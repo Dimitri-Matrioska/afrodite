@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Ortofoto - WebODM</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --marinho: #10192E;
+            --marinho-hover: #1B2A4A;
+            --royal: #3D4FE8;
+            --salmao: #F0C089;
+            --bege: #F5F1EB;
+            --branco: #FFFFFF;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            min-height: 100vh;
+            background: var(--branco);
+            font-family: "IBM Plex Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, Helvetica, sans-serif;
+            color: var(--marinho);
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* =========================
+           TELA DE CARREGAMENTO
+           ========================= */
+
+        #loading {
+            position: fixed;
+            inset: 0;
+            background: var(--branco);
+
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+
+            z-index: 9999;
+
+            transition:
+                opacity 0.9s ease,
+                visibility 0.7s ease;
+        }
+
+        #loading img.gif-carregando {
+            width: min(70vw, 200px);
+            height: auto;
+        }
+
+        #loading.hidden {
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        .loading-rodape {
+            position: absolute;
+            bottom: 34px;
+            left: 0;
+            right: 0;
+
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .loading-rodape span {
+            font-size: 11px;
+            font-style: italic;
+            letter-spacing: 0.5px;
+
+            color: var(--marinho);
+            opacity: 0.55;
+
+            margin-bottom: 10px;
+        }
+
+        .loading-rodape img {
+            width: 130px;
+            height: auto;
+        }
+
+        /* =========================
+           CABEÇALHO (só aparece após o carregamento)
+           ========================= */
+
+        #topo {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            padding: 18px 24px;
+
+            opacity: 0;
+            transform: translateY(-10px);
+            pointer-events: none;
+
+            transition:
+                opacity 0.7s ease,
+                transform 0.7s ease;
+
+            z-index: 10;
+        }
+
+        #topo.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        #topo img {
+            height: 34px;
+            width: auto;
+        }
+
+        /* =========================
+           CONTEÚDO PRINCIPAL
+           ========================= */
+
+        #app {
+            min-height: 100vh;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            padding: 90px 20px 40px;
+
+            opacity: 0;
+            transform: translateY(15px);
+
+            transition:
+                opacity 0.8s ease,
+                transform 0.8s ease;
+        }
+
+        #app.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .container {
+            width: 100%;
+            max-width: 780px;
+
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        /* =========================
+           TÍTULO
+           ========================= */
+
+        .titulo {
+            width: 100%;
+            font-size: 24px;
+            font-weight: 800;
+            letter-spacing: 0.2px;
+            text-align: left;
+
+            margin-bottom: 6px;
+        }
+
+        .subtitulo {
+            width: 100%;
+            font-size: 14px;
+            text-align: left;
+
+            opacity: 0.6;
+
+            margin-bottom: 14px;
+        }
+
+        .acento {
+            width: 40px;
+            height: 4px;
+
+            align-self: flex-start;
+
+            background: var(--salmao);
+            border-radius: 4px;
+
+            margin-bottom: 26px;
+        }
+
+        /* =========================
+           CARD DO MAPA
+           ========================= */
+
+        .mapa-box {
+            width: 100%;
+
+            background: var(--bege);
+
+            border-radius: 22px;
+
+            padding: 20px;
+
+            box-shadow:
+                0 12px 32px rgba(16, 25, 46, 0.10),
+                0 2px 8px rgba(16, 25, 46, 0.06);
+        }
+
+        .mapa-frame-wrap {
+            width: 100%;
+
+            border-radius: 14px;
+            overflow: hidden;
+
+            border: 1.5px solid rgba(16, 25, 46, 0.12);
+
+            background: var(--branco);
+        }
+
+        .mapa-frame-wrap iframe {
+            display: block;
+            width: 100%;
+            height: 360px;
+            border: 0;
+        }
+
+        /* =========================
+           DESENVOLVEDOR (rodapé)
+           ========================= */
+
+        .desenvolvedor {
+            margin-top: 28px;
+
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .desenvolvedor span {
+            font-size: 10px;
+            font-style: italic;
+
+            letter-spacing: 0.5px;
+
+            text-transform: uppercase;
+
+            opacity: 0.45;
+
+            margin-bottom: 8px;
+        }
+
+        .desenvolvedor img {
+            width: 84px;
+            height: auto;
+
+            opacity: 0.85;
+        }
+
+        /* =========================
+           RESPONSIVIDADE
+           ========================= */
+
+        @media (max-height: 700px) {
+
+            #app {
+                padding-top: 80px;
+                padding-bottom: 20px;
+            }
+
+            .subtitulo {
+                margin-bottom: 22px;
+            }
+
+            .desenvolvedor {
+                margin-top: 20px;
+            }
+        }
+
+        @media (min-width: 600px) {
+
+            #app {
+                padding: 100px 40px 40px;
+            }
+
+            #topo {
+                padding: 26px 40px;
+            }
+
+            #topo img {
+                height: 40px;
+            }
+        }
+
+        @media (max-width: 480px) {
+
+            .mapa-frame-wrap iframe {
+                height: 280px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- =========================
+         TELA DE CARREGAMENTO
+         ========================= -->
+
+    <div id="loading">
+
+        <img
+            class="gif-carregando"
+            src="Imagens_Logos/Logo_animada2.gif"
+            alt="Carregando"
+        >
+
+        <div class="loading-rodape">
+
+            <span>Desenvolvido por</span>
+
+            <img
+                src="Imagens_Logos/logo_MATRIOSKA.png"
+                alt="MATRIOSKA Desenvolvimento e Soluções em Planejamento"
+            >
+
+        </div>
+
+    </div>
+
+
+    <!-- =========================
+         CABEÇALHO
+         ========================= -->
+
+    <header id="topo">
+
+        <img src="Imagens_Logos/logo_GB2.png" alt="GB">
+
+        <img src="Imagens_Logos/logo_AFRY.png" alt="AFRY">
+
+    </header>
+
+
+    <!-- =========================
+         APLICAÇÃO
+         ========================= -->
+
+    <main id="app">
+
+        <div class="container">
+
+            <h1 class="titulo">
+                ORTOFOTO
+            </h1>
+
+            <p class="subtitulo">
+                Visualização do levantamento aéreo
+            </p>
+
+            <div class="acento"></div>
+
+            <section class="mapa-box">
+
+                <div class="mapa-frame-wrap">
+                    <iframe
+                        scrolling="no"
+                        title="WebODM"
+                        width="100%"
+                        height="360"
+                        frameborder="0"
+                        src="http://127.0.0.1:29800/public/task/97cfaa7c-8895-49d9-9a26-24be8f9938a7/iframe/map/?t=orthophoto"
+                    ></iframe>
+                </div>
+
+            </section>
+
+            <div class="desenvolvedor">
+
+                <span>
+                    Desenvolvido por
+                </span>
+
+                <img
+                    src="Imagens_Logos/logo_MATRIOSKA.png"
+                    alt="MATRIOSKA Desenvolvimento e Soluções em Planejamento"
+                >
+
+            </div>
+
+        </div>
+
+    </main>
+
+
+    <script>
+        const TEMPO_SPLASH = 2500;
+
+        window.addEventListener("load", function () {
+            setTimeout(function () {
+                const loading = document.getElementById("loading");
+                const app = document.getElementById("app");
+                const topo = document.getElementById("topo");
+
+                loading.classList.add("hidden");
+                topo.classList.add("visible");
+
+                setTimeout(function () {
+                    app.classList.add("visible");
+                }, 250);
+
+            }, TEMPO_SPLASH);
+        });
+    </script>
+</body>
+</html>
