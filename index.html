@@ -3,19 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AFRODITE | Visualizador LiDAR - Aurtech Engine</title>
+    <title>AFRODITE | Visualizador LiDAR</title>
 
-    <!-- Dependências do OpenLidarViewer com cabeçalhos de script válidos (sem bloqueio ORB) -->
+    <!-- 1. Three.js & Controls (200 OK) -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
-    <script src="https://cdn.jsdelivr.net/gh/aurtechmx/openlidarviewer@master/js/laz-perf.js"></script>
-    <script src="https://cdn.jsdelivr.net/gh/aurtechmx/openlidarviewer@master/js/laslaz.js"></script>
+
+    <!-- 2. Leitor/Descompressor LAZ Oficial e Funcional (200 OK) -->
+    <script src="https://cdn.jsdelivr.net/npm/loaders.gl@3.4.13/dist/dist.min.js"></script>
 
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         html, body { width: 100%; height: 100%; overflow: hidden; font-family: sans-serif; background-color: #050505; color: #fff; }
 
-        /* Barra de Controle de Voos */
+        /* Topo com Seletor */
         #top-bar {
             position: absolute; top: 0; left: 0; width: 100%; height: 50px;
             background: rgba(10, 10, 10, 0.9); display: flex; align-items: center;
@@ -27,7 +28,7 @@
         .controls { display: flex; align-items: center; gap: 10px; }
         select { background: #222; color: #fff; border: 1px solid #444; padding: 5px 10px; border-radius: 4px; }
 
-        /* Status e Canvas */
+        /* Mensagens e Viewport */
         #status-msg {
             position: absolute; bottom: 20px; left: 20px; z-index: 10;
             background: rgba(0,0,0,0.8); padding: 10px 15px; border-radius: 5px; font-size: 12px;
@@ -48,19 +49,18 @@
         </div>
     </header>
 
-    <div id="status-msg">Carregando dados da nuvem de pontos...</div>
+    <div id="status-msg">Iniciando motor gráfico...</div>
     <div id="viewport"></div>
 
     <script>
         let scene, camera, renderer, controls;
 
-        // 1. Configura a Cena WebGL Three.js
         function initScene() {
             const container = document.getElementById('viewport');
             scene = new THREE.Scene();
             scene.background = new THREE.Color(0x050505);
 
-            camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.1, 10000);
+            camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.1, 100000);
             camera.position.set(0, 500, 500);
 
             renderer = new THREE.WebGLRenderer({ antialias: true });
@@ -86,53 +86,56 @@
             renderer.render(scene, camera);
         }
 
-        // 2. Carrega e Descomprime o Arquivo LAZ via Engine Aurtech (laslaz.js)
-        function loadLidarFile(dateStr) {
+        async function loadLidarFile(dateStr) {
             const status = document.getElementById('status-msg');
-            status.innerText = "Baixando arquivo LAZ do GitHub Pages...";
+            status.innerText = "Baixando arquivo LAZ...";
 
-            // Remove nuvem anterior da cena se existir
             const oldCloud = scene.getObjectByName("pointcloud");
             if (oldCloud) scene.remove(oldCloud);
 
             const fileUrl = `https://dimitri-matrioska.github.io/afrodite/Rodovia-Ferno-Dias-${dateStr}-georeferenced_model.copc.laz`;
 
-            // Utiliza o descompressor do repositório OpenLidarViewer
-            if (typeof LASFile === 'undefined') {
-                status.innerText = "Erro ao carregar bibliotecas do descompressor. Verifique o console.";
-                return;
-            }
+            try {
+                // Utiliza a biblioteca loaders.gl com o LASLoader nativo
+                const LASLoader = loaders.LASLoader;
+                const parse = loaders.parse;
 
-            LASFile.loadFromURL(fileUrl, function (lasFile) {
-                status.innerText = "Descomprimindo pontos 3D...";
+                const response = await fetch(fileUrl);
+                if (!response.ok) throw new Error(`HTTP Error: ${response.status}`);
                 
-                lasFile.readPoints(lasFile.header.pointsCount, 0, function (points) {
-                    const geometry = new THREE.BufferGeometry();
-                    const positions = new Float32Array(points.position);
+                const arrayBuffer = await response.arrayBuffer();
+                status.innerText = "Processando pontos 3D...";
 
-                    geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
-                    geometry.computeBoundingSphere();
+                const pointCloudData = await parse(arrayBuffer, LASLoader);
 
-                    const material = new THREE.PointsMaterial({
-                        size: 1.5,
-                        color: 0x00aaff
-                    });
+                const positions = pointCloudData.attributes.POSITION.value;
+                const geometry = new THREE.BufferGeometry();
+                geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+                geometry.computeBoundingSphere();
 
-                    const pointCloud = new THREE.Points(geometry, material);
-                    pointCloud.name = "pointcloud";
-                    scene.add(pointCloud);
-
-                    // Centraliza a câmera na nuvem de pontos
-                    const center = geometry.boundingSphere.center;
-                    controls.target.copy(center);
-                    camera.position.set(center.x, center.y + geometry.boundingSphere.radius * 2, center.z + geometry.boundingSphere.radius * 2);
-
-                    status.innerText = `Nuvem de pontos carregada com sucesso! (${lasFile.header.pointsCount.toLocaleString()} pontos)`;
+                const material = new THREE.PointsMaterial({
+                    size: 1.5,
+                    color: 0x00aaff
                 });
-            });
+
+                const pointCloud = new THREE.Points(geometry, material);
+                pointCloud.name = "pointcloud";
+                scene.add(pointCloud);
+
+                // Centraliza a câmera no modelo
+                const center = geometry.boundingSphere.center;
+                controls.target.copy(center);
+                camera.position.set(center.x, center.y + geometry.boundingSphere.radius * 1.5, center.z + geometry.boundingSphere.radius * 1.5);
+
+                const numPoints = pointCloudData.header.vertexCount || (positions.length / 3);
+                status.innerText = `Nuvem carregada com sucesso! (${numPoints.toLocaleString()} pontos)`;
+
+            } catch (err) {
+                console.error(err);
+                status.innerText = `Erro ao carregar o arquivo LAZ: ${err.message}`;
+            }
         }
 
-        // Inicialização
         initScene();
         loadLidarFile('8-11-2026');
     </script>
