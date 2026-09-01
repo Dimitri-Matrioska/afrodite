@@ -3,150 +3,543 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AFRODITE | Visualizador LiDAR - Fernão Dias</title>
 
-    <!-- Scripts Locais (Carregados do seu próprio repositório) -->
-    <script src="js/three.min.js"></script>
-    <script src="js/OrbitControls.js"></script>
-    <script src="js/copc.js"></script>
+    <title>Ortofoto - OpenLiDARViewer</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        html, body { width: 100%; height: 100%; overflow: hidden; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #08090c; color: #fff; }
-
-        /* Barra de Navegação Corporativa */
-        #top-bar {
-            position: absolute; top: 0; left: 0; width: 100%; height: 55px;
-            background: rgba(12, 14, 18, 0.95); display: flex; align-items: center;
-            justify-content: space-between; padding: 0 20px; z-index: 100;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        :root {
+            --marinho: #10192E;
+            --marinho-hover: #1B2A4A;
+            --royal: #3D4FE8;
+            --salmao: #F0C089;
+            --bege: #F5F1EB;
+            --branco: #FFFFFF;
         }
 
-        .brand-title { font-size: 15px; font-weight: 700; letter-spacing: 1px; color: #38bdf8; }
-
-        .flight-select-container { display: flex; align-items: center; gap: 10px; }
-        .flight-select-container label { font-size: 13px; color: #94a3b8; }
-        .flight-select-container select {
-            background: #1e293b; color: #f8fafc; border: 1px solid #334155;
-            padding: 6px 12px; border-radius: 6px; outline: none; cursor: pointer; font-size: 13px;
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
         }
 
-        /* Status e Viewport */
-        #status-msg {
-            position: absolute; bottom: 20px; left: 20px; z-index: 100;
-            background: rgba(15, 23, 42, 0.9); border: 1px solid #334155;
-            padding: 10px 16px; border-radius: 6px; font-size: 13px; color: #38bdf8;
+        body {
+            min-height: 100vh;
+            background: var(--branco);
+            font-family: "IBM Plex Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, Helvetica, sans-serif;
+            color: var(--marinho);
+            -webkit-font-smoothing: antialiased;
         }
 
-        #viewport { width: 100%; height: 100%; display: block; }
-    </style>
-</head>
-<body>
+        /* =========================
+           TELA DE CARREGAMENTO
+           ========================= */
 
-    <header id="top-bar">
-        <div class="brand-title">AFRODITE | LEVANTAMENTO LIDAR</div>
-        <div class="flight-select-container">
-            <label for="date-select">Data do Voo:</label>
-            <select id="date-select" onchange="loadLidarFile(this.value)">
-                <option value="8-11-2026">08/11/2026 - Rodovia Fernão Dias</option>
-                <option value="01-11-2026">01/11/2026 - Rodovia Fernão Dias</option>
-            </select>
-        </div>
-    </header>
+        #loading {
+            position: fixed;
+            inset: 0;
+            background: var(--branco);
 
-    <div id="status-msg">Inicializando motor de renderização...</div>
-    <div id="viewport"></div>
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
 
-    <script>
-        let scene, camera, renderer, controls;
+            z-index: 9999;
 
-        function initScene() {
-            const container = document.getElementById('viewport');
-            scene = new THREE.Scene();
-            scene.background = new THREE.Color(0x08090c);
-
-            camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.1, 100000);
-            camera.position.set(0, 500, 500);
-
-            renderer = new THREE.WebGLRenderer({ antialias: true });
-            renderer.setSize(window.innerWidth, window.innerHeight);
-            renderer.setPixelRatio(window.devicePixelRatio);
-            container.appendChild(renderer.domElement);
-
-            controls = new THREE.OrbitControls(camera, renderer.domElement);
-            controls.enableDamping = true;
-
-            window.addEventListener('resize', () => {
-                camera.aspect = window.innerWidth / window.innerHeight;
-                camera.updateProjectionMatrix();
-                renderer.setSize(window.innerWidth, window.innerHeight);
-            });
-
-            animate();
+            transition:
+                opacity 0.9s ease,
+                visibility 0.7s ease;
         }
 
-        function animate() {
-            requestAnimationFrame(animate);
-            controls.update();
-            renderer.render(scene, camera);
+        #loading img.gif-carregando {
+            width: min(70vw, 200px);
+            height: auto;
         }
 
-        async function loadLidarFile(dateStr) {
-            const status = document.getElementById('status-msg');
-            status.innerText = "Lendo arquivo COPC/LAZ...";
+        #loading.hidden {
+            opacity: 0;
+            visibility: hidden;
+        }
 
-            const oldCloud = scene.getObjectByName("pointcloud");
-            if (oldCloud) scene.remove(oldCloud);
+        .loading-rodape {
+            position: absolute;
+            bottom: 34px;
+            left: 0;
+            right: 0;
 
-            const fileUrl = `https://dimitri-matrioska.github.io/afrodite/Rodovia-Ferno-Dias-${dateStr}-georeferenced_model.copc.laz`;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
 
-            try {
-                const getter = Copc.createUrlGetter(fileUrl);
-                const copc = await Copc.load(getter);
+        .loading-rodape span {
+            font-size: 11px;
+            font-style: italic;
+            letter-spacing: 0.5px;
 
-                status.innerText = "Processando pontos 3D...";
+            color: var(--marinho);
+            opacity: 0.55;
 
-                const hierarchy = await Copc.loadHierarchyPage(getter, copc.info.rootHierarchyPage);
-                const rootNode = Object.values(hierarchy)[0];
-                const pointData = await Copc.loadPointData(getter, copc, rootNode);
+            margin-bottom: 10px;
+        }
 
-                const positions = new Float32Array(pointData.pointCount * 3);
-                const view = new DataView(pointData.buffer);
+        .loading-rodape img {
+            width: 130px;
+            height: auto;
+        }
 
-                for (let i = 0; i < pointData.pointCount; i++) {
-                    const offset = i * copc.header.pointDataRecordLength;
-                    positions[i * 3]     = view.getInt32(offset, true) * copc.header.scale[0] + copc.header.offset[0];
-                    positions[i * 3 + 1] = view.getInt32(offset + 4, true) * copc.header.scale[1] + copc.header.offset[1];
-                    positions[i * 3 + 2] = view.getInt32(offset + 8, true) * copc.header.scale[2] + copc.header.offset[2];
-                }
+        /* =========================
+           CABEÇALHO (só aparece após o carregamento)
+           ========================= */
 
-                const geometry = new THREE.BufferGeometry();
-                geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
-                geometry.computeBoundingSphere();
-                geometry.center();
+        #topo {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
 
-                const material = new THREE.PointsMaterial({
-                    size: 1.2,
-                    color: 0x38bdf8
-                });
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
 
-                const pointCloud = new THREE.Points(geometry, material);
-                pointCloud.name = "pointcloud";
-                scene.add(pointCloud);
+            padding: 18px 24px;
 
-                controls.target.set(0, 0, 0);
-                camera.position.set(0, geometry.boundingSphere.radius * 2, geometry.boundingSphere.radius * 2);
+            opacity: 0;
+            transform: translateY(-10px);
+            pointer-events: none;
 
-                status.innerText = `Nuvem carregada! (${pointData.pointCount.toLocaleString()} pontos renderizados)`;
+            transition:
+                opacity 0.7s ease,
+                transform 0.7s ease;
 
-            } catch (err) {
-                console.error(err);
-                status.innerText = `Erro ao carregar o arquivo LAZ: ${err.message}`;
+            z-index: 10;
+        }
+
+        #topo.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        #topo img {
+            height: 34px;
+            width: auto;
+        }
+
+        /* =========================
+           CONTEÚDO PRINCIPAL
+           ========================= */
+
+        #app {
+            min-height: 100vh;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            padding: 90px 20px 40px;
+
+            opacity: 0;
+            transform: translateY(15px);
+
+            transition:
+                opacity 0.8s ease,
+                transform 0.8s ease;
+        }
+
+        #app.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .container {
+            width: 100%;
+            max-width: 780px;
+
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        /* =========================
+           TÍTULO
+           ========================= */
+
+        .titulo {
+            width: 100%;
+            font-size: 24px;
+            font-weight: 800;
+            letter-spacing: 0.2px;
+            text-align: left;
+
+            margin-bottom: 6px;
+        }
+
+        .subtitulo {
+            width: 100%;
+            font-size: 14px;
+            text-align: left;
+
+            opacity: 0.6;
+
+            margin-bottom: 14px;
+        }
+
+        .acento {
+            width: 40px;
+            height: 4px;
+
+            align-self: flex-start;
+
+            background: var(--salmao);
+            border-radius: 4px;
+
+            margin-bottom: 26px;
+        }
+
+        /* =========================
+           CARD DO MAPA
+           ========================= */
+
+        .mapa-box {
+            width: 100%;
+
+            background: var(--bege);
+
+            border-radius: 22px;
+
+            padding: 20px;
+
+            box-shadow:
+                0 12px 32px rgba(16, 25, 46, 0.10),
+                0 2px 8px rgba(16, 25, 46, 0.06);
+        }
+
+        .mapa-frame-wrap {
+            width: 100%;
+
+            border-radius: 14px;
+            overflow: hidden;
+
+            border: 1.5px solid rgba(16, 25, 46, 0.12);
+
+            background: var(--branco);
+        }
+
+        .mapa-frame-wrap iframe {
+            display: block;
+            width: 100%;
+            height: 480px;
+            border: 0;
+        }
+
+        /* =========================
+           SELETOR DE VOO
+           ========================= */
+
+        .seletor-voo {
+            width: 100%;
+
+            display: flex;
+            align-items: center;
+            gap: 10px;
+
+            margin-bottom: 14px;
+        }
+
+        .seletor-voo label {
+            font-size: 12px;
+            font-weight: 600;
+            letter-spacing: 0.3px;
+            text-transform: uppercase;
+
+            opacity: 0.6;
+
+            white-space: nowrap;
+        }
+
+        .seletor-voo select {
+            flex: 1;
+
+            font-family: inherit;
+            font-size: 14px;
+            font-weight: 500;
+
+            color: var(--marinho);
+            background: var(--branco);
+
+            border: 1.5px solid rgba(16, 25, 46, 0.12);
+            border-radius: 10px;
+
+            padding: 9px 12px;
+
+            cursor: pointer;
+
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2310192E' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 12px center;
+            background-size: 16px;
+
+            padding-right: 34px;
+        }
+
+        .seletor-voo select:focus {
+            outline: none;
+            border-color: var(--royal);
+        }
+
+        /* =========================
+           DESENVOLVEDOR (rodapé)
+           ========================= */
+
+        .desenvolvedor {
+            margin-top: 28px;
+
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .desenvolvedor span {
+            font-size: 10px;
+            font-style: italic;
+
+            letter-spacing: 0.5px;
+
+            text-transform: uppercase;
+
+            opacity: 0.45;
+
+            margin-bottom: 8px;
+        }
+
+        .desenvolvedor img {
+            width: 84px;
+            height: auto;
+
+            opacity: 0.85;
+        }
+
+        /* =========================
+           RESPONSIVIDADE
+           ========================= */
+
+        @media (max-height: 700px) {
+
+            #app {
+                padding-top: 80px;
+                padding-bottom: 20px;
+            }
+
+            .subtitulo {
+                margin-bottom: 22px;
+            }
+
+            .desenvolvedor {
+                margin-top: 20px;
             }
         }
 
-        initScene();
-        loadLidarFile('8-11-2026');
+        @media (min-width: 600px) {
+
+            #app {
+                padding: 100px 40px 40px;
+            }
+
+            #topo {
+                padding: 26px 40px;
+            }
+
+            #topo img {
+                height: 40px;
+            }
+        }
+
+        @media (max-width: 480px) {
+
+            .mapa-frame-wrap iframe {
+                height: 280px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- =========================
+         TELA DE CARREGAMENTO
+         ========================= -->
+
+    <div id="loading">
+
+        <img
+            class="gif-carregando"
+            src="Imagens_Logos/Logo_animada2.gif"
+            alt="Carregando"
+        >
+
+        <div class="loading-rodape">
+
+            <span>Desenvolvido por</span>
+
+            <img
+                src="Imagens_Logos/logo_MATRIOSKA.png"
+                alt="MATRIOSKA Desenvolvimento e Soluções em Planejamento"
+            >
+
+        </div>
+
+    </div>
+
+
+    <!-- =========================
+         CABEÇALHO
+         ========================= -->
+
+    <header id="topo">
+
+        <img src="Imagens_Logos/logo_GB2.png" alt="GB">
+
+        <img src="Imagens_Logos/logo_AFRY.png" alt="AFRY">
+
+    </header>
+
+
+    <!-- =========================
+         APLICAÇÃO
+         ========================= -->
+
+    <main id="app">
+
+        <div class="container">
+
+            <h1 class="titulo">
+                ORTOFOTO
+            </h1>
+
+            <p class="subtitulo">
+                Visualização do levantamento aéreo
+            </p>
+
+            <div class="acento"></div>
+
+            <section class="mapa-box">
+
+                <div class="seletor-voo">
+                    <label for="voo-select">Voo</label>
+                    <select id="voo-select"></select>
+                </div>
+
+                <div class="mapa-frame-wrap">
+                    <iframe
+                        id="visualizador"
+                        scrolling="no"
+                        title="OpenLiDARViewer"
+                        width="100%"
+                        height="480"
+                        frameborder="0"
+                        allow="fullscreen"
+                    ></iframe>
+                </div>
+
+            </section>
+
+            <div class="desenvolvedor">
+
+                <span>
+                    Desenvolvido por
+                </span>
+
+                <img
+                    src="Imagens_Logos/logo_MATRIOSKA.png"
+                    alt="MATRIOSKA Desenvolvimento e Soluções em Planejamento"
+                >
+
+            </div>
+
+        </div>
+
+    </main>
+
+
+    <script>
+        /* =========================
+           CONFIGURAÇÃO DOS VOOS
+           ========================= */
+
+        // Cada voo é uma nuvem de pontos (.copc.laz) exibida pelo OpenLiDARViewer.
+        // Para adicionar um novo voo, inclua um novo item no array abaixo.
+        // "url" pode apontar para qualquer servidor (GitHub Pages, Cloudflare, etc.),
+        // desde que o link seja acessível publicamente (CORS habilitado) e sirva o
+        // arquivo .copc.laz (ou ept.json) diretamente.
+        const VOOS = [
+            {
+                label: "11/08/2026 - Rodovia Fernão Dias",
+                url: "https://dimitri-matrioska.github.io/afrodite/Rodovia-Ferno-Dias-8-11-2026-georeferenced_model.copc.laz"
+            }
+            // {
+            //     label: "DD/MM/AAAA - Descrição do voo",
+            //     url: "https://SEU-SERVIDOR/arquivo.copc.laz"
+            // },
+        ];
+
+        // Instância pública do OpenLiDARViewer (lidar.aurtech.mx).
+        // "embed=1" ativa o modo de incorporação em iframe.
+        const OLV_BASE = "https://lidar.aurtech.mx/";
+
+        function montarSrcVisualizador(urlArquivo) {
+            return OLV_BASE + "?copc=" + encodeURIComponent(urlArquivo) + "&embed=1";
+        }
+
+        function carregarVoo(indice) {
+            const voo = VOOS[indice];
+            if (!voo) return;
+
+            document.getElementById("visualizador").src = montarSrcVisualizador(voo.url);
+        }
+
+        function inicializarSeletorDeVoos() {
+            const select = document.getElementById("voo-select");
+
+            VOOS.forEach(function (voo, indice) {
+                const opcao = document.createElement("option");
+                opcao.value = indice;
+                opcao.textContent = voo.label;
+                select.appendChild(opcao);
+            });
+
+            select.addEventListener("change", function () {
+                carregarVoo(Number(select.value));
+            });
+
+            if (VOOS.length > 0) {
+                carregarVoo(0);
+            }
+        }
+
+        document.addEventListener("DOMContentLoaded", inicializarSeletorDeVoos);
+
+        const TEMPO_SPLASH = 2500;
+
+        window.addEventListener("load", function () {
+            setTimeout(function () {
+                const loading = document.getElementById("loading");
+                const app = document.getElementById("app");
+                const topo = document.getElementById("topo");
+
+                loading.classList.add("hidden");
+                topo.classList.add("visible");
+
+                setTimeout(function () {
+                    app.classList.add("visible");
+                }, 250);
+
+            }, TEMPO_SPLASH);
+        });
     </script>
 </body>
 </html>
