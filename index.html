@@ -4,9 +4,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AFRODITE | Visualizador LiDAR - Fernão Dias</title>
+
+    <!-- Scripts Locais (Carregados do seu próprio repositório) -->
+    <script src="js/three.min.js"></script>
+    <script src="js/OrbitControls.js"></script>
+    <script src="js/copc.js"></script>
+
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        html, body { width: 100%; height: 100%; overflow: hidden; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #0c0e12; color: #fff; }
+        html, body { width: 100%; height: 100%; overflow: hidden; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #08090c; color: #fff; }
 
         /* Barra de Navegação Corporativa */
         #top-bar {
@@ -25,12 +31,14 @@
             padding: 6px 12px; border-radius: 6px; outline: none; cursor: pointer; font-size: 13px;
         }
 
-        /* iFrame da Engine do OpenLidarViewer */
-        #viewer-frame {
-            position: absolute; top: 55px; left: 0;
-            width: 100%; height: calc(100% - 55px);
-            border: none;
+        /* Status e Viewport */
+        #status-msg {
+            position: absolute; bottom: 20px; left: 20px; z-index: 100;
+            background: rgba(15, 23, 42, 0.9); border: 1px solid #334155;
+            padding: 10px 16px; border-radius: 6px; font-size: 13px; color: #38bdf8;
         }
+
+        #viewport { width: 100%; height: 100%; display: block; }
     </style>
 </head>
 <body>
@@ -39,31 +47,106 @@
         <div class="brand-title">AFRODITE | LEVANTAMENTO LIDAR</div>
         <div class="flight-select-container">
             <label for="date-select">Data do Voo:</label>
-            <select id="date-select" onchange="changeFlight(this.value)">
+            <select id="date-select" onchange="loadLidarFile(this.value)">
                 <option value="8-11-2026">08/11/2026 - Rodovia Fernão Dias</option>
                 <option value="01-11-2026">01/11/2026 - Rodovia Fernão Dias</option>
             </select>
         </div>
     </header>
 
-    <iframe id="viewer-frame" allow="gpu; accelerometer; gyroscope; autoplay" allowfullscreen></iframe>
+    <div id="status-msg">Inicializando motor de renderização...</div>
+    <div id="viewport"></div>
 
     <script>
-        function loadPointCloud(dateString) {
-            const lazUrl = `https://dimitri-matrioska.github.io/afrodite/Rodovia-Ferno-Dias-${dateString}-georeferenced_model.copc.laz`;
-            
-            // Passa a URL do arquivo no padrão de hash suportado pelo OpenLidarViewer
-            const targetUrl = `https://lidar.aurtech.mx/#copc=${encodeURIComponent(lazUrl)}`;
-            
-            document.getElementById('viewer-frame').src = targetUrl;
+        let scene, camera, renderer, controls;
+
+        function initScene() {
+            const container = document.getElementById('viewport');
+            scene = new THREE.Scene();
+            scene.background = new THREE.Color(0x08090c);
+
+            camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.1, 100000);
+            camera.position.set(0, 500, 500);
+
+            renderer = new THREE.WebGLRenderer({ antialias: true });
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            renderer.setPixelRatio(window.devicePixelRatio);
+            container.appendChild(renderer.domElement);
+
+            controls = new THREE.OrbitControls(camera, renderer.domElement);
+            controls.enableDamping = true;
+
+            window.addEventListener('resize', () => {
+                camera.aspect = window.innerWidth / window.innerHeight;
+                camera.updateProjectionMatrix();
+                renderer.setSize(window.innerWidth, window.innerHeight);
+            });
+
+            animate();
         }
 
-        function changeFlight(selectedDate) {
-            loadPointCloud(selectedDate);
+        function animate() {
+            requestAnimationFrame(animate);
+            controls.update();
+            renderer.render(scene, camera);
         }
 
-        // Carrega o voo inicial
-        loadPointCloud('8-11-2026');
+        async function loadLidarFile(dateStr) {
+            const status = document.getElementById('status-msg');
+            status.innerText = "Lendo arquivo COPC/LAZ...";
+
+            const oldCloud = scene.getObjectByName("pointcloud");
+            if (oldCloud) scene.remove(oldCloud);
+
+            const fileUrl = `https://dimitri-matrioska.github.io/afrodite/Rodovia-Ferno-Dias-${dateStr}-georeferenced_model.copc.laz`;
+
+            try {
+                const getter = Copc.createUrlGetter(fileUrl);
+                const copc = await Copc.load(getter);
+
+                status.innerText = "Processando pontos 3D...";
+
+                const hierarchy = await Copc.loadHierarchyPage(getter, copc.info.rootHierarchyPage);
+                const rootNode = Object.values(hierarchy)[0];
+                const pointData = await Copc.loadPointData(getter, copc, rootNode);
+
+                const positions = new Float32Array(pointData.pointCount * 3);
+                const view = new DataView(pointData.buffer);
+
+                for (let i = 0; i < pointData.pointCount; i++) {
+                    const offset = i * copc.header.pointDataRecordLength;
+                    positions[i * 3]     = view.getInt32(offset, true) * copc.header.scale[0] + copc.header.offset[0];
+                    positions[i * 3 + 1] = view.getInt32(offset + 4, true) * copc.header.scale[1] + copc.header.offset[1];
+                    positions[i * 3 + 2] = view.getInt32(offset + 8, true) * copc.header.scale[2] + copc.header.offset[2];
+                }
+
+                const geometry = new THREE.BufferGeometry();
+                geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+                geometry.computeBoundingSphere();
+                geometry.center();
+
+                const material = new THREE.PointsMaterial({
+                    size: 1.2,
+                    color: 0x38bdf8
+                });
+
+                const pointCloud = new THREE.Points(geometry, material);
+                pointCloud.name = "pointcloud";
+                scene.add(pointCloud);
+
+                controls.target.set(0, 0, 0);
+                camera.position.set(0, geometry.boundingSphere.radius * 2, geometry.boundingSphere.radius * 2);
+
+                status.innerText = `Nuvem carregada! (${pointData.pointCount.toLocaleString()} pontos renderizados)`;
+
+            } catch (err) {
+                console.error(err);
+                status.innerText = `Erro ao carregar o arquivo LAZ: ${err.message}`;
+            }
+        }
+
+        initScene();
+        loadLidarFile('8-11-2026');
     </script>
 </body>
 </html>
