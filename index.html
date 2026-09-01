@@ -5,11 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AFRODITE | Visualizador LiDAR - Aurtech Engine</title>
 
-    <!-- Dependências do OpenLidarViewer (Aurtech) -->
-    <script src="https://cdn.jsdelivr.net/gh/aurtechmx/openlidarviewer@main/js/three.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/gh/aurtechmx/openlidarviewer@main/js/OrbitControls.js"></script>
-    <script src="https://cdn.jsdelivr.net/gh/aurtechmx/openlidarviewer@main/js/laz-perf.js"></script>
-    <script src="https://cdn.jsdelivr.net/gh/aurtechmx/openlidarviewer@main/js/laslaz.js"></script>
+    <!-- Dependências do OpenLidarViewer com cabeçalhos de script válidos (sem bloqueio ORB) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/aurtechmx/openlidarviewer@master/js/laz-perf.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/aurtechmx/openlidarviewer@master/js/laslaz.js"></script>
 
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -98,21 +98,24 @@
             const fileUrl = `https://dimitri-matrioska.github.io/afrodite/Rodovia-Ferno-Dias-${dateStr}-georeferenced_model.copc.laz`;
 
             // Utiliza o descompressor do repositório OpenLidarViewer
+            if (typeof LASFile === 'undefined') {
+                status.innerText = "Erro ao carregar bibliotecas do descompressor. Verifique o console.";
+                return;
+            }
+
             LASFile.loadFromURL(fileUrl, function (lasFile) {
                 status.innerText = "Descomprimindo pontos 3D...";
                 
                 lasFile.readPoints(lasFile.header.pointsCount, 0, function (points) {
                     const geometry = new THREE.BufferGeometry();
                     const positions = new Float32Array(points.position);
-                    const colors = new Float32Array(points.color || points.position.length);
 
                     geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
                     geometry.computeBoundingSphere();
 
                     const material = new THREE.PointsMaterial({
                         size: 1.5,
-                        vertexColors: points.color ? true : false,
-                        color: points.color ? 0xffffff : 0x00aaff
+                        color: 0x00aaff
                     });
 
                     const pointCloud = new THREE.Points(geometry, material);
