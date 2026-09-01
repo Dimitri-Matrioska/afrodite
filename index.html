@@ -3,141 +3,67 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AFRODITE | Visualizador LiDAR</title>
-
-    <!-- 1. Three.js & Controls (200 OK) -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
-
-    <!-- 2. Leitor/Descompressor LAZ Oficial e Funcional (200 OK) -->
-    <script src="https://cdn.jsdelivr.net/npm/loaders.gl@3.4.13/dist/dist.min.js"></script>
-
+    <title>AFRODITE | Visualizador LiDAR - Fernão Dias</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        html, body { width: 100%; height: 100%; overflow: hidden; font-family: sans-serif; background-color: #050505; color: #fff; }
+        html, body { width: 100%; height: 100%; overflow: hidden; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #0c0e12; color: #fff; }
 
-        /* Topo com Seletor */
+        /* Barra de Navegação Corporativa */
         #top-bar {
-            position: absolute; top: 0; left: 0; width: 100%; height: 50px;
-            background: rgba(10, 10, 10, 0.9); display: flex; align-items: center;
-            justify-content: space-between; padding: 0 20px; z-index: 10;
-            border-bottom: 1px solid #222;
+            position: absolute; top: 0; left: 0; width: 100%; height: 55px;
+            background: rgba(12, 14, 18, 0.95); display: flex; align-items: center;
+            justify-content: space-between; padding: 0 20px; z-index: 100;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
         }
 
-        .title { font-size: 14px; font-weight: bold; color: #40a9ff; }
-        .controls { display: flex; align-items: center; gap: 10px; }
-        select { background: #222; color: #fff; border: 1px solid #444; padding: 5px 10px; border-radius: 4px; }
+        .brand-title { font-size: 15px; font-weight: 700; letter-spacing: 1px; color: #38bdf8; }
 
-        /* Mensagens e Viewport */
-        #status-msg {
-            position: absolute; bottom: 20px; left: 20px; z-index: 10;
-            background: rgba(0,0,0,0.8); padding: 10px 15px; border-radius: 5px; font-size: 12px;
+        .flight-select-container { display: flex; align-items: center; gap: 10px; }
+        .flight-select-container label { font-size: 13px; color: #94a3b8; }
+        .flight-select-container select {
+            background: #1e293b; color: #f8fafc; border: 1px solid #334155;
+            padding: 6px 12px; border-radius: 6px; outline: none; cursor: pointer; font-size: 13px;
         }
-        #viewport { width: 100%; height: 100%; display: block; }
+
+        /* iFrame da Engine do OpenLidarViewer */
+        #viewer-frame {
+            position: absolute; top: 55px; left: 0;
+            width: 100%; height: calc(100% - 55px);
+            border: none;
+        }
     </style>
 </head>
 <body>
 
     <header id="top-bar">
-        <div class="title">AFRODITE - VISUALIZADOR LIDAR</div>
-        <div class="controls">
-            <label for="flight-date">Data do Voo:</label>
-            <select id="flight-date" onchange="loadLidarFile(this.value)">
-                <option value="8-11-2026">08/11/2026 - Fernão Dias</option>
-                <option value="01-11-2026">01/11/2026 - Fernão Dias</option>
+        <div class="brand-title">AFRODITE | LEVANTAMENTO LIDAR</div>
+        <div class="flight-select-container">
+            <label for="date-select">Data do Voo:</label>
+            <select id="date-select" onchange="changeFlight(this.value)">
+                <option value="8-11-2026">08/11/2026 - Rodovia Fernão Dias</option>
+                <option value="01-11-2026">01/11/2026 - Rodovia Fernão Dias</option>
             </select>
         </div>
     </header>
 
-    <div id="status-msg">Iniciando motor gráfico...</div>
-    <div id="viewport"></div>
+    <iframe id="viewer-frame" allow="gpu; accelerometer; gyroscope; autoplay" allowfullscreen></iframe>
 
     <script>
-        let scene, camera, renderer, controls;
-
-        function initScene() {
-            const container = document.getElementById('viewport');
-            scene = new THREE.Scene();
-            scene.background = new THREE.Color(0x050505);
-
-            camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.1, 100000);
-            camera.position.set(0, 500, 500);
-
-            renderer = new THREE.WebGLRenderer({ antialias: true });
-            renderer.setSize(window.innerWidth, window.innerHeight);
-            renderer.setPixelRatio(window.devicePixelRatio);
-            container.appendChild(renderer.domElement);
-
-            controls = new THREE.OrbitControls(camera, renderer.domElement);
-            controls.enableDamping = true;
-
-            window.addEventListener('resize', () => {
-                camera.aspect = window.innerWidth / window.innerHeight;
-                camera.updateProjectionMatrix();
-                renderer.setSize(window.innerWidth, window.innerHeight);
-            });
-
-            animate();
+        function loadPointCloud(dateString) {
+            const lazUrl = `https://dimitri-matrioska.github.io/afrodite/Rodovia-Ferno-Dias-${dateString}-georeferenced_model.copc.laz`;
+            
+            // Passa a URL do arquivo no padrão de hash suportado pelo OpenLidarViewer
+            const targetUrl = `https://lidar.aurtech.mx/#copc=${encodeURIComponent(lazUrl)}`;
+            
+            document.getElementById('viewer-frame').src = targetUrl;
         }
 
-        function animate() {
-            requestAnimationFrame(animate);
-            controls.update();
-            renderer.render(scene, camera);
+        function changeFlight(selectedDate) {
+            loadPointCloud(selectedDate);
         }
 
-        async function loadLidarFile(dateStr) {
-            const status = document.getElementById('status-msg');
-            status.innerText = "Baixando arquivo LAZ...";
-
-            const oldCloud = scene.getObjectByName("pointcloud");
-            if (oldCloud) scene.remove(oldCloud);
-
-            const fileUrl = `https://dimitri-matrioska.github.io/afrodite/Rodovia-Ferno-Dias-${dateStr}-georeferenced_model.copc.laz`;
-
-            try {
-                // Utiliza a biblioteca loaders.gl com o LASLoader nativo
-                const LASLoader = loaders.LASLoader;
-                const parse = loaders.parse;
-
-                const response = await fetch(fileUrl);
-                if (!response.ok) throw new Error(`HTTP Error: ${response.status}`);
-                
-                const arrayBuffer = await response.arrayBuffer();
-                status.innerText = "Processando pontos 3D...";
-
-                const pointCloudData = await parse(arrayBuffer, LASLoader);
-
-                const positions = pointCloudData.attributes.POSITION.value;
-                const geometry = new THREE.BufferGeometry();
-                geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
-                geometry.computeBoundingSphere();
-
-                const material = new THREE.PointsMaterial({
-                    size: 1.5,
-                    color: 0x00aaff
-                });
-
-                const pointCloud = new THREE.Points(geometry, material);
-                pointCloud.name = "pointcloud";
-                scene.add(pointCloud);
-
-                // Centraliza a câmera no modelo
-                const center = geometry.boundingSphere.center;
-                controls.target.copy(center);
-                camera.position.set(center.x, center.y + geometry.boundingSphere.radius * 1.5, center.z + geometry.boundingSphere.radius * 1.5);
-
-                const numPoints = pointCloudData.header.vertexCount || (positions.length / 3);
-                status.innerText = `Nuvem carregada com sucesso! (${numPoints.toLocaleString()} pontos)`;
-
-            } catch (err) {
-                console.error(err);
-                status.innerText = `Erro ao carregar o arquivo LAZ: ${err.message}`;
-            }
-        }
-
-        initScene();
-        loadLidarFile('8-11-2026');
+        // Carrega o voo inicial
+        loadPointCloud('8-11-2026');
     </script>
 </body>
 </html>
