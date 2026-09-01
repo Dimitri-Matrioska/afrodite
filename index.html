@@ -1,10 +1,11 @@
+
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Ortofoto - OpenLiDARViewer</title>
+    <title>LiDAR - OpenLiDARViewer</title>
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -93,7 +94,7 @@
         }
 
         /* =========================
-           CABEÇALHO (só aparece após o carregamento)
+           CABEÇALHO
            ========================= */
 
         #topo {
@@ -157,7 +158,7 @@
 
         .container {
             width: 100%;
-            max-width: 780px;
+            max-width: 1200px;
 
             display: flex;
             flex-direction: column;
@@ -201,10 +202,10 @@
         }
 
         /* =========================
-           CARD DO MAPA
+           CARD DO VISUALIZADOR
            ========================= */
 
-        .mapa-box {
+        .viewer-box {
             width: 100%;
 
             background: var(--bege);
@@ -218,7 +219,7 @@
                 0 2px 8px rgba(16, 25, 46, 0.06);
         }
 
-        .mapa-frame-wrap {
+        .viewer-frame-wrap {
             width: 100%;
 
             border-radius: 14px;
@@ -229,67 +230,36 @@
             background: var(--branco);
         }
 
-        .mapa-frame-wrap iframe {
+        .viewer-frame-wrap iframe {
             display: block;
             width: 100%;
-            height: 480px;
+            height: 600px;
             border: 0;
         }
 
-        /* =========================
-           SELETOR DE VOO
-           ========================= */
-
-        .seletor-voo {
-            width: 100%;
-
+        .viewer-info {
+            margin-top: 14px;
+            padding: 0 4px;
             display: flex;
             align-items: center;
-            gap: 10px;
-
-            margin-bottom: 14px;
-        }
-
-        .seletor-voo label {
+            gap: 8px;
             font-size: 12px;
-            font-weight: 600;
-            letter-spacing: 0.3px;
-            text-transform: uppercase;
-
-            opacity: 0.6;
-
-            white-space: nowrap;
-        }
-
-        .seletor-voo select {
-            flex: 1;
-
-            font-family: inherit;
-            font-size: 14px;
-            font-weight: 500;
-
             color: var(--marinho);
-            background: var(--branco);
-
-            border: 1.5px solid rgba(16, 25, 46, 0.12);
-            border-radius: 10px;
-
-            padding: 9px 12px;
-
-            cursor: pointer;
-
-            appearance: none;
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2310192E' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
-            background-repeat: no-repeat;
-            background-position: right 12px center;
-            background-size: 16px;
-
-            padding-right: 34px;
+            opacity: 0.55;
         }
 
-        .seletor-voo select:focus {
-            outline: none;
-            border-color: var(--royal);
+        .viewer-info .badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            background: var(--marinho);
+            color: var(--branco);
+            padding: 3px 8px;
+            border-radius: 6px;
+            font-size: 10px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.4px;
         }
 
         /* =========================
@@ -357,12 +327,16 @@
             #topo img {
                 height: 40px;
             }
+
+            .viewer-frame-wrap iframe {
+                height: 680px;
+            }
         }
 
         @media (max-width: 480px) {
 
-            .mapa-frame-wrap iframe {
-                height: 280px;
+            .viewer-frame-wrap iframe {
+                height: 420px;
             }
         }
     </style>
@@ -418,32 +392,36 @@
         <div class="container">
 
             <h1 class="titulo">
-                ORTOFOTO
+                NUVEM DE PONTOS LiDAR
             </h1>
 
             <p class="subtitulo">
-                Visualização do levantamento aéreo
+                Visualização 3D do levantamento aéreo — Rodovia Fernão Dias
             </p>
 
             <div class="acento"></div>
 
-            <section class="mapa-box">
+            <section class="viewer-box">
 
-                <div class="seletor-voo">
-                    <label for="voo-select">Voo</label>
-                    <select id="voo-select"></select>
-                </div>
-
-                <div class="mapa-frame-wrap">
+                <div class="viewer-frame-wrap">
                     <iframe
-                        id="visualizador"
+                        id="lidar-viewer"
                         scrolling="no"
                         title="OpenLiDARViewer"
                         width="100%"
-                        height="480"
+                        height="600"
                         frameborder="0"
                         allow="fullscreen"
+                        src="https://lidar.aurtech.mx/?copc=https://pub-ff165ed52c304df59d57ae2f21220e3c.r2.dev/Rodovia-Ferno-Dias-8-11-2026-georeferenced_model.copc.laz&embed=1"
                     ></iframe>
+                </div>
+
+                <div class="viewer-info">
+                    <span class="badge">
+                        <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                        COPC Streaming
+                    </span>
+                    <span>Visualização via OpenLiDARViewer — dados processados localmente no navegador</span>
                 </div>
 
             </section>
@@ -467,62 +445,6 @@
 
 
     <script>
-        /* =========================
-           CONFIGURAÇÃO DOS VOOS
-           ========================= */
-
-        // Cada voo é uma nuvem de pontos (.copc.laz) exibida pelo OpenLiDARViewer.
-        // Para adicionar um novo voo, inclua um novo item no array abaixo.
-        // "url" pode apontar para qualquer servidor (GitHub Pages, Cloudflare, etc.),
-        // desde que o link seja acessível publicamente (CORS habilitado) e sirva o
-        // arquivo .copc.laz (ou ept.json) diretamente.
-        const VOOS = [
-            {
-                label: "11/08/2026 - Rodovia Fernão Dias",
-                url: "https://dimitri-matrioska.github.io/afrodite/Rodovia-Ferno-Dias-8-11-2026-georeferenced_model.copc.laz"
-            }
-            // {
-            //     label: "DD/MM/AAAA - Descrição do voo",
-            //     url: "https://SEU-SERVIDOR/arquivo.copc.laz"
-            // },
-        ];
-
-        // Instância pública do OpenLiDARViewer (lidar.aurtech.mx).
-        // "embed=1" ativa o modo de incorporação em iframe.
-        const OLV_BASE = "https://lidar.aurtech.mx/";
-
-        function montarSrcVisualizador(urlArquivo) {
-            return OLV_BASE + "?copc=" + encodeURIComponent(urlArquivo) + "&embed=1";
-        }
-
-        function carregarVoo(indice) {
-            const voo = VOOS[indice];
-            if (!voo) return;
-
-            document.getElementById("visualizador").src = montarSrcVisualizador(voo.url);
-        }
-
-        function inicializarSeletorDeVoos() {
-            const select = document.getElementById("voo-select");
-
-            VOOS.forEach(function (voo, indice) {
-                const opcao = document.createElement("option");
-                opcao.value = indice;
-                opcao.textContent = voo.label;
-                select.appendChild(opcao);
-            });
-
-            select.addEventListener("change", function () {
-                carregarVoo(Number(select.value));
-            });
-
-            if (VOOS.length > 0) {
-                carregarVoo(0);
-            }
-        }
-
-        document.addEventListener("DOMContentLoaded", inicializarSeletorDeVoos);
-
         const TEMPO_SPLASH = 2500;
 
         window.addEventListener("load", function () {
