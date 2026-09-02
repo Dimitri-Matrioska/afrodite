@@ -18,6 +18,11 @@
             --salmao: #F0C089;
             --bege: #F5F1EB;
             --branco: #FFFFFF;
+
+            /* alturas usadas pra calcular o espaço do viewer */
+            --altura-topo: 52px;
+            --altura-titulo: 44px;
+            --altura-timeline: 104px;
         }
 
         * {
@@ -26,12 +31,20 @@
             padding: 0;
         }
 
+        html, body {
+            height: 100%;
+            overflow: hidden; /* app de tela única, sem scroll */
+        }
+
         body {
-            min-height: 100vh;
-            background: var(--branco);
+            background: var(--marinho);
             font-family: "IBM Plex Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, Helvetica, sans-serif;
             color: var(--marinho);
             -webkit-font-smoothing: antialiased;
+        }
+
+        button {
+            font-family: inherit;
         }
 
         /* =========================
@@ -85,7 +98,7 @@
         }
 
         /* =========================
-           CABEÇALHO
+           CABEÇALHO (logos)
            ========================= */
 
         #topo {
@@ -93,219 +106,252 @@
             top: 0;
             left: 0;
             right: 0;
+            height: var(--altura-topo);
             display: flex;
             align-items: center;
             justify-content: space-between;
-            padding: 18px 24px;
+            padding: 0 20px;
+            background: var(--branco);
             opacity: 0;
             transform: translateY(-10px);
             pointer-events: none;
-            transition: opacity 0.7s ease, transform 0.7s ease;
-            z-index: 10;
+            transition: opacity 0.5s ease, transform 0.5s ease;
+            z-index: 20;
         }
 
         #topo.visible {
             opacity: 1;
             transform: translateY(0);
+            pointer-events: auto;
         }
 
         #topo img {
-            height: 34px;
+            height: 26px;
             width: auto;
         }
 
-        /* =========================
-           CONTEÚDO PRINCIPAL
-           ========================= */
-
-        #app {
-            min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 90px 20px 40px;
+        /* Modo imersivo esconde o cabeçalho */
+        body.immersive #topo {
             opacity: 0;
-            transform: translateY(15px);
-            transition: opacity 0.8s ease, transform 0.8s ease;
+            transform: translateY(-100%);
+            pointer-events: none;
         }
 
-        #app.visible {
+        /* =========================
+           BARRA DE TÍTULO (compacta)
+           ========================= */
+
+        .titulo-bar {
+            position: fixed;
+            top: var(--altura-topo);
+            left: 0;
+            right: 0;
+            height: var(--altura-titulo);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 0 20px;
+            background: var(--bege);
+            border-bottom: 1px solid rgba(16, 25, 46, 0.08);
+            opacity: 0;
+            transform: translateY(-6px);
+            transition: opacity 0.5s ease 0.1s, transform 0.5s ease 0.1s;
+            z-index: 19;
+        }
+
+        .titulo-bar.visible {
             opacity: 1;
             transform: translateY(0);
         }
 
-        .container {
-            width: 100%;
-            max-width: 780px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
+        body.immersive .titulo-bar {
+            opacity: 0;
+            transform: translateY(-100%);
+            pointer-events: none;
         }
 
-        /* =========================
-           TÍTULO
-           ========================= */
+        .titulo-bar .acento {
+            width: 4px;
+            height: 18px;
+            background: var(--salmao);
+            border-radius: 3px;
+            flex-shrink: 0;
+        }
 
-        .titulo {
-            width: 100%;
-            font-size: 24px;
+        .titulo-bar h1 {
+            font-size: 14px;
             font-weight: 800;
             letter-spacing: 0.2px;
-            text-align: left;
-            margin-bottom: 6px;
+            white-space: nowrap;
         }
 
-        .subtitulo {
-            width: 100%;
-            font-size: 14px;
-            text-align: left;
+        .titulo-bar .subtitulo {
+            font-size: 12px;
             opacity: 0.6;
-            margin-bottom: 14px;
-        }
-
-        .acento {
-            width: 40px;
-            height: 4px;
-            align-self: flex-start;
-            background: var(--salmao);
-            border-radius: 4px;
-            margin-bottom: 26px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
 
         /* =========================
-           CARD DO VISUALIZADOR
+           VIEWER (ocupa o espaço restante da tela)
            ========================= */
 
-        .viewer-box {
-            width: 100%;
-            background: var(--bege);
-            border-radius: 22px;
-            padding: 28px;
-            box-shadow:
-                0 12px 32px rgba(16, 25, 46, 0.10),
-                0 2px 8px rgba(16, 25, 46, 0.06);
+        #viewer-shell {
+            position: fixed;
+            top: calc(var(--altura-topo) + var(--altura-titulo));
+            left: 0;
+            right: 0;
+            bottom: var(--altura-timeline);
+            background: #000;
+            transition: top 0.4s ease, bottom 0.4s ease;
         }
 
-        .viewer-frame-wrap {
-            width: 100%;
-            border-radius: 14px;
-            overflow: hidden;
-            border: 1.5px solid rgba(16, 25, 46, 0.12);
-            line-height: 0;
+        body.immersive #viewer-shell {
+            top: 0;
+            bottom: var(--altura-timeline);
         }
 
-        .viewer-frame-wrap iframe {
+        #viewer-shell iframe {
             display: block;
             width: 100%;
+            height: 100%;
+            border: 0;
         }
 
-        /* Info do arquivo */
-        .file-meta {
-            margin-top: 18px;
-            padding: 14px 16px;
-            background: rgba(16, 25, 46, 0.04);
-            border-radius: 10px;
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-        }
+        /* =========================
+           TIMELINE (rodapé)
+           ========================= */
 
-        .file-meta-row {
+        #timeline {
+            position: fixed;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            height: var(--altura-timeline);
             display: flex;
             align-items: center;
-            gap: 8px;
-            font-size: 12px;
-            color: var(--marinho);
-            opacity: 0.65;
+            justify-content: center;
+            gap: 14px;
+            padding: 0 20px;
+            background: var(--marinho);
+            border-top: 1px solid rgba(255, 255, 255, 0.08);
+            z-index: 21;
         }
 
-        .file-meta-row svg {
-            width: 14px;
-            height: 14px;
-            flex-shrink: 0;
-            opacity: 0.6;
+        /* No modo imersivo a timeline continua visível, flutuando por cima do viewer */
+        body.immersive #timeline {
+            background: rgba(16, 25, 46, 0.82);
+            backdrop-filter: blur(6px);
         }
 
-        .file-meta-row strong {
-            font-weight: 600;
+        .voo-btn {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 6px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            opacity: 0.55;
+            transition: opacity 0.2s ease, transform 0.2s ease;
+        }
+
+        .voo-btn:hover {
+            opacity: 0.85;
+        }
+
+        .voo-btn.ativo {
             opacity: 1;
         }
 
-        .badge-copc {
-            display: inline-flex;
-            align-items: center;
-            gap: 4px;
-            background: var(--marinho);
-            color: var(--branco);
-            padding: 3px 8px;
-            border-radius: 6px;
-            font-size: 10px;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 0.4px;
+        .voo-btn:disabled {
+            cursor: default;
+            opacity: 0.35;
         }
 
-        /* =========================
-           DESENVOLVEDOR (rodapé)
-           ========================= */
-
-        .desenvolvedor {
-            margin-top: 28px;
+        .voo-thumb {
+            width: 64px;
+            height: 64px;
+            border-radius: 10px;
+            background: var(--marinho-hover);
+            border: 2px solid transparent;
             display: flex;
-            flex-direction: column;
             align-items: center;
+            justify-content: center;
+            overflow: hidden;
         }
 
-        .desenvolvedor span {
-            font-size: 10px;
-            font-style: italic;
-            letter-spacing: 0.5px;
+        .voo-btn.ativo .voo-thumb {
+            border-color: var(--salmao);
+        }
+
+        .voo-thumb img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .voo-thumb .icone-lidar {
+            width: 26px;
+            height: 26px;
+            stroke: var(--branco);
+            opacity: 0.7;
+        }
+
+        .voo-label {
+            font-size: 11px;
+            font-weight: 600;
+            color: var(--branco);
+            letter-spacing: 0.3px;
+        }
+
+        .voo-tag {
+            font-size: 9px;
             text-transform: uppercase;
-            opacity: 0.45;
-            margin-bottom: 8px;
+            letter-spacing: 0.5px;
+            color: var(--salmao);
+            opacity: 0.9;
         }
 
-        .desenvolvedor img {
-            width: 84px;
-            height: auto;
-            opacity: 0.85;
+        /* Botão de sair do modo imersivo */
+        #btn-restaurar {
+            position: fixed;
+            top: 14px;
+            right: 14px;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            border: none;
+            background: rgba(16, 25, 46, 0.75);
+            color: var(--branco);
+            font-size: 16px;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 22;
+        }
+
+        body.immersive #btn-restaurar {
+            display: flex;
         }
 
         /* =========================
            RESPONSIVIDADE
            ========================= */
 
-        @media (max-height: 700px) {
-            #app {
-                padding-top: 80px;
-                padding-bottom: 20px;
-            }
-            .subtitulo {
-                margin-bottom: 22px;
-            }
-            .desenvolvedor {
-                margin-top: 20px;
-            }
-        }
-
-        @media (min-width: 600px) {
-            #app {
-                padding: 100px 40px 40px;
-            }
-            #topo {
-                padding: 26px 40px;
-            }
-            #topo img {
-                height: 40px;
-            }
-            .viewer-box {
-                padding: 32px;
-            }
-        }
-
         @media (max-width: 480px) {
-            .viewer-box {
-                padding: 20px;
+            .voo-thumb {
+                width: 48px;
+                height: 48px;
+            }
+            #timeline {
+                gap: 8px;
+                padding: 0 8px;
+            }
+            .titulo-bar .subtitulo {
+                display: none;
             }
         }
     </style>
@@ -325,7 +371,6 @@
         </div>
     </div>
 
-
     <!-- =========================
          CABEÇALHO
          ========================= -->
@@ -335,83 +380,220 @@
         <img src="Imagens_Logos/logo_AFRY.png" alt="AFRY">
     </header>
 
-
     <!-- =========================
-         APLICAÇÃO
+         BARRA DE TÍTULO
          ========================= -->
 
-    <main id="app">
-        <div class="container">
+    <div class="titulo-bar">
+        <span class="acento"></span>
+        <h1>NUVEM DE PONTOS LiDAR</h1>
+        <span class="subtitulo">Rodovia Fernão Dias — levantamento aéreo semanal</span>
+    </div>
 
-            <h1 class="titulo">NUVEM DE PONTOS LiDAR</h1>
-            <p class="subtitulo">Visualização 3D do levantamento aéreo — Rodovia Fernão Dias</p>
-            <div class="acento"></div>
+    <!-- =========================
+         VIEWER
+         ========================= -->
 
-            <section class="viewer-box">
+    <div id="viewer-shell">
+        <iframe
+            id="lidar-viewer"
+            scrolling="no"
+            title="OpenLiDARViewer"
+            frameborder="0"
+            allow="fullscreen"
+            src=""
+        ></iframe>
+    </div>
 
-                <!-- Visualizador -->
-                <div class="viewer-frame-wrap">
-                    <iframe
-                        id="lidar-viewer"
-                        scrolling="no"
-                        title="OpenLiDARViewer"
-                        width="100%"
-                        height="680"
-                        frameborder="0"
-                        allow="fullscreen"
-                        loading="lazy"
-                        src="https://olv-afrodite.matrioska-dev.workers.dev/?copc=https://pub-ff165ed52c304df59d57ae2f21220e3c.r2.dev/Rodovia-Ferno-Dias-8-11-2026-georeferenced_model.copc.laz&embed=1"
-                    ></iframe>
-                </div>
+    <!-- Botão pra sair do modo imersivo -->
+    <button id="btn-restaurar" title="Sair da tela cheia">✕</button>
 
-                <!-- Metadados do arquivo -->
-                <div class="file-meta">
-                    <div class="file-meta-row">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"/><polyline points="13 2 13 9 20 9"/></svg>
-                        <span><strong>Arquivo:</strong> Rodovia-Ferno-Dias-8-11-2026-georeferenced_model.copc.laz</span>
-                        <span class="badge-copc">COPC</span>
-                    </div>
-                    <div class="file-meta-row">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-                        <span><strong>Data do levantamento:</strong> 08/11/2026</span>
-                    </div>
-                    <div class="file-meta-row">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
-                        <span><strong>Local:</strong> Rodovia Fernão Dias — Georreferenciado</span>
-                    </div>
-                    <div class="file-meta-row">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
-                        <span><strong>Visualizador:</strong> OpenLiDARViewer (WebGPU / WebGL2)</span>
-                    </div>
-                </div>
+    <!-- =========================
+         TIMELINE DE VOOS
+         ========================= -->
 
-            </section>
-
-            <div class="desenvolvedor">
-                <span>Desenvolvido por</span>
-                <img src="Imagens_Logos/logo_MATRIOSKA.png" alt="MATRIOSKA Desenvolvimento e Soluções em Planejamento">
-            </div>
-
-        </div>
-    </main>
-
+    <nav id="timeline"></nav>
 
     <script>
         const TEMPO_SPLASH = 2500;
 
+        // ======================================================
+        // CONFIGURAÇÃO — ajuste aqui se o padrão de nome, o dia
+        // da semana do voo, o bucket ou a quantidade de semanas
+        // exibidas na timeline mudar no futuro.
+        // ======================================================
+        const CONFIG = {
+            baseUrlArquivos: "https://pub-ff165ed52c304df59d57ae2f21220e3c.r2.dev",
+            prefixoArquivo: "voo-",
+            sufixoArquivo: ".copc.laz",
+            viewerBase: "https://olv-afrodite.matrioska-dev.workers.dev/?embed=1&copc=",
+            semanasExibidas: 4,
+            diaDaSemanaAlvo: 3, // 0=domingo, 1=segunda, 2=terça, 3=quarta, ...
+            // ordem de tentativa de dias ao redor do dia-alvo, caso o voo
+            // programado atrase/adiante (ex: por causa de feriado)
+            offsetsBusca: [0, 1, -1, 2, -2, 3, -3],
+            gifBuscando: "Imagens_Logos/gif_buscando.gif",
+        };
+
+        function pad(n) {
+            return String(n).padStart(2, "0");
+        }
+
+        function formatarDataArquivo(d) {
+            return `${pad(d.getDate())}-${pad(d.getMonth() + 1)}-${d.getFullYear()}`;
+        }
+
+        function formatarDataLabel(d) {
+            return `${pad(d.getDate())}/${pad(d.getMonth() + 1)}`;
+        }
+
+        function nomeArquivoPara(d) {
+            return `${CONFIG.prefixoArquivo}${formatarDataArquivo(d)}${CONFIG.sufixoArquivo}`;
+        }
+
+        function urlArquivoPara(d) {
+            return `${CONFIG.baseUrlArquivos}/${nomeArquivoPara(d)}`;
+        }
+
+        // Encontra o dia-alvo (ex: quarta-feira) mais recente,
+        // menor ou igual à data de referência.
+        function diaAlvoMaisRecente(referencia) {
+            const d = new Date(referencia);
+            d.setHours(0, 0, 0, 0);
+            const diaAtual = d.getDay();
+            const diferenca = (diaAtual - CONFIG.diaDaSemanaAlvo + 7) % 7;
+            d.setDate(d.getDate() - diferenca);
+            return d;
+        }
+
+        // Faz um HEAD request pra checar se o arquivo existe no bucket,
+        // sem baixar o conteúdo inteiro.
+        // OBS: exige que o bucket R2 tenha CORS liberado para o domínio
+        // do GitHub Pages (o mesmo CORS já necessário pro OpenLiDARViewer
+        // ler o .laz por range-request deve cobrir isso).
+        async function arquivoExiste(url) {
+            try {
+                const res = await fetch(url, { method: "HEAD", mode: "cors" });
+                return res.ok;
+            } catch (e) {
+                return false;
+            }
+        }
+
+        // Procura, dentro da semana ancorada em `diaAlvo`, um arquivo
+        // válido — tentando primeiro o dia-alvo e depois os dias vizinhos.
+        async function buscarVooDaSemana(diaAlvo) {
+            for (const offset of CONFIG.offsetsBusca) {
+                const candidata = new Date(diaAlvo);
+                candidata.setDate(candidata.getDate() + offset);
+                const url = urlArquivoPara(candidata);
+                if (await arquivoExiste(url)) {
+                    return { data: candidata, url };
+                }
+            }
+            return null; // nenhum voo encontrado nessa semana (ex: feriado)
+        }
+
+        function iconeLidarSvg() {
+            return `<svg class="icone-lidar" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M12 2v4"/><path d="M12 18v4"/><path d="M4.93 4.93l2.83 2.83"/>
+                <path d="M16.24 16.24l2.83 2.83"/><path d="M2 12h4"/><path d="M18 12h4"/>
+                <path d="M4.93 19.07l2.83-2.83"/><path d="M16.24 7.76l2.83-2.83"/>
+                <circle cx="12" cy="12" r="3"/>
+            </svg>`;
+        }
+
+        function montarBotaoVoo(resultado, indice, ehSemanaAtual) {
+            const btn = document.createElement("button");
+            btn.className = "voo-btn";
+            btn.type = "button";
+
+            const thumb = document.createElement("div");
+            thumb.className = "voo-thumb";
+
+            const label = document.createElement("span");
+            label.className = "voo-label";
+
+            if (resultado) {
+                thumb.innerHTML = iconeLidarSvg();
+                label.textContent = formatarDataLabel(resultado.data);
+                btn.addEventListener("click", () => selecionarVoo(btn, resultado.url));
+            } else {
+                // Sem arquivo encontrado pra essa semana ainda
+                thumb.innerHTML = `<img src="${CONFIG.gifBuscando}" alt="Procurando voo">`;
+                label.textContent = ehSemanaAtual ? "Buscando..." : "Sem voo";
+                btn.disabled = true;
+            }
+
+            btn.appendChild(thumb);
+            btn.appendChild(label);
+            return btn;
+        }
+
+        function selecionarVoo(btnClicado, urlArquivoLaz) {
+            document.querySelectorAll(".voo-btn").forEach((b) => b.classList.remove("ativo"));
+            btnClicado.classList.add("ativo");
+
+            const iframe = document.getElementById("lidar-viewer");
+            iframe.src = CONFIG.viewerBase + encodeURIComponent(urlArquivoLaz);
+
+            document.body.classList.add("immersive");
+        }
+
+        async function montarTimeline() {
+            const nav = document.getElementById("timeline");
+            const hoje = new Date();
+            const diaAlvoAtual = diaAlvoMaisRecente(hoje);
+
+            // gera as âncoras das últimas N semanas (0 = semana atual)
+            const ancoras = [];
+            for (let i = 0; i < CONFIG.semanasExibidas; i++) {
+                const ancora = new Date(diaAlvoAtual);
+                ancora.setDate(ancora.getDate() - 7 * i);
+                ancoras.push(ancora);
+            }
+
+            const resultados = await Promise.all(ancoras.map(buscarVooDaSemana));
+
+            nav.innerHTML = "";
+            // exibe da mais antiga (esquerda) pra mais recente (direita)
+            resultados
+                .slice()
+                .reverse()
+                .forEach((resultado, idxReverso) => {
+                    const indiceOriginal = resultados.length - 1 - idxReverso;
+                    const btn = montarBotaoVoo(resultado, indiceOriginal, indiceOriginal === 0);
+                    nav.appendChild(btn);
+                });
+
+            // carrega automaticamente o voo mais recente disponível (sem
+            // entrar em modo imersivo — isso só acontece com clique manual)
+            const maisRecenteDisponivel = resultados.find((r) => r !== null);
+            if (maisRecenteDisponivel) {
+                const iframe = document.getElementById("lidar-viewer");
+                iframe.src = CONFIG.viewerBase + encodeURIComponent(maisRecenteDisponivel.url);
+                const idx = resultados.indexOf(maisRecenteDisponivel);
+                const botoes = nav.querySelectorAll(".voo-btn");
+                const botaoCorrespondente = botoes[resultados.length - 1 - idx];
+                if (botaoCorrespondente) botaoCorrespondente.classList.add("ativo");
+            }
+        }
+
+        document.getElementById("btn-restaurar").addEventListener("click", () => {
+            document.body.classList.remove("immersive");
+        });
+
         window.addEventListener("load", function () {
+            montarTimeline();
+
             setTimeout(function () {
                 const loading = document.getElementById("loading");
-                const app = document.getElementById("app");
                 const topo = document.getElementById("topo");
+                const tituloBar = document.querySelector(".titulo-bar");
 
                 loading.classList.add("hidden");
                 topo.classList.add("visible");
-
-                setTimeout(function () {
-                    app.classList.add("visible");
-                }, 250);
-
+                tituloBar.classList.add("visible");
             }, TEMPO_SPLASH);
         });
     </script>
