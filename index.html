@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -424,7 +423,8 @@
 
     <!-- VIEWER -->
     <div id="viewer-shell">
-        <div id="iframe-loader">
+        <!-- COMEÇA ESCONDIDO (class hidden) -->
+        <div id="iframe-loader" class="hidden">
             <div class="spinner"></div>
             <p>Carregando nuvem de pontos...</p>
         </div>
@@ -450,13 +450,11 @@
             baseUrlArquivos: "https://pub-ff165ed52c304df59d57ae2f21220e3c.r2.dev",
             prefixoArquivo: "voo-",
             sufixoArquivo: ".copc.laz",
-            // REMOVIDO embed=1 — agora mostra a interface completa com ferramentas
+            // embed=1 REMOVIDO — mostra interface completa com ferramentas
             viewerBase: "https://olv-afrodite.matrioska-dev.workers.dev/?copc=",
             semanasExibidas: 4,
             diaDaSemanaAlvo: 3,
             offsetsBusca: [0, 1, -1, 2, -2, 3, -3],
-            // Se quiser iniciar em uma ferramenta específica, descomente e ajuste:
-            // toolInicial: "measure",  // exemplo: "measure", "clip", "profile", etc.
         };
 
         function pad(n) {
@@ -545,12 +543,7 @@
         }
 
         function montarUrlViewer(urlArquivoLaz) {
-            let url = CONFIG.viewerBase + encodeURIComponent(urlArquivoLaz);
-            // Se quiser forçar uma ferramenta inicial, adicione aqui
-            // if (CONFIG.toolInicial) {
-            //     url += "&tool=" + CONFIG.toolInicial;
-            // }
-            return url;
+            return CONFIG.viewerBase + encodeURIComponent(urlArquivoLaz);
         }
 
         function mostrarLoaderIframe() {
@@ -588,18 +581,11 @@
 
             nav.innerHTML = "";
 
-            // Cria os botões na ordem correta: mais antigo -> mais recente
-            // resultados[0] = semana atual, resultados[3] = mais antiga
-            // Queremos exibir: [mais antiga, ..., semana atual]
-            const botoesData = [];
+            // Cria botões: mais antigo (esquerda) -> mais recente (direita)
             for (let i = resultados.length - 1; i >= 0; i--) {
                 const ehSemanaAtual = (i === 0);
                 const btn = montarBotaoVoo(resultados[i], ehSemanaAtual);
-                // Guarda referência ao resultado pra marcar ativo depois
-                btn._resultado = resultados[i];
-                btn._indiceOriginal = i;
                 nav.appendChild(btn);
-                botoesData.push({ btn, resultado: resultados[i], indice: i });
             }
 
             // Carrega automaticamente o voo mais recente disponível
@@ -610,9 +596,6 @@
                 iframe.src = montarUrlViewer(maisRecente.url);
 
                 // Marca o botão correto como ativo
-                // maisRecenteIdx no array original = 0 é semana atual
-                // No DOM, a ordem é invertida, então o índice no DOM é:
-                // DOM index = (resultados.length - 1) - maisRecenteIdx
                 const domIdx = (resultados.length - 1) - maisRecenteIdx;
                 const botoes = nav.querySelectorAll(".voo-btn");
                 if (botoes[domIdx]) {
@@ -623,6 +606,11 @@
 
         document.getElementById("btn-restaurar").addEventListener("click", () => {
             document.body.classList.remove("immersive");
+        });
+
+        // Esconde o loader do iframe quando ele terminar de carregar
+        document.getElementById("lidar-viewer").addEventListener("load", () => {
+            esconderLoaderIframe();
         });
 
         window.addEventListener("load", function () {
