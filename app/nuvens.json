@@ -1,0 +1,9 @@
+{
+	"nuvens": [
+		{
+			"nome": "Exemplo — Leão de Takanawa (demo local)",
+			"url": "./nuvens/exemplo-leao/cloud.js",
+			"descricao": "Nuvem de demonstração incluída na página. Substitua esta lista pelas suas nuvens."
+		}
+	]
+}
