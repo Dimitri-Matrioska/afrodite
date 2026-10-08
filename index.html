@@ -450,8 +450,7 @@
             baseUrlArquivos: "https://pub-ff165ed52c304df59d57ae2f21220e3c.r2.dev",
             prefixoArquivo: "voo-",
             sufixoArquivo: ".copc.laz",
-            // embed=1 REMOVIDO — mostra interface completa com ferramentas
-            viewerBase: "https://olv-afrodite.matrioska-dev.workers.dev/?copc=",
+            viewerBase: "app/index.html",
             semanasExibidas: 4,
             diaDaSemanaAlvo: 3,
             offsetsBusca: [0, 1, -1, 2, -2, 3, -3],
@@ -543,7 +542,9 @@
         }
 
         function montarUrlViewer(urlArquivoLaz) {
-            return CONFIG.viewerBase + encodeURIComponent(urlArquivoLaz);
+            const url = new URL(CONFIG.viewerBase, document.baseURI);
+            url.searchParams.set("copc", urlArquivoLaz);
+            return url.toString();
         }
 
         function mostrarLoaderIframe() {

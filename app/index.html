@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+	<title>Visualizador de Nuvem de Pontos</title>
+
+	<link rel="stylesheet" type="text/css" href="./potree/potree.css">
+	<link rel="stylesheet" type="text/css" href="./libs/jquery-ui/jquery-ui.min.css">
+	<link rel="stylesheet" type="text/css" href="./libs/openlayers3/ol.css">
+	<link rel="stylesheet" type="text/css" href="./libs/spectrum/spectrum.css">
+	<link rel="stylesheet" type="text/css" href="./libs/jstree/themes/mixed/style.css">
+
+	<style>
+		html, body { margin: 0; padding: 0; height: 100%; overflow: hidden; font-family: "Segoe UI", Arial, sans-serif; }
+
+		/* ---------- painel de arquivos ---------- */
+		#painel-arquivos {
+			position: absolute; top: 12px; right: 12px; z-index: 1000;
+			width: 300px; max-height: calc(100% - 24px);
+			background: rgba(20, 24, 30, 0.92); color: #e8eaed;
+			border-radius: 10px; box-shadow: 0 4px 18px rgba(0,0,0,.45);
+			display: flex; flex-direction: column; overflow: hidden;
+			backdrop-filter: blur(4px);
+		}
+		#painel-arquivos .cabecalho {
+			padding: 12px 14px 8px 14px; border-bottom: 1px solid rgba(255,255,255,.08);
+		}
+		#painel-arquivos h1 { font-size: 15px; margin: 0 0 2px 0; font-weight: 600; }
+		#painel-arquivos .sub { font-size: 11px; color: #9aa0a6; }
+		#busca {
+			margin: 10px 14px; padding: 7px 10px; width: calc(100% - 28px);
+			border: 1px solid rgba(255,255,255,.15); border-radius: 6px;
+			background: rgba(255,255,255,.06); color: #e8eaed; outline: none; font-size: 13px;
+		}
+		#busca::placeholder { color: #80868b; }
+		#lista-nuvens { overflow-y: auto; padding: 0 8px 10px 8px; flex: 1; }
+		.item-nuvem {
+			padding: 9px 10px; margin: 4px 0; border-radius: 7px; cursor: pointer;
+			border: 1px solid transparent; transition: background .15s;
+		}
+		.item-nuvem:hover { background: rgba(255,255,255,.07); }
+		.item-nuvem.ativo { background: rgba(66,133,244,.25); border-color: rgba(66,133,244,.6); }
+		.item-nuvem .nome { font-size: 13px; font-weight: 500; }
+		.item-nuvem .detalhe { font-size: 11px; color: #9aa0a6; margin-top: 2px; word-break: break-all; }
+		#status-lista { padding: 14px; font-size: 12px; color: #9aa0a6; text-align: center; }
+
+		/* ---------- barra de ferramentas rápida ---------- */
+		#barra-rapida {
+			position: absolute; top: 12px; right: 326px; z-index: 1000;
+			display: flex; gap: 6px;
+		}
+		#barra-rapida button {
+			background: rgba(20,24,30,.92); color: #e8eaed; border: 1px solid rgba(255,255,255,.12);
+			border-radius: 7px; padding: 7px 12px; font-size: 12px; cursor: pointer;
+		}
+		#barra-rapida button:hover { background: rgba(66,133,244,.35); }
+
+		/* ---------- status de carregamento ---------- */
+		#carregando {
+			position: absolute; bottom: 18px; left: 50%; transform: translateX(-50%);
+			z-index: 1000; background: rgba(20,24,30,.92); color: #e8eaed;
+			padding: 8px 18px; border-radius: 20px; font-size: 13px; display: none;
+		}
+		#erro {
+			position: absolute; bottom: 18px; left: 50%; transform: translateX(-50%);
+			z-index: 1001; background: rgba(160,30,30,.95); color: #fff;
+			padding: 10px 18px; border-radius: 8px; font-size: 13px; display: none; max-width: 70%;
+		}
+	</style>
+</head>
+<body>
+
+	<script src="./libs/jquery/jquery-3.1.1.min.js"></script>
+	<script src="./libs/spectrum/spectrum.js"></script>
+	<script src="./libs/jquery-ui/jquery-ui.min.js"></script>
+	<script src="./libs/other/BinaryHeap.js"></script>
+	<script src="./libs/tween/tween.min.js"></script>
+	<script src="./libs/d3/d3.js"></script>
+	<script src="./libs/proj4/proj4.js"></script>
+	<script src="./libs/openlayers3/ol.js"></script>
+	<script src="./libs/i18next/i18next.js"></script>
+	<script src="./libs/jstree/jstree.js"></script>
+	<script src="./potree/potree.js"></script>
+
+	<!-- ================= PAINEL DE ARQUIVOS ================= -->
+	<div id="painel-arquivos">
+		<div class="cabecalho">
+			<h1>Nuvens de Pontos</h1>
+			<div class="sub">Selecione um arquivo para visualizar</div>
+		</div>
+		<input id="busca" type="text" placeholder="Buscar nuvem...">
+		<div id="lista-nuvens"><div id="status-lista">Carregando lista...</div></div>
+	</div>
+
+	<!-- ================= BARRA RÁPIDA ================= -->
+	<div id="barra-rapida">
+		<button id="btn-enquadrar" title="Enquadrar a nuvem inteira na tela">⤢ Enquadrar</button>
+		<button id="btn-elevacao" title="Colorir pontos por cota/elevação">▲ Elevação</button>
+		<button id="btn-rgb" title="Colorir pelas cores originais (RGB)">🎨 RGB</button>
+		<button id="btn-limpar" title="Remover todas as medições">✕ Limpar medições</button>
+	</div>
+
+	<div id="carregando">Carregando nuvem de pontos…</div>
+	<div id="erro"></div>
+
+	<!-- ================= ÁREA DO VISUALIZADOR ================= -->
+	<div class="potree_container" style="position: absolute; width: 100%; height: 100%; left: 0; top: 0;">
+		<div id="potree_render_area" style="background-image: url('./potree/resources/images/background.jpg');"></div>
+		<div id="potree_sidebar_container"></div>
+	</div>
+
+	<script type="module">
+	import * as THREE from "./libs/three.js/build/three.module.js";
+
+	/* ============================================================
+	 *  CONFIGURAÇÃO — EDITE AQUI
+	 * ============================================================
+	 *  MODO 1 (padrão): a página lê o arquivo "nuvens.json" no mesmo
+	 *  servidor. Basta manter esse JSON atualizado com as suas nuvens:
+	 *
+	 *     { "nuvens": [ { "nome": "Talhão 1", "url": "https://seu-servidor/talhao1/metadata.json" } ] }
+	 *
+	 *  Formatos aceitos na URL:
+	 *     • metadata.json  → formato Potree 2.0 (PotreeConverter 2.x)
+	 *     • cloud.js       → formato Potree 1.x (PotreeConverter 1.x)
+	 *     • ept.json       → Entwine Point Tiles
+	 *     • *.copc.laz     → COPC (LAZ otimizado para nuvem)
+	 *  A página externa pode passar ?copc=<URL codificada> para abrir um COPC automaticamente.
+	 *
+	 *  MODO 2 (Cloudflare R2): configure o endpoint do Worker em
+	 *  r2.listUrl e o endereço público do bucket em r2.publicBaseUrl.
+	 *  O Worker precisa estar vinculado ao bucket (veja worker-r2-list.js).
+	 *
+	 *  MODO 3 (Firebase Storage): preencha firebase.bucket e
+	 *  firebase.prefix.
+	 * ============================================================ */
+	const CONFIG = {
+		manifestUrl: "./nuvens.json",     // MODO 1
+		r2: {
+			listUrl: "https://listar-nuvens-potree.seu-subdominio.workers.dev/api/nuvens",
+			publicBaseUrl: "https://pub-ff165ed52c304df59d57ae2f21220e3c.r2.dev"
+		},
+		firebase: {                        // MODO 3 (deixe bucket vazio para desativar)
+			bucket: "",                    // ex.: "meu-projeto.appspot.com"
+			prefix: "nuvens/"              // pasta dentro do bucket
+		}
+	};
+
+	/* ------------------- inicialização do viewer ------------------- */
+	const renderArea = document.getElementById("potree_render_area");
+	window.viewer = new Potree.Viewer(renderArea);
+
+	viewer.setEDLEnabled(true);
+	viewer.setFOV(60);
+	viewer.setPointBudget(1_000_000);
+	viewer.setDescription("");
+	viewer.loadSettingsFromURL();
+
+	viewer.loadGUI(() => {
+		viewer.setLanguage("pt");
+		$("#menu_appearance").next().show();
+		$("#menu_tools").next().show();
+	});
+
+	/* ------------------- carregamento da lista ------------------- */
+	const elLista  = document.getElementById("lista-nuvens");
+	const elStatus = document.getElementById("status-lista");
+	const elCarregando = document.getElementById("carregando");
+	const elErro = document.getElementById("erro");
+
+	function mostrarErro(msg) {
+		elErro.textContent = msg;
+		elErro.style.display = "block";
+		setTimeout(() => elErro.style.display = "none", 9000);
+	}
+
+	async function listarNuvens() {
+		// MODO 2 — Cloudflare R2 listado por um Worker vinculado ao bucket
+		if (CONFIG.r2.listUrl) {
+			const nuvens = [];
+			let cursor = null;
+
+			do {
+				const api = new URL(CONFIG.r2.listUrl, window.location.href);
+				if (cursor) api.searchParams.set("cursor", cursor);
+				const resp = await fetch(api);
+				if (!resp.ok) {
+					const erro = resp.headers.get("content-type")?.includes("application/json")
+						? await resp.json()
+						: null;
+					throw new Error(erro?.error || "Falha ao listar bucket Cloudflare R2 (HTTP " + resp.status + ")");
+				}
+
+				const dados = await resp.json();
+				if (!Array.isArray(dados.objects)) {
+					throw new Error("Resposta inválida do Worker: era esperada uma lista em 'objects'.");
+				}
+
+				for (const objeto of dados.objects) {
+					if (typeof objeto.key !== "string" || !objeto.key.toLowerCase().endsWith(".copc.laz")) continue;
+					const nomeArquivo = objeto.key.split("/").pop();
+					const caminho = objeto.key.split("/").map(encodeURIComponent).join("/");
+					nuvens.push({
+						nome: nomeArquivo.replace(/\.copc\.laz$/i, ""),
+						url: `${CONFIG.r2.publicBaseUrl.replace(/\/$/, "")}/${caminho}`,
+						descricao: (objeto.size / 1024 / 1024).toFixed(1) + " MB — Cloudflare R2"
+					});
+				}
+
+				if (dados.truncated && !dados.nextCursor) {
+					throw new Error("O Worker informou mais arquivos, mas não retornou o cursor da próxima página.");
+				}
+				cursor = dados.truncated ? dados.nextCursor : null;
+			} while (cursor);
+
+			return nuvens.sort((a, b) => a.nome.localeCompare(b.nome));
+		}
+
+		// MODO 3 — Firebase Storage
+		if (CONFIG.firebase.bucket) {
+			const b = CONFIG.firebase.bucket;
+			const api = `https://firebasestorage.googleapis.com/v0/b/${encodeURIComponent(b)}/o?prefix=${encodeURIComponent(CONFIG.firebase.prefix)}&maxResults=1000`;
+			const resp = await fetch(api);
+			if (!resp.ok) throw new Error("Falha ao listar bucket Firebase (HTTP " + resp.status + ")");
+			const dados = await resp.json();
+			const validos = (dados.items || []).filter(it =>
+				it.name.endsWith("metadata.json") || it.name.endsWith("cloud.js") ||
+				it.name.endsWith("ept.json") || it.name.endsWith(".copc.laz"));
+			return validos.map(it => ({
+				nome: it.name.split("/").pop().replace(/\.(json|laz)$/i, ""),
+				url: `https://firebasestorage.googleapis.com/v0/b/${encodeURIComponent(b)}/o/${encodeURIComponent(it.name)}?alt=media`,
+				descricao: (it.size / 1024).toFixed(0) + " KB — Firebase Storage"
+			}));
+		}
+		// MODO 1 — manifesto nuvens.json
+		const resp = await fetch(CONFIG.manifestUrl, { cache: "no-store" });
+		if (!resp.ok) throw new Error("Não foi possível ler " + CONFIG.manifestUrl + " (HTTP " + resp.status + ")");
+		const dados = await resp.json();
+		return dados.nuvens || [];
+	}
+
+	function renderizarLista(nuvens, urlSelecionada = null) {
+		elLista.innerHTML = "";
+		if (!nuvens.length) {
+			elLista.innerHTML = '<div id="status-lista">Nenhuma nuvem encontrada nos arquivos configurados.</div>';
+			return;
+		}
+		for (const nuvem of nuvens) {
+			const item = document.createElement("div");
+			item.className = "item-nuvem";
+			item.innerHTML = `<div class="nome"></div><div class="detalhe"></div>`;
+			item.querySelector(".nome").textContent = nuvem.nome;
+			item.querySelector(".detalhe").textContent = nuvem.descricao || nuvem.url;
+			if (nuvem.url === urlSelecionada) item.classList.add("ativo");
+			item.addEventListener("click", () => {
+				document.querySelectorAll(".item-nuvem").forEach(e => e.classList.remove("ativo"));
+				item.classList.add("ativo");
+				carregarNuvem(nuvem);
+			});
+			elLista.appendChild(item);
+		}
+	}
+
+	/* ------------------- carregamento da nuvem ------------------- */
+	function carregarNuvem(nuvem) {
+		elCarregando.style.display = "block";
+
+		// remove nuvens anteriores
+		viewer.scene.pointclouds.forEach(pc => viewer.scene.scene.remove(pc));
+		viewer.scene.pointclouds.length = 0;
+
+		Potree.loadPointCloud(nuvem.url, nuvem.nome, e => {
+			elCarregando.style.display = "none";
+			const pc = e.pointcloud;
+			viewer.scene.addPointCloud(pc);
+
+			const material = pc.material;
+			material.pointSizeType = Potree.PointSizeType.ADAPTIVE;
+			material.size = 1;
+
+			// define a faixa de elevação conforme a extensão real da nuvem
+			let faixa = null;
+			if (pc.pcoGeometry && pc.pcoGeometry.tightBoundingBox) {
+				const t = pc.pcoGeometry.tightBoundingBox;
+				faixa = [t.min.z, t.max.z];
+			} else if (pc.getAttribute && pc.getAttribute("position") && pc.getAttribute("position").range) {
+				faixa = [pc.getAttribute("position").range[0][2], pc.getAttribute("position").range[1][2]];
+			} else if (pc.boundingBox) {
+				faixa = [pc.boundingBox.min.z, pc.boundingBox.max.z];
+			}
+			if (faixa) material.elevationRange = faixa;
+
+			viewer.fitToScreen(0.6);
+		});
+	}
+
+	/* ------------------- busca ------------------- */
+	let cacheNuvens = [];
+	document.getElementById("busca").addEventListener("input", ev => {
+		const termo = ev.target.value.toLowerCase();
+		renderizarLista(cacheNuvens.filter(n => n.nome.toLowerCase().includes(termo)));
+	});
+
+	/* ------------------- barra rápida ------------------- */
+	document.getElementById("btn-enquadrar").addEventListener("click", () => viewer.fitToScreen(0.6));
+
+	document.getElementById("btn-elevacao").addEventListener("click", () => {
+		viewer.scene.pointclouds.forEach(pc => {
+			pc.material.gradient = Potree.Gradients.RAINBOW;
+			pc.material.activeAttributeName = "elevation";
+		});
+	});
+
+	document.getElementById("btn-rgb").addEventListener("click", () => {
+		viewer.scene.pointclouds.forEach(pc => {
+			pc.material.activeAttributeName = "rgba";
+		});
+	});
+
+	document.getElementById("btn-limpar").addEventListener("click", () => {
+		viewer.scene.removeAllMeasurements();
+	});
+
+	/* ------------------- início ------------------- */
+	const parametros = new URLSearchParams(window.location.search);
+	const urlCopc = parametros.get("copc");
+	let nuvemSelecionada = null;
+
+	if (urlCopc) {
+		let url;
+		try {
+			url = new URL(urlCopc, window.location.href);
+		} catch (err) {
+			mostrarErro("A URL informada no parâmetro 'copc' é inválida.");
+			console.error(err);
+		}
+
+		if (url && (!["http:", "https:"].includes(url.protocol) || !url.pathname.toLowerCase().endsWith(".copc.laz"))) {
+			mostrarErro("O parâmetro 'copc' precisa apontar para um arquivo .copc.laz via HTTP ou HTTPS.");
+		} else if (url) {
+			const nomeArquivo = url.pathname.split("/").pop() || "Nuvem COPC";
+			nuvemSelecionada = {
+				nome: nomeArquivo.replace(/\.copc\.laz$/i, ""),
+				url: url.href,
+				descricao: "Selecionada pela linha do tempo"
+			};
+			cacheNuvens = [nuvemSelecionada];
+			renderizarLista(cacheNuvens, nuvemSelecionada.url);
+			carregarNuvem(nuvemSelecionada);
+		}
+	}
+
+	listarNuvens()
+		.then(nuvens => {
+			cacheNuvens = nuvemSelecionada ? [nuvemSelecionada, ...nuvens] : nuvens;
+			renderizarLista(cacheNuvens, nuvemSelecionada?.url || null);
+		})
+		.catch(err => {
+			elStatus.textContent = "Erro ao carregar a lista de nuvens.";
+			mostrarErro(err.message + " — se a página e os arquivos estão em domínios diferentes, habilite CORS no servidor.");
+			console.error(err);
+		});
+
+	</script>
+</body>
+</html>
