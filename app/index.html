@@ -106,7 +106,19 @@
 			border: 1px solid rgba(240,192,137,.55); border-radius: 10px;
 			background: rgba(16,25,46,.94); color: #f5f1eb; font-size: 13px;
 			text-align: center; box-shadow: 0 4px 18px rgba(0,0,0,.3);
-			display: none; pointer-events: none;
+			display: none; pointer-events: auto; touch-action: manipulation;
+		}
+		.elevation-radius-button {
+			pointer-events: auto !important;
+			transition: transform .12s ease, background .12s ease, border-color .12s ease;
+		}
+		.elevation-radius-button:hover {
+			transform: translateY(-1px);
+		}
+		@keyframes pulse {
+			0% { transform: scale(0.8); opacity: 0.7; }
+			50% { transform: scale(1.1); opacity: 1; }
+			100% { transform: scale(0.8); opacity: 0.7; }
 		}
 	</style>
 </head>
@@ -204,6 +216,8 @@
 	let elevationSampleRing = null;
 	let elevationPreviewPointer = null;
 	let elevationPreviewTimer = null;
+	const ELEVATION_SAMPLE_RADII = [2, 5, 10, 15, 20];
+	let currentElevationSampleRadius = 10;
 	const elevationSampleLabels = new Set();
 	let activeElevationPalette = null;
 	let activeElevationProfile = null;
@@ -443,6 +457,40 @@
 		}
 	}
 
+	function renderElevationRadiusSelector(message = "Selecione o raio da área de amostragem.") {
+		const buttons = ELEVATION_SAMPLE_RADII.map(radius => {
+			const active = radius === currentElevationSampleRadius ? "active" : "";
+			return `<button type="button" class="elevation-radius-button ${active}" data-radius="${radius}" style="background:${active ? '#ff5a5f' : 'rgba(255,255,255,0.08)'}; color:#fff; border:1px solid rgba(255,255,255,0.15); border-radius:999px; padding:4px 8px; font-size:11px; cursor:pointer;">${radius}m</button>`;
+		}).join("");
+		elevationSampleResult.innerHTML = `
+			<div style="display:flex; gap:6px; justify-content:center; flex-wrap:wrap; margin-bottom:8px;">${buttons}</div>
+			<div style="font-weight:600; letter-spacing:0.02em;">${message}</div>
+		`;
+		elevationSampleResult.querySelectorAll(".elevation-radius-button").forEach(button => {
+			button.addEventListener("pointerdown", event => {
+				event.preventDefault();
+				event.stopPropagation();
+			});
+			button.addEventListener("click", event => {
+				event.preventDefault();
+				event.stopPropagation();
+				currentElevationSampleRadius = Number(button.dataset.radius);
+				renderElevationRadiusSelector(`Raio ativo: ${currentElevationSampleRadius} m`);
+				if (elevationSampleRing) {
+					const ringPoints = [];
+					for (let i = 0; i <= 48; i++) {
+						const angle = (i / 48) * Math.PI * 2;
+						ringPoints.push(new THREE.Vector3(Math.cos(angle) * currentElevationSampleRadius, Math.sin(angle) * currentElevationSampleRadius, 0));
+					}
+					elevationSampleRing.geometry.dispose();
+					elevationSampleRing.geometry = new THREE.BufferGeometry().setFromPoints(ringPoints);
+					elevationSampleRing.visible = true;
+				}
+			});
+		});
+		elevationSampleResult.style.display = "block";
+	}
+
 	function stopElevationSampleMode(message = null, hideResult = false) {
 		setElevationSamplingActive(false);
 		clearTimeout(elevationPreviewTimer);
@@ -461,6 +509,23 @@
 		elevationSampleResult.style.display = "block";
 	}
 
+	function showElevationProcessingIndicator(progress = 0) {
+		const safeProgress = Math.max(0, Math.min(100, Number.isFinite(progress) ? progress : 0));
+		elevationSampleResult.innerHTML = `
+			<div style="display:flex; flex-direction:column; align-items:center; justify-content:center; gap:6px; min-width:220px;">
+				<div style="display:flex; align-items:center; justify-content:center; gap:8px; width:100%;">
+					<span style="display:inline-block; width:10px; height:10px; border-radius:50%; background:#ffb703; box-shadow:0 0 12px rgba(255,183,3,0.8); animation:pulse 1s infinite;"> </span>
+					<span>Processando elevação em ${currentElevationSampleRadius} m...</span>
+				</div>
+				<div style="width:100%; height:8px; border-radius:999px; background:rgba(255,255,255,0.08); overflow:hidden; border:1px solid rgba(255,255,255,0.1);">
+					<div style="width:${safeProgress}%; height:100%; border-radius:999px; background:linear-gradient(90deg, #ffb703, #ff5a5f); transition:width .15s ease-out;"></div>
+				</div>
+				<span style="font-size:11px; color:#dfe3eb;">${Math.round(safeProgress)}%</span>
+			</div>
+		`;
+		elevationSampleResult.style.display = "block";
+	}
+
 	function clearElevationSamplePreview() {
 		if (elevationSampleMarker) {
 			viewer.scene.scene.remove(elevationSampleMarker);
@@ -476,8 +541,10 @@
 		}
 	}
 
-	const ELEVATION_SAMPLE_RADIUS = 10;
 	const ELEVATION_SAMPLE_PREVIEW_LIMIT = 1;
+	const MIN_ELEVATION_SAMPLES = 50;
+	const MAX_ELEVATION_SAMPLES = 50;
+	const ELEVATION_SAMPLE_RING_OFFSET_Z = 0.25;
 
 	function computeMedian(values) {
 		if (!values.length) return null;
@@ -511,14 +578,15 @@
 		viewer.scene.scene.add(elevationSampleMarker);
 
 		const ringMaterial = new THREE.LineBasicMaterial({
-			color: 0xffcc66,
+			color: 0xff3b30,
 			transparent: true,
-			opacity: 0.85
+			opacity: 1,
+			linewidth: 3
 		});
 		const ringPoints = [];
 		for (let i = 0; i <= 48; i++) {
 			const angle = (i / 48) * Math.PI * 2;
-			ringPoints.push(new THREE.Vector3(Math.cos(angle) * ELEVATION_SAMPLE_RADIUS, Math.sin(angle) * ELEVATION_SAMPLE_RADIUS, 0));
+			ringPoints.push(new THREE.Vector3(Math.cos(angle) * currentElevationSampleRadius, Math.sin(angle) * currentElevationSampleRadius, 0));
 		}
 		elevationSampleRing = new THREE.LineLoop(new THREE.BufferGeometry().setFromPoints(ringPoints), ringMaterial);
 		elevationSampleRing.visible = false;
@@ -529,15 +597,14 @@
 		if (!elevationSampleMarker || !elevationSampleRing) return;
 		elevationSampleMarker.visible = true;
 		elevationSampleMarker.position.copy(center);
-		if (valueZ !== null) {
-			elevationSampleMarker.position.z = valueZ + 0.05;
-		}
+		const previewZ = valueZ !== null ? valueZ + ELEVATION_SAMPLE_RING_OFFSET_Z : center.z + ELEVATION_SAMPLE_RING_OFFSET_Z;
+		elevationSampleMarker.position.z = previewZ;
 		elevationSampleRing.visible = true;
 		elevationSampleRing.position.copy(center);
-		elevationSampleRing.position.z = center.z;
+		elevationSampleRing.position.z = previewZ;
 	}
 
-	function findElevationSamples(anchor, pointcloud, radius = ELEVATION_SAMPLE_RADIUS) {
+	function findElevationSamples(anchor, pointcloud, radius = currentElevationSampleRadius) {
 		const radiusSquared = radius * radius;
 		const samples = [];
 
@@ -595,7 +662,7 @@
 		}
 
 		updateElevationSampleCursorPreview(intersection.location, intersection.location.z);
-		showElevationSampleMessage("Posicione o cursor sobre a nuvem e clique para confirmar a elevação média em um raio de 10 m.");
+		renderElevationRadiusSelector(`Raio ativo: ${currentElevationSampleRadius} m — clique para calcular a elevação.`);
 	}
 
 	function clearViewerMeasurements() {
@@ -609,23 +676,18 @@
 
 	function sampleAverageElevation(anchor, pointcloud) {
 		return new Promise((resolve, reject) => {
+			const radius = currentElevationSampleRadius;
 			const profile = new Potree.Profile();
 			profile.name = "Amostragem de elevação";
-			profile.setWidth(ELEVATION_SAMPLE_RADIUS);
+			profile.setWidth(Math.max(1, radius * 1.25));
+			const start = new THREE.Vector3(anchor.x - radius, anchor.y, anchor.z + ELEVATION_SAMPLE_RING_OFFSET_Z);
+			const end = new THREE.Vector3(anchor.x + radius, anchor.y, anchor.z + ELEVATION_SAMPLE_RING_OFFSET_Z);
+			profile.addMarker(start);
+			profile.addMarker(end);
 
-			const half = ELEVATION_SAMPLE_RADIUS * 0.5;
-			const square = [
-				new THREE.Vector3(anchor.x - half, anchor.y - half, anchor.z),
-				new THREE.Vector3(anchor.x + half, anchor.y - half, anchor.z),
-				new THREE.Vector3(anchor.x + half, anchor.y + half, anchor.z),
-				new THREE.Vector3(anchor.x - half, anchor.y + half, anchor.z),
-				new THREE.Vector3(anchor.x - half, anchor.y - half, anchor.z)
-			];
-			for (const point of square) {
-				profile.addMarker(point.clone());
-			}
+			const selected = [];
+			showElevationProcessingIndicator(5);
 
-			const elevations = [];
 			const request = pointcloud.getPointsInProfile(profile, null, {
 				onProgress: event => {
 					if (!event?.points?.segments) return;
@@ -635,23 +697,53 @@
 						const values = pointData.position;
 						const count = segment.points.numPoints || Math.floor(values.length / 3);
 						for (let i = 0; i < count; i++) {
-							const z = values[i * 3 + 2];
-							if (Number.isFinite(z)) elevations.push(z);
+							const index = i * 3;
+							const px = values[index];
+							const py = values[index + 1];
+							const pz = values[index + 2];
+							if (!Number.isFinite(px) || !Number.isFinite(py) || !Number.isFinite(pz)) continue;
+
+							const dx = px - anchor.x;
+							const dy = py - anchor.y;
+							const distanceSquared = dx * dx + dy * dy;
+							if (distanceSquared > radius * radius) continue;
+							if (Math.abs(pz - anchor.z) > radius * 0.5) continue;
+
+							const candidate = { distanceSquared, z: pz };
+							if (selected.length < MAX_ELEVATION_SAMPLES) {
+								selected.push(candidate);
+							} else {
+								const randomIndex = Math.floor(Math.random() * (selected.length + 1));
+								if (randomIndex < MAX_ELEVATION_SAMPLES) {
+									selected[randomIndex] = candidate;
+								}
+							}
 						}
+					}
+
+					if (selected.length >= MIN_ELEVATION_SAMPLES) {
+						showElevationProcessingIndicator(90);
+					} else {
+						const progress = Math.min(89, Math.round((selected.length / MIN_ELEVATION_SAMPLES) * 100));
+						showElevationProcessingIndicator(progress || 5);
 					}
 				},
 				onFinish: () => {
-					if (request) request.cancel?.();
-					if (!elevations.length) {
-						reject(new Error("Não foi possível encontrar pontos próximos nessa região."));
+					if (selected.length < MIN_ELEVATION_SAMPLES) {
+						reject(new Error("Não foi possível encontrar pelo menos 50 pontos próximos nessa região."));
 						return;
 					}
-
+					showElevationProcessingIndicator(100);
+					const elevations = selected
+						.sort((a, b) => a.distanceSquared - b.distanceSquared)
+						.slice(0, MAX_ELEVATION_SAMPLES)
+						.map(item => item.z);
 					const robustMedianZ = computeRobustMedian(elevations);
 					const formattedZ = new Intl.NumberFormat("pt-BR", {
 						minimumFractionDigits: 2,
 						maximumFractionDigits: 2
 					}).format(robustMedianZ);
+
 					const measurement = new Potree.Measure();
 					measurement.name = `Elevação média: ${formattedZ} m`;
 					measurement.position.copy(anchor);
@@ -670,9 +762,12 @@
 					viewer.scene.addMeasurement(measurement);
 					elevationSampleLabels.add(label);
 					showElevationSampleMessage(
-						`Elevação estimada em raio de 10 m: ${formattedZ} m — ${elevations.length} pontos coletados pela faixa do perfil.`
+						`Elevação estimada em raio de ${currentElevationSampleRadius} m: ${formattedZ} m — ${elevations.length} pontos amostrados (mín. 50 / máx. 50).`
 					);
 					resolve({ elevations, z: robustMedianZ });
+				},
+				onCancel: () => {
+					reject(new Error("A coleta do perfil foi cancelada."));
 				}
 			});
 		});
@@ -768,7 +863,7 @@
 				} else {
 					beginElevationSamplePreview();
 					elevationSampleResult.style.display = "block";
-					showElevationSampleMessage("Posicione o cursor sobre a nuvem e clique para confirmar a elevação média em um raio de 10 m.");
+					renderElevationRadiusSelector(`Raio ativo: ${currentElevationSampleRadius} m — clique na nuvem para calcular a elevação.`);
 					setElevationSamplingActive(true);
 				}
 				break;
@@ -788,7 +883,7 @@
 		}
 	}, true);
 
-	viewer.renderer.domElement.addEventListener("click", event => {
+	viewer.renderer.domElement.addEventListener("click", async event => {
 		if (!elevationSamplingActive || event.button !== 0) return;
 		const rect = viewer.renderer.domElement.getBoundingClientRect();
 		const mouse = new THREE.Vector2(event.clientX - rect.left, event.clientY - rect.top);
@@ -804,11 +899,12 @@
 		}
 
 		stopElevationSampleMode();
-		sampleAverageElevation(intersection.location, intersection.pointcloud)
-			.catch(error => {
-				showElevationSampleMessage(error.message);
-				console.error("Falha ao calcular a elevação média:", error);
-			});
+		try {
+			await sampleAverageElevation(intersection.location, intersection.pointcloud);
+		} catch (error) {
+			showElevationSampleMessage(error.message);
+			console.error("Falha ao calcular a elevação média:", error);
+		}
 	}, true);
 
 	viewer.addEventListener("update", () => {
@@ -837,7 +933,7 @@
 
 	viewer.setEDLEnabled(true);
 	viewer.setFOV(60);
-	viewer.setPointBudget(1_000_000);
+	viewer.setPointBudget(500000);
 	viewer.setDescription("");
 	viewer.loadSettingsFromURL();
 
