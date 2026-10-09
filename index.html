@@ -195,7 +195,7 @@
         }
 
         body.profile-open #viewer-shell {
-            bottom: calc(var(--altura-timeline) + var(--altura-perfil));
+            bottom: var(--altura-perfil);
         }
 
         #viewer-shell iframe {
@@ -216,7 +216,7 @@
         }
 
         body.profile-open #basic-toolbar {
-            bottom: calc(var(--altura-timeline) + var(--altura-perfil) + 12px);
+            bottom: calc(var(--altura-perfil) + 12px);
         }
 
         .toolbar-panel {
@@ -855,6 +855,7 @@
 
         const iframe = document.getElementById("lidar-viewer");
         const loader = document.getElementById("iframe-loader");
+        const flightTimeline = document.getElementById("timeline");
         const timeline = document.getElementById("timeline-list");
         const statusTimeline = document.getElementById("timeline-status");
         const profilePanel = document.getElementById("profile-panel");
@@ -899,6 +900,7 @@
         function setProfilePanelOpen(open) {
             profilePanel.hidden = !open;
             document.body.classList.toggle("profile-open", open);
+            if (flightTimeline) flightTimeline.hidden = open;
             document.querySelector('[data-potree-action="profile"]')
                 .setAttribute("aria-pressed", String(open));
             if (open) requestAnimationFrame(drawProfileChart);
@@ -1117,7 +1119,7 @@
                     profilePanel.querySelectorAll("[data-profile-metric]").forEach(metric => {
                         metric.textContent = "—";
                     });
-                    setProfilePanelOpen(true);
+                    setProfilePanelOpen(false);
                 } else if (action === "clear-measurements") {
                     closeProfilePanel();
                 }
@@ -1145,7 +1147,13 @@
             if (event.data.type === "profile-status") {
                 profileInstructions.textContent = event.data.message || "";
                 profileStatus.textContent = event.data.status || event.data.message || "";
+                if (event.data.message === "Perfil desenhado.") {
+                    setProfilePanelOpen(true);
+                }
                 return;
+            }
+            if (event.data.type === "profile-progress" && event.data.finished) {
+                setProfilePanelOpen(true);
             }
             if (event.data.type === "profile-close") {
                 closeProfilePanel();

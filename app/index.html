@@ -761,9 +761,9 @@
 					measurement.add(label);
 					viewer.scene.addMeasurement(measurement);
 					elevationSampleLabels.add(label);
-					showElevationSampleMessage(
-						`Elevação estimada em raio de ${currentElevationSampleRadius} m: ${formattedZ} m — ${elevations.length} pontos amostrados (mín. 50 / máx. 50).`
-					);
+					//showElevationSampleMessage(
+						//`Elevação estimada em raio de ${currentElevationSampleRadius} m: ${formattedZ} m — ${elevations.length} pontos amostrados (mín. 50 / máx. 50).`
+					//);
 					resolve({ elevations, z: robustMedianZ });
 				},
 				onCancel: () => {
