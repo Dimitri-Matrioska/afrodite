@@ -56,6 +56,9 @@
 		}
 		#barra-rapida button:hover { background: rgba(66,133,244,.35); }
 
+		body.embedded #painel-arquivos,
+		body.embedded #barra-rapida { display: none; }
+
 		/* ---------- status de carregamento ---------- */
 		#carregando {
 			position: absolute; bottom: 18px; left: 50%; transform: translateX(-50%);
@@ -113,6 +116,10 @@
 
 	<script type="module">
 	import * as THREE from "./libs/three.js/build/three.module.js";
+
+	if (new URLSearchParams(window.location.search).get("embed") === "1") {
+		document.body.classList.add("embedded");
+	}
 
 	/* ============================================================
 	 *  CONFIGURAÇÃO — EDITE AQUI

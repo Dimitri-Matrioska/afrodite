@@ -22,7 +22,7 @@
 
             --altura-topo: 52px;
             --altura-titulo: 44px;
-            --altura-timeline: 104px;
+            --altura-timeline: 132px;
         }
 
         * {
@@ -125,12 +125,6 @@
             pointer-events: auto;
         }
 
-        body.immersive #topo {
-            opacity: 0;
-            transform: translateY(-100%);
-            pointer-events: none;
-        }
-
         #topo img {
             height: 26px;
             width: auto;
@@ -161,12 +155,6 @@
         .titulo-bar.visible {
             opacity: 1;
             transform: translateY(0);
-        }
-
-        body.immersive .titulo-bar {
-            opacity: 0;
-            transform: translateY(-100%);
-            pointer-events: none;
         }
 
         .titulo-bar .acento {
@@ -202,13 +190,7 @@
             left: 0;
             right: 0;
             bottom: var(--altura-timeline);
-            background: var(--cinza-claro);
-            transition: top 0.4s ease, bottom 0.4s ease;
-        }
-
-        body.immersive #viewer-shell {
-            top: 0;
-            bottom: var(--altura-timeline);
+            background: var(--marinho);
         }
 
         #viewer-shell iframe {
@@ -225,7 +207,7 @@
         #iframe-loader {
             position: absolute;
             inset: 0;
-            background: var(--cinza-claro);
+            background: var(--marinho);
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -257,7 +239,7 @@
         #iframe-loader p {
             font-size: 13px;
             font-weight: 500;
-            color: var(--marinho);
+            color: var(--branco);
             opacity: 0.7;
         }
 
@@ -272,29 +254,71 @@
             bottom: 0;
             height: var(--altura-timeline);
             display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 14px;
-            padding: 0 20px;
+            flex-direction: column;
+            gap: 8px;
+            padding: 10px 20px 8px;
             background: var(--marinho);
             border-top: 1px solid rgba(255, 255, 255, 0.08);
             z-index: 21;
         }
 
-        body.immersive #timeline {
-            background: rgba(16, 25, 46, 0.82);
-            backdrop-filter: blur(6px);
+        .timeline-heading {
+            display: flex;
+            align-items: baseline;
+            gap: 10px;
+            min-height: 16px;
+            color: var(--branco);
+        }
+
+        .timeline-heading strong {
+            font-size: 10px;
+            letter-spacing: 1px;
+        }
+
+        #timeline-status {
+            min-width: 0;
+            overflow: hidden;
+            color: rgba(255, 255, 255, 0.62);
+            font-size: 11px;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        #timeline-list {
+            position: relative;
+            display: flex;
+            flex: 1;
+            align-items: flex-start;
+            gap: 18px;
+            min-height: 0;
+            overflow-x: auto;
+            overflow-y: hidden;
+            padding: 0 8px 6px;
+            scrollbar-color: var(--marinho-hover) transparent;
+            scrollbar-width: thin;
+        }
+
+        #timeline-list::before {
+            position: absolute;
+            top: 22px;
+            right: 8px;
+            left: 8px;
+            height: 1px;
+            background: rgba(255, 255, 255, 0.22);
+            content: "";
         }
 
         .voo-btn {
             display: flex;
+            flex: 0 0 180px;
             flex-direction: column;
-            align-items: center;
-            gap: 6px;
+            align-items: flex-start;
+            gap: 4px;
             background: none;
             border: none;
             cursor: pointer;
-            opacity: 0.55;
+            color: var(--branco);
+            opacity: 0.72;
             transition: opacity 0.2s ease, transform 0.2s ease;
         }
 
@@ -306,75 +330,44 @@
             opacity: 1;
         }
 
+        .voo-btn.ativo .timeline-marker {
+            background: var(--salmao);
+            box-shadow: 0 0 0 2px rgba(240, 192, 137, 0.3);
+        }
+
         .voo-btn:disabled {
             cursor: default;
             opacity: 0.35;
         }
 
-        .voo-thumb {
-            width: 64px;
-            height: 64px;
-            border-radius: 10px;
-            background: var(--marinho-hover);
-            border: 2px solid transparent;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            overflow: hidden;
+        .timeline-date {
+            color: var(--salmao);
+            font-size: 10px;
+            font-weight: 600;
+            line-height: 14px;
         }
 
-        .voo-btn.ativo .voo-thumb {
-            border-color: var(--salmao);
-        }
-
-        .voo-thumb img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-
-        .voo-thumb .icone-lidar {
-            width: 26px;
-            height: 26px;
-            stroke: var(--branco);
-            opacity: 0.7;
+        .timeline-marker {
+            position: relative;
+            z-index: 1;
+            width: 9px;
+            height: 9px;
+            margin: 0 0 1px 2px;
+            border: 2px solid var(--marinho);
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.65);
+            box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.45);
         }
 
         .voo-label {
+            width: 100%;
+            overflow: hidden;
+            color: var(--branco);
             font-size: 11px;
-            font-weight: 600;
-            color: var(--branco);
-            letter-spacing: 0.3px;
-        }
-
-        .voo-tag {
-            font-size: 9px;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            color: var(--salmao);
-            opacity: 0.9;
-        }
-
-        #btn-restaurar {
-            position: fixed;
-            top: 14px;
-            right: 14px;
-            width: 36px;
-            height: 36px;
-            border-radius: 50%;
-            border: none;
-            background: rgba(16, 25, 46, 0.75);
-            color: var(--branco);
-            font-size: 16px;
-            display: none;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            z-index: 22;
-        }
-
-        body.immersive #btn-restaurar {
-            display: flex;
+            font-weight: 500;
+            text-align: left;
+            text-overflow: ellipsis;
+            white-space: nowrap;
         }
 
         /* =========================
@@ -382,17 +375,22 @@
            ========================= */
 
         @media (max-width: 480px) {
-            .voo-thumb {
-                width: 48px;
-                height: 48px;
+            :root {
+                --altura-topo: 46px;
+                --altura-titulo: 40px;
+                --altura-timeline: 124px;
             }
+
+            #topo { padding: 0 12px; }
+            #topo img { height: 23px; }
+            .titulo-bar { gap: 8px; padding: 0 12px; }
+            .titulo-bar h1 { font-size: 12px; }
+            .titulo-bar .subtitulo { display: none; }
             #timeline {
-                gap: 8px;
-                padding: 0 8px;
+                padding: 8px 10px 6px;
             }
-            .titulo-bar .subtitulo {
-                display: none;
-            }
+            #timeline-list { gap: 12px; }
+            .voo-btn { flex-basis: 150px; }
         }
     </style>
 </head>
@@ -423,10 +421,9 @@
 
     <!-- VIEWER -->
     <div id="viewer-shell">
-        <!-- COMEÇA ESCONDIDO (class hidden) -->
-        <div id="iframe-loader" class="hidden">
+        <div id="iframe-loader">
             <div class="spinner"></div>
-            <p>Carregando nuvem de pontos...</p>
+            <p>Buscando arquivos...</p>
         </div>
         <iframe
             id="lidar-viewer"
@@ -438,193 +435,157 @@
         ></iframe>
     </div>
 
-    <button id="btn-restaurar" title="Sair da tela cheia">✕</button>
-
-    <!-- TIMELINE -->
-    <nav id="timeline"></nav>
+    <footer id="timeline">
+        <div class="timeline-heading">
+            <strong>ARQUIVOS</strong>
+            <span id="timeline-status" role="status" aria-live="polite">Buscando arquivos...</span>
+        </div>
+        <nav id="timeline-list" aria-label="Arquivos em ordem cronológica"></nav>
+    </footer>
 
     <script>
         const TEMPO_SPLASH = 2500;
-
         const CONFIG = {
-            baseUrlArquivos: "https://pub-ff165ed52c304df59d57ae2f21220e3c.r2.dev",
-            prefixoArquivo: "voo-",
-            sufixoArquivo: ".copc.laz",
+            listUrl: "https://listar-nuvens-potree.matrioska-dev.workers.dev/api/nuvens",
+            publicBaseUrl: "https://pub-ff165ed52c304df59d57ae2f21220e3c.r2.dev",
             viewerBase: "app/index.html",
-            semanasExibidas: 4,
-            diaDaSemanaAlvo: 3,
-            offsetsBusca: [0, 1, -1, 2, -2, 3, -3],
         };
 
-        function pad(n) {
-            return String(n).padStart(2, "0");
+        const iframe = document.getElementById("lidar-viewer");
+        const loader = document.getElementById("iframe-loader");
+        const timeline = document.getElementById("timeline-list");
+        const statusTimeline = document.getElementById("timeline-status");
+
+        function extrairData(nomeArquivo) {
+            const match = nomeArquivo.match(/(?:^|[^\d])(\d{1,2})-(\d{1,2})-(\d{4})(?=[^\d]|$)/);
+            if (!match) return null;
+
+            const dia = Number(match[1]);
+            const mes = Number(match[2]);
+            const ano = Number(match[3]);
+            const data = new Date(ano, mes - 1, dia);
+            if (data.getFullYear() !== ano || data.getMonth() !== mes - 1 || data.getDate() !== dia) return null;
+            return data;
         }
 
-        function formatarDataArquivo(d) {
-            return `${pad(d.getDate())}-${pad(d.getMonth() + 1)}-${d.getFullYear()}`;
+        function formatarData(data) {
+            if (!data) return "Data não identificada";
+            return new Intl.DateTimeFormat("pt-BR", { dateStyle: "short" }).format(data);
         }
 
-        function formatarDataLabel(d) {
-            return `${pad(d.getDate())}/${pad(d.getMonth() + 1)}`;
-        }
+        async function listarArquivos() {
+            const arquivos = [];
+            let cursor = null;
 
-        function nomeArquivoPara(d) {
-            return `${CONFIG.prefixoArquivo}${formatarDataArquivo(d)}${CONFIG.sufixoArquivo}`;
-        }
+            do {
+                const url = new URL(CONFIG.listUrl, window.location.href);
+                if (cursor) url.searchParams.set("cursor", cursor);
+                const resposta = await fetch(url);
+                if (!resposta.ok) throw new Error(`Falha ao listar arquivos (HTTP ${resposta.status}).`);
 
-        function urlArquivoPara(d) {
-            return `${CONFIG.baseUrlArquivos}/${nomeArquivoPara(d)}`;
-        }
-
-        function diaAlvoMaisRecente(referencia) {
-            const d = new Date(referencia);
-            d.setHours(0, 0, 0, 0);
-            const diaAtual = d.getDay();
-            const diferenca = (diaAtual - CONFIG.diaDaSemanaAlvo + 7) % 7;
-            d.setDate(d.getDate() - diferenca);
-            return d;
-        }
-
-        async function arquivoExiste(url) {
-            try {
-                const res = await fetch(url, { method: "HEAD", mode: "cors" });
-                return res.ok;
-            } catch (e) {
-                return false;
-            }
-        }
-
-        async function buscarVooDaSemana(diaAlvo) {
-            for (const offset of CONFIG.offsetsBusca) {
-                const candidata = new Date(diaAlvo);
-                candidata.setDate(candidata.getDate() + offset);
-                const url = urlArquivoPara(candidata);
-                if (await arquivoExiste(url)) {
-                    return { data: candidata, url };
+                const dados = await resposta.json();
+                if (!Array.isArray(dados.objects)) {
+                    throw new Error("Resposta inválida do Worker: lista 'objects' ausente.");
                 }
-            }
-            return null;
+
+                for (const objeto of dados.objects) {
+                    if (typeof objeto.key !== "string" || !objeto.key.toLowerCase().endsWith(".copc.laz")) continue;
+                    const nomeArquivo = objeto.key.split("/").pop();
+                    const caminho = objeto.key.split("/").map(encodeURIComponent).join("/");
+                    arquivos.push({
+                        nome: nomeArquivo,
+                        data: extrairData(nomeArquivo),
+                        url: `${CONFIG.publicBaseUrl.replace(/\/$/, "")}/${caminho}`,
+                    });
+                }
+
+                if (dados.truncated && !dados.nextCursor) {
+                    throw new Error("O Worker indicou mais arquivos, mas não informou o cursor da próxima página.");
+                }
+                cursor = dados.truncated ? dados.nextCursor : null;
+            } while (cursor);
+
+            arquivos.sort((a, b) => {
+                const dataA = a.data ? a.data.getTime() : Number.NEGATIVE_INFINITY;
+                const dataB = b.data ? b.data.getTime() : Number.NEGATIVE_INFINITY;
+                return dataA - dataB || a.nome.localeCompare(b.nome);
+            });
+            return arquivos;
         }
 
-        function iconeLidarSvg() {
-            return `<svg class="icone-lidar" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M12 2v4"/><path d="M12 18v4"/><path d="M4.93 4.93l2.83 2.83"/>
-                <path d="M16.24 16.24l2.83 2.83"/><path d="M2 12h4"/><path d="M18 12h4"/>
-                <path d="M4.93 19.07l2.83-2.83"/><path d="M16.24 7.76l2.83-2.83"/>
-                <circle cx="12" cy="12" r="3"/>
-            </svg>`;
+        function montarBotaoArquivo(arquivo) {
+            const botao = document.createElement("button");
+            botao.className = "voo-btn";
+            botao.type = "button";
+            botao.title = arquivo.nome;
+            botao.setAttribute("aria-label", `Abrir ${arquivo.nome}, ${formatarData(arquivo.data)}`);
+
+            const data = document.createElement("span");
+            data.className = "timeline-date";
+            data.textContent = formatarData(arquivo.data);
+
+            const marcador = document.createElement("span");
+            marcador.className = "timeline-marker";
+            marcador.setAttribute("aria-hidden", "true");
+
+            const nome = document.createElement("span");
+            nome.className = "voo-label";
+            nome.textContent = arquivo.nome.replace(/\.copc\.laz$/i, "");
+
+            botao.append(data, marcador, nome);
+            botao.addEventListener("click", () => selecionarArquivo(botao, arquivo.url));
+            return botao;
         }
 
-        function montarBotaoVoo(resultado, ehSemanaAtual) {
-            const btn = document.createElement("button");
-            btn.className = "voo-btn";
-            btn.type = "button";
-
-            const thumb = document.createElement("div");
-            thumb.className = "voo-thumb";
-
-            const label = document.createElement("span");
-            label.className = "voo-label";
-
-            if (resultado) {
-                thumb.innerHTML = iconeLidarSvg();
-                label.textContent = formatarDataLabel(resultado.data);
-                btn.addEventListener("click", () => selecionarVoo(btn, resultado.url));
-            } else {
-                thumb.innerHTML = iconeLidarSvg();
-                label.textContent = ehSemanaAtual ? "Buscando..." : "Sem voo";
-                btn.disabled = true;
-            }
-
-            btn.appendChild(thumb);
-            btn.appendChild(label);
-            return btn;
-        }
-
-        function montarUrlViewer(urlArquivoLaz) {
+        function montarUrlViewer(urlArquivo) {
             const url = new URL(CONFIG.viewerBase, document.baseURI);
-            url.searchParams.set("copc", urlArquivoLaz);
+            url.searchParams.set("copc", urlArquivo);
+            url.searchParams.set("embed", "1");
             return url.toString();
         }
 
-        function mostrarLoaderIframe() {
-            document.getElementById("iframe-loader").classList.remove("hidden");
-        }
-
-        function esconderLoaderIframe() {
-            document.getElementById("iframe-loader").classList.add("hidden");
-        }
-
-        function selecionarVoo(btnClicado, urlArquivoLaz) {
-            document.querySelectorAll(".voo-btn").forEach((b) => b.classList.remove("ativo"));
-            btnClicado.classList.add("ativo");
-
-            mostrarLoaderIframe();
-            const iframe = document.getElementById("lidar-viewer");
-            iframe.src = montarUrlViewer(urlArquivoLaz);
-
-            document.body.classList.add("immersive");
+        function selecionarArquivo(botaoSelecionado, urlArquivo) {
+            document.querySelectorAll(".voo-btn").forEach((botao) => botao.classList.remove("ativo"));
+            botaoSelecionado.classList.add("ativo");
+            loader.classList.remove("hidden");
+            loader.querySelector("p").textContent = "Carregando nuvem de pontos...";
+            iframe.src = montarUrlViewer(urlArquivo);
         }
 
         async function montarTimeline() {
-            const nav = document.getElementById("timeline");
-            const hoje = new Date();
-            const diaAlvoAtual = diaAlvoMaisRecente(hoje);
+            try {
+                const arquivos = await listarArquivos();
+                timeline.replaceChildren();
 
-            const ancoras = [];
-            for (let i = 0; i < CONFIG.semanasExibidas; i++) {
-                const ancora = new Date(diaAlvoAtual);
-                ancora.setDate(ancora.getDate() - 7 * i);
-                ancoras.push(ancora);
-            }
-
-            const resultados = await Promise.all(ancoras.map(buscarVooDaSemana));
-
-            nav.innerHTML = "";
-
-            // Cria botões: mais antigo (esquerda) -> mais recente (direita)
-            for (let i = resultados.length - 1; i >= 0; i--) {
-                const ehSemanaAtual = (i === 0);
-                const btn = montarBotaoVoo(resultados[i], ehSemanaAtual);
-                nav.appendChild(btn);
-            }
-
-            // Carrega automaticamente o voo mais recente disponível
-            const maisRecenteIdx = resultados.findIndex((r) => r !== null);
-            if (maisRecenteIdx !== -1) {
-                const maisRecente = resultados[maisRecenteIdx];
-                const iframe = document.getElementById("lidar-viewer");
-                iframe.src = montarUrlViewer(maisRecente.url);
-
-                // Marca o botão correto como ativo
-                const domIdx = (resultados.length - 1) - maisRecenteIdx;
-                const botoes = nav.querySelectorAll(".voo-btn");
-                if (botoes[domIdx]) {
-                    botoes[domIdx].classList.add("ativo");
+                if (!arquivos.length) {
+                    statusTimeline.textContent = "Nenhum arquivo COPC foi encontrado.";
+                    loader.classList.add("hidden");
+                    return;
                 }
+
+                for (const arquivo of arquivos) timeline.appendChild(montarBotaoArquivo(arquivo));
+
+                const arquivosComData = arquivos.filter((arquivo) => arquivo.data);
+                const maisRecente = arquivosComData.at(-1) || arquivos.at(-1);
+                statusTimeline.textContent = `${arquivos.length} arquivo(s) — mais antigo à esquerda, mais recente à direita`;
+                const botaoMaisRecente = timeline.children[arquivos.indexOf(maisRecente)];
+                if (botaoMaisRecente) selecionarArquivo(botaoMaisRecente, maisRecente.url);
+            } catch (erro) {
+                console.error(erro);
+                statusTimeline.textContent = `Erro ao carregar a lista: ${erro.message}`;
+                loader.classList.add("hidden");
             }
         }
 
-        document.getElementById("btn-restaurar").addEventListener("click", () => {
-            document.body.classList.remove("immersive");
-        });
+        iframe.addEventListener("load", () => loader.classList.add("hidden"));
 
-        // Esconde o loader do iframe quando ele terminar de carregar
-        document.getElementById("lidar-viewer").addEventListener("load", () => {
-            esconderLoaderIframe();
-        });
-
-        window.addEventListener("load", function () {
+        window.addEventListener("load", () => {
             montarTimeline();
 
-            setTimeout(function () {
-                const loading = document.getElementById("loading");
-                const topo = document.getElementById("topo");
-                const tituloBar = document.querySelector(".titulo-bar");
-
-                loading.classList.add("hidden");
-                topo.classList.add("visible");
-                tituloBar.classList.add("visible");
+            setTimeout(() => {
+                document.getElementById("loading").classList.add("hidden");
+                document.getElementById("topo").classList.add("visible");
+                document.querySelector(".titulo-bar").classList.add("visible");
             }, TEMPO_SPLASH);
         });
     </script>
