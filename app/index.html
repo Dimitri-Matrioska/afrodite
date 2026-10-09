@@ -126,7 +126,10 @@
 	 *     • cloud.js       → formato Potree 1.x (PotreeConverter 1.x)
 	 *     • ept.json       → Entwine Point Tiles
 	 *     • *.copc.laz     → COPC (LAZ otimizado para nuvem)
+<<<<<<< HEAD
 	 *  A página externa pode passar ?copc=<URL codificada> para abrir um COPC automaticamente.
+=======
+>>>>>>> 2129db59d1f5479b3c8b8c59c2ae01376236d3f8
 	 *
 	 *  MODO 2 (Cloudflare R2): configure o endpoint do Worker em
 	 *  r2.listUrl e o endereço público do bucket em r2.publicBaseUrl.
@@ -137,8 +140,13 @@
 	 * ============================================================ */
 	const CONFIG = {
 		manifestUrl: "./nuvens.json",     // MODO 1
+<<<<<<< HEAD
 		r2: {
 			listUrl: "https://listar-nuvens-potree.seu-subdominio.workers.dev/api/nuvens",
+=======
+		r2: {                              // MODO 2 (Cloudflare R2)
+			listUrl: "",                    // URL do Worker com a rota /api/nuvens
+>>>>>>> 2129db59d1f5479b3c8b8c59c2ae01376236d3f8
 			publicBaseUrl: "https://pub-ff165ed52c304df59d57ae2f21220e3c.r2.dev"
 		},
 		firebase: {                        // MODO 3 (deixe bucket vazio para desativar)
@@ -240,7 +248,11 @@
 		return dados.nuvens || [];
 	}
 
+<<<<<<< HEAD
 	function renderizarLista(nuvens, urlSelecionada = null) {
+=======
+	function renderizarLista(nuvens) {
+>>>>>>> 2129db59d1f5479b3c8b8c59c2ae01376236d3f8
 		elLista.innerHTML = "";
 		if (!nuvens.length) {
 			elLista.innerHTML = '<div id="status-lista">Nenhuma nuvem encontrada nos arquivos configurados.</div>';
@@ -252,7 +264,10 @@
 			item.innerHTML = `<div class="nome"></div><div class="detalhe"></div>`;
 			item.querySelector(".nome").textContent = nuvem.nome;
 			item.querySelector(".detalhe").textContent = nuvem.descricao || nuvem.url;
+<<<<<<< HEAD
 			if (nuvem.url === urlSelecionada) item.classList.add("ativo");
+=======
+>>>>>>> 2129db59d1f5479b3c8b8c59c2ae01376236d3f8
 			item.addEventListener("click", () => {
 				document.querySelectorAll(".item-nuvem").forEach(e => e.classList.remove("ativo"));
 				item.classList.add("ativo");
@@ -323,6 +338,7 @@
 	});
 
 	/* ------------------- início ------------------- */
+<<<<<<< HEAD
 	const parametros = new URLSearchParams(window.location.search);
 	const urlCopc = parametros.get("copc");
 	let nuvemSelecionada = null;
@@ -355,6 +371,12 @@
 		.then(nuvens => {
 			cacheNuvens = nuvemSelecionada ? [nuvemSelecionada, ...nuvens] : nuvens;
 			renderizarLista(cacheNuvens, nuvemSelecionada?.url || null);
+=======
+	listarNuvens()
+		.then(nuvens => {
+			cacheNuvens = nuvens;
+			renderizarLista(nuvens);
+>>>>>>> 2129db59d1f5479b3c8b8c59c2ae01376236d3f8
 		})
 		.catch(err => {
 			elStatus.textContent = "Erro ao carregar a lista de nuvens.";
