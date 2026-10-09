@@ -199,7 +199,8 @@
 	window.viewer = new Potree.Viewer(renderArea);
 	const elevationSampleResult = document.getElementById("elevation-sample-result");
 	let elevationSamplingActive = false;
-	let elevationSampleMarkers = null;
+	let elevationSamplePreview = null;
+	const elevationSampleLabels = new Set();
 
 	function setElevationSamplingActive(active) {
 		elevationSamplingActive = active;
@@ -218,12 +219,31 @@
 		elevationSampleResult.style.display = "block";
 	}
 
-	function clearElevationSampleMarkers() {
-		if (!elevationSampleMarkers) return;
-		viewer.scene.scene.remove(elevationSampleMarkers);
-		elevationSampleMarkers.geometry.dispose();
-		elevationSampleMarkers.material.dispose();
-		elevationSampleMarkers = null;
+	function clearElevationSamplePreview() {
+		if (!elevationSamplePreview) return;
+		viewer.scene.removeMeasurement(elevationSamplePreview);
+		elevationSamplePreview = null;
+	}
+
+	function beginElevationSamplePreview() {
+		clearElevationSamplePreview();
+		elevationSamplePreview = new Potree.Measure();
+		elevationSamplePreview.name = "Prévia da cota média";
+		elevationSamplePreview.showEdges = false;
+		elevationSamplePreview.showDistances = false;
+		elevationSamplePreview.maxMarkers = 1;
+		elevationSamplePreview.addMarker([0, 0, 0]);
+		elevationSamplePreview.visible = false;
+		viewer.scene.addMeasurement(elevationSamplePreview);
+	}
+
+	function clearViewerMeasurements() {
+		viewer.dispatchEvent({ type: "cancel_insertions" });
+		setElevationSamplingActive(false);
+		clearElevationSamplePreview();
+		viewer.scene.removeAllMeasurements();
+		elevationSampleLabels.clear();
+		elevationSampleResult.style.display = "none";
 	}
 
 	function sampleAverageElevation(anchor, pointcloud) {
@@ -277,32 +297,35 @@
 		}
 
 		const averageZ = foundSamples.reduce((sum, sample) => sum + sample.position.z, 0) / foundSamples.length;
-		clearElevationSampleMarkers();
-		const markerPositions = foundSamples.flatMap(sample => [
-			sample.position.x - anchor.x,
-			sample.position.y - anchor.y,
-			sample.position.z - anchor.z
-		]);
-		const markerGeometry = new THREE.BufferGeometry();
-		markerGeometry.setAttribute("position", new THREE.Float32BufferAttribute(markerPositions, 3));
-		const markerMaterial = new THREE.PointsMaterial({
-			color: "#f0c089",
-			size: 10,
-			sizeAttenuation: false,
-			depthTest: false,
-			depthWrite: false
-		});
-		elevationSampleMarkers = new THREE.Points(markerGeometry, markerMaterial);
-		elevationSampleMarkers.position.set(anchor.x, anchor.y, anchor.z);
-		elevationSampleMarkers.renderOrder = 1000;
-		viewer.scene.scene.add(elevationSampleMarkers);
-
 		const formattedZ = new Intl.NumberFormat("pt-BR", {
 			minimumFractionDigits: 2,
 			maximumFractionDigits: 2
 		}).format(averageZ);
+		const measurement = new Potree.Measure();
+		measurement.name = `Cota média: ${formattedZ} m`;
+		measurement.position.copy(anchor);
+		measurement.showEdges = false;
+		measurement.showDistances = false;
+		measurement.maxMarkers = foundSamples.length;
+		for (const sample of foundSamples) {
+			measurement.addMarker([
+				sample.position.x - anchor.x,
+				sample.position.y - anchor.y,
+				sample.position.z - anchor.z
+			]);
+		}
+		const label = new Potree.TextSprite(`Cota média: ${formattedZ} m`);
+		label.setTextColor({ r: 255, g: 255, b: 255, a: 1 });
+		label.setBackgroundColor({ r: 0, g: 0, b: 0, a: 1 });
+		label.setBorderColor({ r: 0, g: 0, b: 0, a: 1 });
+		label.fontsize = 16;
+		label.update();
+		label.position.set(0, 0, 1.5);
+		measurement.add(label);
+		viewer.scene.addMeasurement(measurement);
+		elevationSampleLabels.add(label);
 		showElevationSampleMessage(
-			`Elevação média: ${formattedZ} m — ${foundSamples.length} pontos, grade 3 × 3 com espaçamento de 1 m.`
+			`Cota média confirmada: ${formattedZ} m — ${foundSamples.length} pontos marcados.`
 		);
 	}
 
@@ -318,6 +341,7 @@
 		if (event.data.type !== "tool") return;
 		if (event.data.action !== "sample-elevation" && elevationSamplingActive) {
 			setElevationSamplingActive(false);
+			clearElevationSamplePreview();
 			showElevationSampleMessage("Amostragem de elevação cancelada.");
 		}
 		switch (event.data.action) {
@@ -359,19 +383,39 @@
 			case "sample-elevation":
 				if (elevationSamplingActive) {
 					setElevationSamplingActive(false);
+					clearElevationSamplePreview();
 					showElevationSampleMessage("Amostragem de elevação cancelada.");
 				} else if (!viewer.scene.pointclouds.length) {
 					showElevationSampleMessage("Carregue uma nuvem antes de medir a cota média.");
 				} else {
+					beginElevationSamplePreview();
 					elevationSampleResult.style.display = "block";
-					showElevationSampleMessage("Clique em um ponto da nuvem para calcular a cota média.");
+					showElevationSampleMessage("Mova o mouse para posicionar o ponto central; clique para confirmar a cota média.");
 					setElevationSamplingActive(true);
 				}
+				break;
+			case "clear-measurements":
+				clearViewerMeasurements();
 				break;
 			default:
 				console.warn("Ferramenta Potree não reconhecida:", event.data.action);
 		}
 	});
+
+	viewer.renderer.domElement.addEventListener("mousemove", event => {
+		if (!elevationSamplingActive || !elevationSamplePreview) return;
+		const rect = viewer.renderer.domElement.getBoundingClientRect();
+		const intersection = Potree.Utils.getMousePointCloudIntersection(
+			{ x: event.clientX - rect.left, y: event.clientY - rect.top },
+			viewer.scene.getActiveCamera(),
+			viewer,
+			viewer.scene.pointclouds
+		);
+		elevationSamplePreview.visible = Boolean(intersection);
+		if (intersection) {
+			elevationSamplePreview.setPosition(0, intersection.location);
+		}
+	}, true);
 
 	viewer.renderer.domElement.addEventListener("click", event => {
 		if (!elevationSamplingActive || event.button !== 0) return;
@@ -389,6 +433,7 @@
 		}
 
 		setElevationSamplingActive(false);
+		clearElevationSamplePreview();
 		try {
 			sampleAverageElevation(intersection.location, intersection.pointcloud);
 		} catch (error) {
@@ -396,6 +441,24 @@
 			console.error("Falha ao calcular a elevação média:", error);
 		}
 	}, true);
+
+	viewer.addEventListener("update", () => {
+		if (!elevationSampleLabels.size) return;
+		const camera = viewer.scene.getActiveCamera();
+		const renderSize = viewer.renderer.getSize(new THREE.Vector2());
+		for (const label of elevationSampleLabels) {
+			if (!label.parent) {
+				elevationSampleLabels.delete(label);
+				continue;
+			}
+			const position = label.getWorldPosition(new THREE.Vector3());
+			const distance = camera.position.distanceTo(position);
+			const projectedRadius = Potree.Utils.projectedRadius(
+				1, camera, distance, renderSize.width, renderSize.height
+			);
+			label.scale.setScalar(70 / projectedRadius);
+		}
+	});
 
 	viewer.setEDLEnabled(true);
 	viewer.setFOV(60);
@@ -511,7 +574,7 @@
 	/* ------------------- carregamento da nuvem ------------------- */
 	function carregarNuvem(nuvem) {
 		elCarregando.style.display = "block";
-		clearElevationSampleMarkers();
+		clearElevationSamplePreview();
 		setElevationSamplingActive(false);
 		elevationSampleResult.style.display = "none";
 
