@@ -282,6 +282,63 @@
             color: var(--marinho);
         }
 
+        .elevation-palette-control {
+            position: relative;
+        }
+
+        .elevation-palette-menu {
+            position: absolute;
+            bottom: 0;
+            right: calc(100% + 8px);
+            z-index: 15;
+            display: grid;
+            width: 184px;
+            gap: 3px;
+            padding: 7px;
+            border: 1px solid rgba(240, 192, 137, 0.32);
+            border-radius: 12px;
+            background: rgba(16, 25, 46, 0.97);
+            box-shadow: 0 8px 28px rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(8px);
+        }
+
+        .elevation-palette-menu[hidden] {
+            display: none;
+        }
+
+        .palette-option {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            min-height: 30px;
+            padding: 4px 7px;
+            border: 1px solid transparent;
+            border-radius: 7px;
+            background: transparent;
+            color: var(--bege);
+            cursor: pointer;
+            font: inherit;
+            font-size: 11px;
+            text-align: left;
+        }
+
+        .palette-option:hover,
+        .palette-option:focus-visible,
+        .palette-option[aria-pressed="true"] {
+            border-color: rgba(240, 192, 137, 0.55);
+            background: var(--marinho-hover);
+            color: var(--salmao);
+            outline: none;
+        }
+
+        .palette-swatch {
+            width: 44px;
+            height: 10px;
+            flex: 0 0 44px;
+            border: 1px solid rgba(255, 255, 255, 0.35);
+            border-radius: 5px;
+        }
+
         .tool-button svg {
             flex: 0 0 21px;
             width: 21px;
@@ -552,16 +609,19 @@
                     </button>
                     <button class="tool-button" type="button" data-potree-action="sample-elevation" title="Calcular elevação média em uma grade 3 × 3" aria-label="Calcular elevação média em uma grade 3 por 3" aria-pressed="false">
                         <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 5h14v14H5z"/><path d="M9.7 5v14M14.3 5v14M5 9.7h14M5 14.3h14"/><path d="M8 2v2M16 2v2"/></svg>
-                        <span class="tool-label">Cota média</span>
+                        <span class="tool-label">Elevação média</span>
                     </button>
                     <button class="tool-button" type="button" data-potree-action="clear-measurements" title="Apagar todas as medições e cotas" aria-label="Apagar todas as medições e cotas">
                         <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m3 15 8-8a2 2 0 0 1 3 0l7 7-7 7H8z"/><path d="m7 11 7 7M4 21h16"/></svg>
                         <span class="tool-label">Apagar medições</span>
                     </button>
-                    <button class="tool-button" type="button" data-potree-action="elevation" title="Colorir por elevação" aria-label="Colorir por elevação" aria-pressed="false">
-                        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m3 18 6-7 4 4 3-5 5 8z"/><path d="M4 21h16"/></svg>
-                        <span class="tool-label">Elevação</span>
-                    </button>
+                    <div class="elevation-palette-control" id="elevation-palette-control">
+                        <button class="tool-button" id="elevation-palette-toggle" type="button" title="Escolher paleta de cores por elevação" aria-label="Escolher paleta de cores por elevação" aria-expanded="false" aria-controls="elevation-palette-menu" aria-pressed="false">
+                            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m3 18 6-7 4 4 3-5 5 8z"/><path d="M4 21h16"/></svg>
+                            <span class="tool-label">Cor por elevação</span>
+                        </button>
+                        <div class="elevation-palette-menu" id="elevation-palette-menu" role="group" aria-label="Paletas de cores por elevação" hidden></div>
+                    </div>
                     <button class="tool-button" type="button" data-potree-action="rgb" title="Mostrar cores originais" aria-label="Mostrar cores originais" aria-pressed="false">
                         <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3a9 9 0 1 0 0 18h1.2a2 2 0 0 0 1.5-3.3 1.7 1.7 0 0 1 1.3-2.8H18a3 3 0 0 0 3-3c0-5-4-8.9-9-8.9Z"/><path d="M7.5 10h.01M11.5 7h.01M16 9h.01"/></svg>
                         <span class="tool-label">Cores originais</span>
@@ -592,6 +652,29 @@
         const timeline = document.getElementById("timeline-list");
         const statusTimeline = document.getElementById("timeline-status");
         let viewerMode = "basic";
+        let selectedElevationPalette = null;
+        const paletteLabels = {
+            SPECTRAL: "Spectral",
+            PLASMA: "Plasma",
+            YELLOW_GREEN: "Yellow-Green",
+            VIRIDIS: "Viridis",
+            INFERNO: "Inferno",
+            GRAYSCALE: "Grayscale",
+            TURBO: "Turbo",
+            RAINBOW: "Rainbow",
+            CONTOUR: "Contour",
+        };
+        const paletteSwatches = {
+            SPECTRAL: "linear-gradient(90deg, #5e4fa2, #3288bd, #66c2a5, #abdda4, #e6f598, #ffffbf, #fee08b, #fdae61, #f46d43, #d53e4f, #9e0142)",
+            PLASMA: "linear-gradient(90deg, #3e039c, #8306a8, #c74687, #e96b53, #fdb32f, #effa21)",
+            YELLOW_GREEN: "linear-gradient(90deg, #2a4858, #008287, #00a892, #4abd86, #9cdd7c, #fafb6e)",
+            VIRIDIS: "linear-gradient(90deg, #440154, #414487, #2a788e, #22a884, #7ad151, #fde725)",
+            INFERNO: "linear-gradient(90deg, #140b35, #57106e, #a52c60, #e55b31, #fca50a, #fcffa4)",
+            GRAYSCALE: "linear-gradient(90deg, #000, #fff)",
+            TURBO: "linear-gradient(90deg, #30123b, #466be3, #28bbec, #32f298, #c8e020, #f98e09, #b40426)",
+            RAINBOW: "linear-gradient(90deg, #4700b6, #0000ff, #00ffff, #00ff00, #ffff00, #ffa300, #ff0000)",
+            CONTOUR: "linear-gradient(90deg, #000 0 48%, #fff 48% 100%)",
+        };
 
         function sendViewerCommand(type, details = {}) {
             iframe.contentWindow?.postMessage(
@@ -613,17 +696,66 @@
             button.addEventListener("click", () => setViewerMode(button.dataset.viewerMode));
         });
 
+        const elevationPaletteControl = document.getElementById("elevation-palette-control");
+        const elevationPaletteToggle = document.getElementById("elevation-palette-toggle");
+        const elevationPaletteMenu = document.getElementById("elevation-palette-menu");
+
+        function setElevationPaletteMenuOpen(open) {
+            elevationPaletteMenu.hidden = !open;
+            elevationPaletteToggle.setAttribute("aria-expanded", String(open));
+        }
+
+        Object.entries(paletteLabels).forEach(([palette, label]) => {
+            const option = document.createElement("button");
+            option.className = "palette-option";
+            option.type = "button";
+            option.dataset.elevationPalette = palette;
+            option.setAttribute("aria-pressed", "false");
+
+            const swatch = document.createElement("span");
+            swatch.className = "palette-swatch";
+            swatch.style.background = paletteSwatches[palette];
+            swatch.setAttribute("aria-hidden", "true");
+
+            const name = document.createElement("span");
+            name.textContent = label;
+            option.append(swatch, name);
+            option.addEventListener("click", () => {
+                selectedElevationPalette = palette;
+                sendViewerCommand("tool", { action: "elevation", palette });
+                elevationPaletteToggle.setAttribute("aria-pressed", "true");
+                document.querySelector('[data-potree-action="rgb"]').setAttribute("aria-pressed", "false");
+                elevationPaletteMenu.querySelectorAll(".palette-option").forEach(button => {
+                    button.setAttribute("aria-pressed", String(button.dataset.elevationPalette === palette));
+                });
+                setElevationPaletteMenuOpen(false);
+            });
+            elevationPaletteMenu.append(option);
+        });
+
+        elevationPaletteToggle.addEventListener("click", () => {
+            setElevationPaletteMenuOpen(elevationPaletteMenu.hidden);
+        });
+
+        document.addEventListener("click", event => {
+            if (!elevationPaletteControl.contains(event.target)) setElevationPaletteMenuOpen(false);
+        });
+
+        document.addEventListener("keydown", event => {
+            if (event.key === "Escape" && !elevationPaletteMenu.hidden) {
+                setElevationPaletteMenuOpen(false);
+                elevationPaletteToggle.focus();
+            }
+        });
+
         document.querySelectorAll("[data-potree-action]").forEach(button => {
             button.addEventListener("click", () => {
                 const action = button.dataset.potreeAction;
                 sendViewerCommand("tool", { action });
 
-                if (action === "elevation" || action === "rgb") {
-                    document.querySelectorAll('[data-potree-action="elevation"], [data-potree-action="rgb"]')
-                        .forEach(colorButton => colorButton.setAttribute(
-                            "aria-pressed",
-                            String(colorButton.dataset.potreeAction === action)
-                        ));
+                if (action === "rgb") {
+                    selectedElevationPalette = null;
+                    elevationPaletteToggle.setAttribute("aria-pressed", "false");
                 }
             });
         });
@@ -634,6 +766,16 @@
             if (event.data.action === "sample-elevation") {
                 document.querySelector('[data-potree-action="sample-elevation"]')
                     ?.setAttribute("aria-pressed", String(event.data.active));
+            }
+            if (event.data.action === "elevation" && event.data.palette) {
+                elevationPaletteToggle.setAttribute("aria-pressed", "true");
+                elevationPaletteMenu.querySelectorAll(".palette-option").forEach(button => {
+                    button.setAttribute("aria-pressed", String(button.dataset.elevationPalette === event.data.palette));
+                });
+            }
+            if (event.data.action === "rgb") {
+                selectedElevationPalette = null;
+                elevationPaletteToggle.setAttribute("aria-pressed", "false");
             }
         });
 
@@ -724,10 +866,11 @@
         function selecionarArquivo(botaoSelecionado, urlArquivo) {
             document.querySelectorAll(".voo-btn").forEach((botao) => botao.classList.remove("ativo"));
             botaoSelecionado.classList.add("ativo");
-            document.querySelectorAll('[data-potree-action="elevation"], [data-potree-action="rgb"]')
-                .forEach(button => button.setAttribute("aria-pressed", "false"));
+            document.querySelector('[data-potree-action="rgb"]')
+                .setAttribute("aria-pressed", "false");
             document.querySelector('[data-potree-action="sample-elevation"]')
                 ?.setAttribute("aria-pressed", "false");
+            setElevationPaletteMenuOpen(false);
             loader.classList.remove("hidden");
             loader.querySelector("p").textContent = "Carregando nuvem de pontos...";
             iframe.src = montarUrlViewer(urlArquivo);
@@ -761,6 +904,9 @@
         iframe.addEventListener("load", () => {
             loader.classList.add("hidden");
             sendViewerCommand("mode", { mode: viewerMode });
+            if (selectedElevationPalette) {
+                sendViewerCommand("tool", { action: "elevation", palette: selectedElevationPalette });
+            }
         });
 
         window.addEventListener("load", () => {

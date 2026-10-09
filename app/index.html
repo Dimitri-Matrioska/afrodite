@@ -200,7 +200,10 @@
 	const elevationSampleResult = document.getElementById("elevation-sample-result");
 	let elevationSamplingActive = false;
 	let elevationSamplePreview = null;
+	let elevationPreviewPointer = null;
+	let elevationPreviewTimer = null;
 	const elevationSampleLabels = new Set();
+	let activeElevationPalette = null;
 
 	function setElevationSamplingActive(active) {
 		elevationSamplingActive = active;
@@ -228,25 +231,16 @@
 	function beginElevationSamplePreview() {
 		clearElevationSamplePreview();
 		elevationSamplePreview = new Potree.Measure();
-		elevationSamplePreview.name = "Prévia da cota média";
+		elevationSamplePreview.name = "Prévia da elevação média";
 		elevationSamplePreview.showEdges = false;
 		elevationSamplePreview.showDistances = false;
-		elevationSamplePreview.maxMarkers = 1;
-		elevationSamplePreview.addMarker([0, 0, 0]);
+		elevationSamplePreview.maxMarkers = 9;
+		for (let i = 0; i < 9; i++) elevationSamplePreview.addMarker([0, 0, 0]);
 		elevationSamplePreview.visible = false;
 		viewer.scene.addMeasurement(elevationSamplePreview);
 	}
 
-	function clearViewerMeasurements() {
-		viewer.dispatchEvent({ type: "cancel_insertions" });
-		setElevationSamplingActive(false);
-		clearElevationSamplePreview();
-		viewer.scene.removeAllMeasurements();
-		elevationSampleLabels.clear();
-		elevationSampleResult.style.display = "none";
-	}
-
-	function sampleAverageElevation(anchor, pointcloud) {
+	function findElevationSamples(anchor, pointcloud) {
 		const samples = [];
 		for (let y = -1; y <= 1; y++) {
 			for (let x = -1; x <= 1; x++) {
@@ -260,10 +254,8 @@
 		}
 
 		pointcloud.updateMatrixWorld(true);
-		const nodes = new Set(pointcloud.visibleNodes || []);
-		for (const node of nodes) {
-			const geometry = node.geometryNode?.geometry;
-			const positions = geometry?.attributes?.position;
+		for (const node of new Set(pointcloud.visibleNodes || [])) {
+			const positions = node.geometryNode?.geometry?.attributes?.position;
 			const sceneNode = node.sceneNode;
 			if (!positions || !sceneNode) continue;
 
@@ -285,12 +277,64 @@
 					const distanceSquared = dx * dx + dy * dy;
 					if (distanceSquared < sample.distanceSquared) {
 						sample.distanceSquared = distanceSquared;
-						sample.position = { x: worldX, y: worldY, z: worldZ };
+						sample.position = { x: sample.x, y: sample.y, z: worldZ };
 					}
 				}
 			}
 		}
 
+		return samples;
+	}
+
+	function refreshElevationSamplePreview() {
+		elevationPreviewTimer = null;
+		if (!elevationSamplingActive || !elevationSamplePreview || !elevationPreviewPointer) return;
+
+		const { x, y } = elevationPreviewPointer;
+		const rect = viewer.renderer.domElement.getBoundingClientRect();
+		const intersection = Potree.Utils.getMousePointCloudIntersection(
+			{ x: x - rect.left, y: y - rect.top },
+			viewer.scene.getActiveCamera(),
+			viewer,
+			viewer.scene.pointclouds
+		);
+		if (!intersection) {
+			elevationSamplePreview.visible = false;
+			return;
+		}
+
+		const samples = findElevationSamples(intersection.location, intersection.pointcloud);
+		elevationSamplePreview.position.copy(intersection.location);
+		for (let i = 0; i < samples.length; i++) {
+			const sample = samples[i];
+			const sphere = elevationSamplePreview.spheres[i];
+			sphere.visible = Boolean(sample.position);
+			if (sample.position) {
+				elevationSamplePreview.points[i].position.set(
+					sample.position.x - intersection.location.x,
+					sample.position.y - intersection.location.y,
+					sample.position.z - intersection.location.z
+				);
+			}
+		}
+		elevationSamplePreview.update();
+		elevationSamplePreview.visible = true;
+	}
+
+	function clearViewerMeasurements() {
+		viewer.dispatchEvent({ type: "cancel_insertions" });
+		setElevationSamplingActive(false);
+		clearTimeout(elevationPreviewTimer);
+		elevationPreviewTimer = null;
+		elevationPreviewPointer = null;
+		clearElevationSamplePreview();
+		viewer.scene.removeAllMeasurements();
+		elevationSampleLabels.clear();
+		elevationSampleResult.style.display = "none";
+	}
+
+	function sampleAverageElevation(anchor, pointcloud) {
+		const samples = findElevationSamples(anchor, pointcloud);
 		const foundSamples = samples.filter(sample => sample.position);
 		if (!foundSamples.length) {
 			throw new Error("Não foi possível encontrar pontos próximos nessa região.");
@@ -302,7 +346,7 @@
 			maximumFractionDigits: 2
 		}).format(averageZ);
 		const measurement = new Potree.Measure();
-		measurement.name = `Cota média: ${formattedZ} m`;
+		measurement.name = `Elevação média: ${formattedZ} m`;
 		measurement.position.copy(anchor);
 		measurement.showEdges = false;
 		measurement.showDistances = false;
@@ -314,7 +358,7 @@
 				sample.position.z - anchor.z
 			]);
 		}
-		const label = new Potree.TextSprite(`Cota média: ${formattedZ} m`);
+		const label = new Potree.TextSprite(`Elevação média: ${formattedZ} m`);
 		label.setTextColor({ r: 255, g: 255, b: 255, a: 1 });
 		label.setBackgroundColor({ r: 0, g: 0, b: 0, a: 1 });
 		label.setBorderColor({ r: 0, g: 0, b: 0, a: 1 });
@@ -325,9 +369,34 @@
 		viewer.scene.addMeasurement(measurement);
 		elevationSampleLabels.add(label);
 		showElevationSampleMessage(
-			`Cota média confirmada: ${formattedZ} m — ${foundSamples.length} pontos marcados.`
+			`Elevação média confirmada: ${formattedZ} m — ${foundSamples.length} pontos marcados.`
 		);
 	}
+
+	function applyElevationPalette(paletteName) {
+		const palette = Potree.Gradients[paletteName];
+		if (!palette) {
+			console.warn("Paleta de elevação Potree não reconhecida:", paletteName);
+			return;
+		}
+		activeElevationPalette = paletteName;
+		viewer.scene.pointclouds.forEach(pointcloud => {
+			pointcloud.material.gradient = palette;
+			pointcloud.material.activeAttributeName = "elevation";
+		});
+		if (window.parent !== window) {
+			window.parent.postMessage({
+				channel: "afrodite-potree",
+				type: "tool-state",
+				action: "elevation",
+				palette: paletteName
+			}, window.location.origin);
+		}
+	}
+
+	viewer.scene.addEventListener("pointcloud_added", () => {
+		if (activeElevationPalette) applyElevationPalette(activeElevationPalette);
+	});
 
 	window.addEventListener("message", event => {
 		if (event.source !== window.parent || event.origin !== window.location.origin) return;
@@ -365,20 +434,20 @@
 				});
 				break;
 			case "elevation":
-				viewer.scene.pointclouds.forEach(pointcloud => {
-					pointcloud.material.gradient = [
-						[0, new THREE.Color("#10192e")],
-						[0.34, new THREE.Color("#3d4fe8")],
-						[0.68, new THREE.Color("#f0c089")],
-						[1, new THREE.Color("#f5f1eb")]
-					];
-					pointcloud.material.activeAttributeName = "elevation";
-				});
+				applyElevationPalette(event.data.palette || "SPECTRAL");
 				break;
 			case "rgb":
+				activeElevationPalette = null;
 				viewer.scene.pointclouds.forEach(pointcloud => {
 					pointcloud.material.activeAttributeName = "rgba";
 				});
+				if (window.parent !== window) {
+					window.parent.postMessage({
+						channel: "afrodite-potree",
+						type: "tool-state",
+						action: "rgb"
+					}, window.location.origin);
+				}
 				break;
 			case "sample-elevation":
 				if (elevationSamplingActive) {
@@ -386,11 +455,11 @@
 					clearElevationSamplePreview();
 					showElevationSampleMessage("Amostragem de elevação cancelada.");
 				} else if (!viewer.scene.pointclouds.length) {
-					showElevationSampleMessage("Carregue uma nuvem antes de medir a cota média.");
+					showElevationSampleMessage("Carregue uma nuvem antes de medir a elevação média.");
 				} else {
 					beginElevationSamplePreview();
 					elevationSampleResult.style.display = "block";
-					showElevationSampleMessage("Mova o mouse para posicionar o ponto central; clique para confirmar a cota média.");
+					showElevationSampleMessage("Mova o mouse para posicionar a grade 3 × 3; clique para confirmar a elevação média.");
 					setElevationSamplingActive(true);
 				}
 				break;
@@ -404,16 +473,9 @@
 
 	viewer.renderer.domElement.addEventListener("mousemove", event => {
 		if (!elevationSamplingActive || !elevationSamplePreview) return;
-		const rect = viewer.renderer.domElement.getBoundingClientRect();
-		const intersection = Potree.Utils.getMousePointCloudIntersection(
-			{ x: event.clientX - rect.left, y: event.clientY - rect.top },
-			viewer.scene.getActiveCamera(),
-			viewer,
-			viewer.scene.pointclouds
-		);
-		elevationSamplePreview.visible = Boolean(intersection);
-		if (intersection) {
-			elevationSamplePreview.setPosition(0, intersection.location);
+		elevationPreviewPointer = { x: event.clientX, y: event.clientY };
+		if (elevationPreviewTimer === null) {
+			elevationPreviewTimer = setTimeout(refreshElevationSamplePreview, 80);
 		}
 	}, true);
 
@@ -443,6 +505,12 @@
 	}, true);
 
 	viewer.addEventListener("update", () => {
+		for (const measurement of viewer.scene.measurements) {
+			if (measurement.name !== "Prévia da elevação média" && !measurement.name.startsWith("Elevação média:")) continue;
+			measurement.spheres.forEach((sphere, index) => {
+				sphere.scale.multiplyScalar(index === 4 ? 0.55 : 0.3);
+			});
+		}
 		if (!elevationSampleLabels.size) return;
 		const camera = viewer.scene.getActiveCamera();
 		const renderSize = viewer.renderer.getSize(new THREE.Vector2());
