@@ -550,6 +550,10 @@
                         <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m4 18 2-11 9-3 5 8-6 8z"/><path d="m6 7 8 13M15 4l-1 16"/></svg>
                         <span class="tool-label">Área</span>
                     </button>
+                    <button class="tool-button" type="button" data-potree-action="sample-elevation" title="Calcular elevação média em uma grade 3 × 3" aria-label="Calcular elevação média em uma grade 3 por 3" aria-pressed="false">
+                        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 5h14v14H5z"/><path d="M9.7 5v14M14.3 5v14M5 9.7h14M5 14.3h14"/><path d="M8 2v2M16 2v2"/></svg>
+                        <span class="tool-label">Cota média</span>
+                    </button>
                     <button class="tool-button" type="button" data-potree-action="elevation" title="Colorir por elevação" aria-label="Colorir por elevação" aria-pressed="false">
                         <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m3 18 6-7 4 4 3-5 5 8z"/><path d="M4 21h16"/></svg>
                         <span class="tool-label">Elevação</span>
@@ -618,6 +622,15 @@
                         ));
                 }
             });
+        });
+
+        window.addEventListener("message", event => {
+            if (event.source !== iframe.contentWindow || event.origin !== window.location.origin) return;
+            if (event.data?.channel !== "afrodite-potree" || event.data.type !== "tool-state") return;
+            if (event.data.action === "sample-elevation") {
+                document.querySelector('[data-potree-action="sample-elevation"]')
+                    ?.setAttribute("aria-pressed", String(event.data.active));
+            }
         });
 
         function extrairData(nomeArquivo) {
@@ -709,6 +722,8 @@
             botaoSelecionado.classList.add("ativo");
             document.querySelectorAll('[data-potree-action="elevation"], [data-potree-action="rgb"]')
                 .forEach(button => button.setAttribute("aria-pressed", "false"));
+            document.querySelector('[data-potree-action="sample-elevation"]')
+                ?.setAttribute("aria-pressed", "false");
             loader.classList.remove("hidden");
             loader.querySelector("p").textContent = "Carregando nuvem de pontos...";
             iframe.src = montarUrlViewer(urlArquivo);
