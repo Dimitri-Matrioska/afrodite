@@ -200,6 +200,109 @@
             border: 0;
         }
 
+        #basic-toolbar {
+            position: fixed;
+            top: calc(var(--altura-topo) + var(--altura-titulo) + 18px);
+            right: 16px;
+            bottom: calc(var(--altura-timeline) + 18px);
+            z-index: 12;
+            display: flex;
+            align-items: center;
+        }
+
+        .toolbar-panel {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            padding: 8px;
+            border: 1px solid rgba(240, 192, 137, 0.32);
+            border-radius: 14px;
+            background: rgba(16, 25, 46, 0.94);
+            box-shadow: 0 8px 28px rgba(0, 0, 0, 0.25);
+            backdrop-filter: blur(8px);
+        }
+
+        .toolbar-modes {
+            display: flex;
+            gap: 2px;
+            padding: 3px;
+            border-radius: 9px;
+            background: rgba(255, 255, 255, 0.08);
+        }
+
+        .toolbar-mode {
+            min-width: 58px;
+            padding: 6px 7px;
+            border: 0;
+            border-radius: 7px;
+            background: transparent;
+            color: rgba(255, 255, 255, 0.72);
+            cursor: pointer;
+            font-size: 10px;
+            font-weight: 600;
+        }
+
+        .toolbar-mode[aria-pressed="true"] {
+            background: var(--salmao);
+            color: var(--marinho);
+        }
+
+        #basic-tools {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+
+        .tool-button {
+            display: flex;
+            width: 176px;
+            height: 42px;
+            align-items: center;
+            gap: 11px;
+            padding: 0 10px;
+            border: 1px solid transparent;
+            border-radius: 10px;
+            background: transparent;
+            color: var(--bege);
+            cursor: pointer;
+            text-align: left;
+            transition: color 0.15s ease, background 0.15s ease, border-color 0.15s ease;
+        }
+
+        .tool-button:hover,
+        .tool-button:focus-visible {
+            border-color: rgba(240, 192, 137, 0.6);
+            background: var(--marinho-hover);
+            color: var(--salmao);
+            outline: none;
+        }
+
+        .tool-button[aria-pressed="true"] {
+            background: var(--salmao);
+            color: var(--marinho);
+        }
+
+        .tool-button svg {
+            flex: 0 0 21px;
+            width: 21px;
+            height: 21px;
+            fill: none;
+            stroke: currentColor;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+            stroke-width: 1.7;
+        }
+
+        .tool-label {
+            font-size: 12px;
+            font-weight: 500;
+            white-space: nowrap;
+        }
+
+        body.mode-advanced #basic-tools {
+            display: none;
+        }
+
         /* =========================
            TELA DE CARREGAMENTO DO IFRAME
            ========================= */
@@ -300,7 +403,7 @@
 
         #timeline-list::before {
             position: absolute;
-            top: 22px;
+            top: 25px;
             right: 8px;
             left: 8px;
             height: 1px;
@@ -350,24 +453,13 @@
         .timeline-marker {
             position: relative;
             z-index: 1;
-            width: 9px;
-            height: 9px;
+            width: 13.5px;
+            height: 13.5px;
             margin: 0 0 1px 2px;
             border: 2px solid var(--marinho);
             border-radius: 50%;
             background: rgba(255, 255, 255, 0.65);
             box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.45);
-        }
-
-        .voo-label {
-            width: 100%;
-            overflow: hidden;
-            color: var(--branco);
-            font-size: 11px;
-            font-weight: 500;
-            text-align: left;
-            text-overflow: ellipsis;
-            white-space: nowrap;
         }
 
         /* =========================
@@ -386,6 +478,11 @@
             .titulo-bar { gap: 8px; padding: 0 12px; }
             .titulo-bar h1 { font-size: 12px; }
             .titulo-bar .subtitulo { display: none; }
+            #basic-toolbar { right: 8px; }
+            .toolbar-panel { gap: 4px; padding: 6px; }
+            .toolbar-mode { min-width: 52px; padding: 6px 5px; }
+            .tool-button { width: 156px; height: 38px; gap: 9px; }
+            .tool-label { font-size: 11px; }
             #timeline {
                 padding: 8px 10px 6px;
             }
@@ -433,12 +530,43 @@
             allow="fullscreen"
             src=""
         ></iframe>
+
+        <aside id="basic-toolbar" aria-label="Ferramentas do visualizador">
+            <div class="toolbar-panel">
+                <div class="toolbar-modes" role="group" aria-label="Modo do visualizador">
+                    <button class="toolbar-mode" type="button" data-viewer-mode="basic" aria-pressed="true">Básico</button>
+                    <button class="toolbar-mode" type="button" data-viewer-mode="advanced" aria-pressed="false">Avançado</button>
+                </div>
+                <div id="basic-tools" role="toolbar" aria-label="Ferramentas básicas">
+                    <button class="tool-button" type="button" data-potree-action="fit" title="Enquadrar nuvem" aria-label="Enquadrar nuvem">
+                        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 3H5a2 2 0 0 0-2 2v3M16 3h3a2 2 0 0 1 2 2v3M21 16v3a2 2 0 0 1-2 2h-3M8 21H5a2 2 0 0 1-2-2v-3"/><path d="M9 9h6v6H9z"/></svg>
+                        <span class="tool-label">Enquadrar</span>
+                    </button>
+                    <button class="tool-button" type="button" data-potree-action="distance" title="Medir distância" aria-label="Medir distância">
+                        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 18 18 4M7 4H4v3M20 17v3h-3"/><path d="m8 14 2 2M12 10l2 2M15 7l2 2"/></svg>
+                        <span class="tool-label">Distância</span>
+                    </button>
+                    <button class="tool-button" type="button" data-potree-action="area" title="Medir área" aria-label="Medir área">
+                        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m4 18 2-11 9-3 5 8-6 8z"/><path d="m6 7 8 13M15 4l-1 16"/></svg>
+                        <span class="tool-label">Área</span>
+                    </button>
+                    <button class="tool-button" type="button" data-potree-action="elevation" title="Colorir por elevação" aria-label="Colorir por elevação" aria-pressed="false">
+                        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m3 18 6-7 4 4 3-5 5 8z"/><path d="M4 21h16"/></svg>
+                        <span class="tool-label">Elevação</span>
+                    </button>
+                    <button class="tool-button" type="button" data-potree-action="rgb" title="Mostrar cores originais" aria-label="Mostrar cores originais" aria-pressed="false">
+                        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3a9 9 0 1 0 0 18h1.2a2 2 0 0 0 1.5-3.3 1.7 1.7 0 0 1 1.3-2.8H18a3 3 0 0 0 3-3c0-5-4-8.9-9-8.9Z"/><path d="M7.5 10h.01M11.5 7h.01M16 9h.01"/></svg>
+                        <span class="tool-label">Cores originais</span>
+                    </button>
+                </div>
+            </div>
+        </aside>
     </div>
 
     <footer id="timeline">
         <div class="timeline-heading">
-            <strong>ARQUIVOS</strong>
-            <span id="timeline-status" role="status" aria-live="polite">Buscando arquivos...</span>
+            <strong>VOOS</strong>
+            <span id="timeline-status" role="status" aria-live="polite"></span>
         </div>
         <nav id="timeline-list" aria-label="Arquivos em ordem cronológica"></nav>
     </footer>
@@ -455,6 +583,42 @@
         const loader = document.getElementById("iframe-loader");
         const timeline = document.getElementById("timeline-list");
         const statusTimeline = document.getElementById("timeline-status");
+        let viewerMode = "basic";
+
+        function sendViewerCommand(type, details = {}) {
+            iframe.contentWindow?.postMessage(
+                { channel: "afrodite-potree", type, ...details },
+                window.location.origin
+            );
+        }
+
+        function setViewerMode(mode) {
+            viewerMode = mode;
+            document.body.classList.toggle("mode-advanced", mode === "advanced");
+            document.querySelectorAll("[data-viewer-mode]").forEach(button => {
+                button.setAttribute("aria-pressed", String(button.dataset.viewerMode === mode));
+            });
+            sendViewerCommand("mode", { mode });
+        }
+
+        document.querySelectorAll("[data-viewer-mode]").forEach(button => {
+            button.addEventListener("click", () => setViewerMode(button.dataset.viewerMode));
+        });
+
+        document.querySelectorAll("[data-potree-action]").forEach(button => {
+            button.addEventListener("click", () => {
+                const action = button.dataset.potreeAction;
+                sendViewerCommand("tool", { action });
+
+                if (action === "elevation" || action === "rgb") {
+                    document.querySelectorAll('[data-potree-action="elevation"], [data-potree-action="rgb"]')
+                        .forEach(colorButton => colorButton.setAttribute(
+                            "aria-pressed",
+                            String(colorButton.dataset.potreeAction === action)
+                        ));
+                }
+            });
+        });
 
         function extrairData(nomeArquivo) {
             const match = nomeArquivo.match(/(?:^|[^\d])(\d{1,2})-(\d{1,2})-(\d{4})(?=[^\d]|$)/);
@@ -528,11 +692,7 @@
             marcador.className = "timeline-marker";
             marcador.setAttribute("aria-hidden", "true");
 
-            const nome = document.createElement("span");
-            nome.className = "voo-label";
-            nome.textContent = arquivo.nome.replace(/\.copc\.laz$/i, "");
-
-            botao.append(data, marcador, nome);
+            botao.append(data, marcador);
             botao.addEventListener("click", () => selecionarArquivo(botao, arquivo.url));
             return botao;
         }
@@ -547,6 +707,8 @@
         function selecionarArquivo(botaoSelecionado, urlArquivo) {
             document.querySelectorAll(".voo-btn").forEach((botao) => botao.classList.remove("ativo"));
             botaoSelecionado.classList.add("ativo");
+            document.querySelectorAll('[data-potree-action="elevation"], [data-potree-action="rgb"]')
+                .forEach(button => button.setAttribute("aria-pressed", "false"));
             loader.classList.remove("hidden");
             loader.querySelector("p").textContent = "Carregando nuvem de pontos...";
             iframe.src = montarUrlViewer(urlArquivo);
@@ -567,7 +729,7 @@
 
                 const arquivosComData = arquivos.filter((arquivo) => arquivo.data);
                 const maisRecente = arquivosComData.at(-1) || arquivos.at(-1);
-                statusTimeline.textContent = `${arquivos.length} arquivo(s) — mais antigo à esquerda, mais recente à direita`;
+                statusTimeline.textContent = "";
                 const botaoMaisRecente = timeline.children[arquivos.indexOf(maisRecente)];
                 if (botaoMaisRecente) selecionarArquivo(botaoMaisRecente, maisRecente.url);
             } catch (erro) {
@@ -577,7 +739,10 @@
             }
         }
 
-        iframe.addEventListener("load", () => loader.classList.add("hidden"));
+        iframe.addEventListener("load", () => {
+            loader.classList.add("hidden");
+            sendViewerCommand("mode", { mode: viewerMode });
+        });
 
         window.addEventListener("load", () => {
             montarTimeline();

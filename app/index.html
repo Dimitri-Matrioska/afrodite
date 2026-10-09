@@ -59,6 +59,36 @@
 		body.embedded #painel-arquivos,
 		body.embedded #barra-rapida { display: none; }
 
+		body.embedded {
+			--color-0: #10192e;
+			--color-1: #f0c089;
+			--color-2: #1b2a4a;
+			--color-3: #3d4fe8;
+			--color-4: #f5f1eb;
+			--bg-color: var(--color-0);
+			--bg-color-2: #1b2a4a;
+			--bg-light-color: #1b2a4a;
+			--bg-dark-color: #10192e;
+			--bg-hover-color: #3d4fe8;
+			--font-color: #f5f1eb;
+			--font-color-2: #ffffff;
+			--border-color: #3d4fe8;
+		}
+
+		body.embedded #potree_sidebar_container {
+			z-index: 1001;
+			border-right-color: rgba(240, 192, 137, 0.35);
+			box-shadow: 8px 0 28px rgba(0, 0, 0, 0.22);
+		}
+
+		body.embedded #potree_quick_buttons {
+			display: none !important;
+		}
+
+		body.embedded:not(.advanced) #potree_sidebar_container {
+			display: none !important;
+		}
+
 		/* ---------- status de carregamento ---------- */
 		#carregando {
 			position: absolute; bottom: 18px; left: 50%; transform: translateX(-50%);
@@ -158,6 +188,57 @@
 	/* ------------------- inicialização do viewer ------------------- */
 	const renderArea = document.getElementById("potree_render_area");
 	window.viewer = new Potree.Viewer(renderArea);
+
+	window.addEventListener("message", event => {
+		if (event.source !== window.parent || event.origin !== window.location.origin) return;
+		if (event.data?.channel !== "afrodite-potree") return;
+
+		if (event.data.type === "mode") {
+			document.body.classList.toggle("advanced", event.data.mode === "advanced");
+			return;
+		}
+
+		if (event.data.type !== "tool") return;
+		switch (event.data.action) {
+			case "fit":
+				viewer.fitToScreen(0.6);
+				break;
+			case "distance":
+				viewer.measuringTool.startInsertion({
+					showDistances: true,
+					showArea: false,
+					closed: false,
+					name: "Distance"
+				});
+				break;
+			case "area":
+				viewer.measuringTool.startInsertion({
+					showDistances: true,
+					showArea: true,
+					closed: true,
+					name: "Area"
+				});
+				break;
+			case "elevation":
+				viewer.scene.pointclouds.forEach(pointcloud => {
+					pointcloud.material.gradient = [
+						[0, new THREE.Color("#10192e")],
+						[0.34, new THREE.Color("#3d4fe8")],
+						[0.68, new THREE.Color("#f0c089")],
+						[1, new THREE.Color("#f5f1eb")]
+					];
+					pointcloud.material.activeAttributeName = "elevation";
+				});
+				break;
+			case "rgb":
+				viewer.scene.pointclouds.forEach(pointcloud => {
+					pointcloud.material.activeAttributeName = "rgba";
+				});
+				break;
+			default:
+				console.warn("Ferramenta Potree não reconhecida:", event.data.action);
+		}
+	});
 
 	viewer.setEDLEnabled(true);
 	viewer.setFOV(60);
