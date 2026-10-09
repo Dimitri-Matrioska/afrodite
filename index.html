@@ -23,6 +23,7 @@
             --altura-topo: 52px;
             --altura-titulo: 44px;
             --altura-timeline: 132px;
+            --altura-perfil: 270px;
         }
 
         * {
@@ -193,6 +194,10 @@
             background: var(--marinho);
         }
 
+        body.profile-open #viewer-shell {
+            bottom: calc(var(--altura-timeline) + var(--altura-perfil));
+        }
+
         #viewer-shell iframe {
             display: block;
             width: 100%;
@@ -208,6 +213,10 @@
             z-index: 12;
             display: flex;
             align-items: center;
+        }
+
+        body.profile-open #basic-toolbar {
+            bottom: calc(var(--altura-timeline) + var(--altura-perfil) + 12px);
         }
 
         .toolbar-panel {
@@ -520,6 +529,161 @@
         }
 
         /* =========================
+           PERFIL DE ELEVAÇÃO
+           ========================= */
+
+        #profile-panel {
+            position: fixed;
+            right: 0;
+            bottom: var(--altura-timeline);
+            left: 0;
+            z-index: 13;
+            display: grid;
+            height: var(--altura-perfil);
+            grid-template-rows: auto auto minmax(0, 1fr) auto;
+            gap: 8px;
+            padding: 12px 20px 9px;
+            border-top: 1px solid rgba(61, 79, 232, 0.55);
+            background:
+                radial-gradient(ellipse at 50% 0, rgba(61, 79, 232, 0.15), transparent 60%),
+                #0c1427;
+            color: var(--bege);
+            box-shadow: 0 -10px 30px rgba(0, 0, 0, 0.22);
+        }
+
+        #profile-panel[hidden] {
+            display: none;
+        }
+
+        .profile-heading,
+        .profile-chart-heading {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            min-width: 0;
+        }
+
+        .profile-title {
+            display: flex;
+            align-items: center;
+            gap: 9px;
+            min-width: 0;
+        }
+
+        .profile-title-mark {
+            width: 8px;
+            height: 8px;
+            flex: 0 0 8px;
+            border-radius: 50%;
+            background: #56e3f0;
+            box-shadow: 0 0 12px rgba(86, 227, 240, 0.8);
+        }
+
+        .profile-title strong {
+            font-size: 11px;
+            letter-spacing: 1.1px;
+        }
+
+        #profile-instructions {
+            overflow: hidden;
+            color: rgba(245, 241, 235, 0.62);
+            font-size: 11px;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        #profile-close {
+            width: 28px;
+            height: 28px;
+            flex: 0 0 28px;
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.04);
+            color: var(--bege);
+            cursor: pointer;
+            font-size: 18px;
+            line-height: 1;
+        }
+
+        #profile-close:hover {
+            border-color: rgba(240, 192, 137, 0.6);
+            color: var(--salmao);
+        }
+
+        #profile-metrics {
+            display: grid;
+            grid-template-columns: repeat(6, minmax(0, 1fr));
+            gap: 7px;
+        }
+
+        .profile-metric {
+            min-width: 0;
+            padding: 5px 9px 6px;
+            border: 1px solid rgba(123, 148, 205, 0.14);
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.035);
+        }
+
+        .profile-metric span {
+            display: block;
+            overflow: hidden;
+            color: rgba(245, 241, 235, 0.52);
+            font-size: 9px;
+            letter-spacing: 0.45px;
+            text-overflow: ellipsis;
+            text-transform: uppercase;
+            white-space: nowrap;
+        }
+
+        .profile-metric strong {
+            display: block;
+            overflow: hidden;
+            margin-top: 1px;
+            color: #f5f1eb;
+            font-size: 14px;
+            font-variant-numeric: tabular-nums;
+            font-weight: 600;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .profile-chart {
+            display: grid;
+            min-height: 0;
+            grid-template-rows: auto minmax(0, 1fr);
+            gap: 2px;
+        }
+
+        .profile-chart-heading {
+            color: rgba(245, 241, 235, 0.58);
+            font-size: 9px;
+            letter-spacing: 0.8px;
+        }
+
+        #profile-range {
+            color: rgba(86, 227, 240, 0.85);
+            font-variant-numeric: tabular-nums;
+            letter-spacing: 0;
+            text-align: right;
+        }
+
+        #profile-chart {
+            display: block;
+            width: 100%;
+            height: 100%;
+            min-height: 80px;
+        }
+
+        #profile-status {
+            overflow: hidden;
+            color: rgba(245, 241, 235, 0.58);
+            font-size: 10px;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        /* =========================
            RESPONSIVIDADE
            ========================= */
 
@@ -528,6 +692,7 @@
                 --altura-topo: 46px;
                 --altura-titulo: 40px;
                 --altura-timeline: 124px;
+                --altura-perfil: 310px;
             }
 
             #topo { padding: 0 12px; }
@@ -545,6 +710,16 @@
             }
             #timeline-list { gap: 12px; }
             .voo-btn { flex-basis: 150px; }
+            #profile-panel { gap: 7px; padding: 9px 10px 7px; }
+            #profile-metrics { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 5px; }
+            .profile-metric { padding: 4px 6px; }
+            .profile-metric strong { font-size: 12px; }
+            #profile-instructions { font-size: 10px; }
+            .profile-chart-heading { font-size: 8px; }
+        }
+
+        @media (min-width: 481px) and (max-width: 760px) {
+            #profile-metrics { grid-template-columns: repeat(3, minmax(0, 1fr)); }
         }
     </style>
 </head>
@@ -607,6 +782,10 @@
                         <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m4 18 2-11 9-3 5 8-6 8z"/><path d="m6 7 8 13M15 4l-1 16"/></svg>
                         <span class="tool-label">Área</span>
                     </button>
+                    <button class="tool-button" type="button" data-potree-action="profile" title="Desenhar uma linha e ver o perfil de elevação" aria-label="Perfil de elevação" aria-pressed="false">
+                        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 19h18M4 16l5-5 4 2 6-8"/><circle cx="4" cy="16" r="1"/><circle cx="19" cy="5" r="1"/></svg>
+                        <span class="tool-label">Perfil de elevação</span>
+                    </button>
                     <button class="tool-button" type="button" data-potree-action="sample-elevation" title="Calcular elevação média em uma grade 3 × 3" aria-label="Calcular elevação média em uma grade 3 por 3" aria-pressed="false">
                         <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 5h14v14H5z"/><path d="M9.7 5v14M14.3 5v14M5 9.7h14M5 14.3h14"/><path d="M8 2v2M16 2v2"/></svg>
                         <span class="tool-label">Elevação média</span>
@@ -631,6 +810,33 @@
         </aside>
     </div>
 
+    <section id="profile-panel" aria-label="Perfil de elevação" aria-live="polite" hidden>
+        <div class="profile-heading">
+            <div class="profile-title">
+                <span class="profile-title-mark" aria-hidden="true"></span>
+                <strong>PERFIL DE ELEVAÇÃO</strong>
+                <span id="profile-instructions">Desenhe uma linha sobre a nuvem e clique com o botão direito para concluir.</span>
+            </div>
+            <button id="profile-close" type="button" aria-label="Fechar perfil de elevação" title="Fechar perfil">×</button>
+        </div>
+        <div id="profile-metrics">
+            <div class="profile-metric"><span>Distância</span><strong data-profile-metric="distance">—</strong></div>
+            <div class="profile-metric"><span>Δ cota</span><strong data-profile-metric="delta">—</strong></div>
+            <div class="profile-metric"><span>Inclinação</span><strong data-profile-metric="slope">—</strong></div>
+            <div class="profile-metric"><span>Ângulo</span><strong data-profile-metric="angle">—</strong></div>
+            <div class="profile-metric"><span>Cota inicial</span><strong data-profile-metric="start">—</strong></div>
+            <div class="profile-metric"><span>Cota final</span><strong data-profile-metric="end">—</strong></div>
+        </div>
+        <div class="profile-chart">
+            <div class="profile-chart-heading">
+                <span>COTA AO LONGO DO TRAJETO</span>
+                <span id="profile-range"></span>
+            </div>
+            <canvas id="profile-chart" aria-label="Gráfico da elevação em função da distância"></canvas>
+        </div>
+        <div id="profile-status" role="status">Aguardando o desenho do perfil.</div>
+    </section>
+
     <footer id="timeline">
         <div class="timeline-heading">
             <strong>VOOS</strong>
@@ -651,8 +857,15 @@
         const loader = document.getElementById("iframe-loader");
         const timeline = document.getElementById("timeline-list");
         const statusTimeline = document.getElementById("timeline-status");
+        const profilePanel = document.getElementById("profile-panel");
+        const profileCanvas = document.getElementById("profile-chart");
+        const profileContext = profileCanvas.getContext("2d");
+        const profileStatus = document.getElementById("profile-status");
+        const profileInstructions = document.getElementById("profile-instructions");
+        const profileRange = document.getElementById("profile-range");
         let viewerMode = "basic";
         let selectedElevationPalette = null;
+        let profileChartData = null;
         const paletteLabels = {
             SPECTRAL: "Spectral",
             PLASMA: "Plasma",
@@ -682,6 +895,151 @@
                 window.location.origin
             );
         }
+
+        function setProfilePanelOpen(open) {
+            profilePanel.hidden = !open;
+            document.body.classList.toggle("profile-open", open);
+            document.querySelector('[data-potree-action="profile"]')
+                .setAttribute("aria-pressed", String(open));
+            if (open) requestAnimationFrame(drawProfileChart);
+        }
+
+        function formatProfileValue(value, digits = 2) {
+            return new Intl.NumberFormat("pt-BR", {
+                minimumFractionDigits: digits,
+                maximumFractionDigits: digits
+            }).format(value);
+        }
+
+        function updateProfileMetrics(metrics) {
+            if (!metrics) return;
+            const signed = value => `${value > 0 ? "+" : ""}${formatProfileValue(value)}`;
+            const values = {
+                distance: `${formatProfileValue(metrics.distance)} m`,
+                delta: `${signed(metrics.deltaZ)} m`,
+                slope: metrics.slopePercent === null ? "—" : `${signed(metrics.slopePercent)}%`,
+                angle: metrics.angleDegrees === null ? "—" : `${signed(metrics.angleDegrees)}°`,
+                start: `${formatProfileValue(metrics.startElevation)} m`,
+                end: `${formatProfileValue(metrics.endElevation)} m`
+            };
+            Object.entries(values).forEach(([key, value]) => {
+                profilePanel.querySelector(`[data-profile-metric="${key}"]`).textContent = value;
+            });
+        }
+
+        function drawProfileChart() {
+            if (profilePanel.hidden) return;
+            const bounds = profileCanvas.getBoundingClientRect();
+            if (!bounds.width || !bounds.height) return;
+            const pixelRatio = window.devicePixelRatio || 1;
+            profileCanvas.width = Math.round(bounds.width * pixelRatio);
+            profileCanvas.height = Math.round(bounds.height * pixelRatio);
+            profileContext.setTransform(pixelRatio, 0, 0, pixelRatio, 0, 0);
+            profileContext.clearRect(0, 0, bounds.width, bounds.height);
+
+            const samples = profileChartData?.samples || [];
+            if (samples.length < 2) {
+                profileContext.fillStyle = "rgba(245, 241, 235, 0.48)";
+                profileContext.font = "11px IBM Plex Sans, sans-serif";
+                profileContext.textAlign = "center";
+                profileContext.fillText("O gráfico será exibido após o processamento dos pontos.", bounds.width / 2, bounds.height / 2);
+                return;
+            }
+
+            const left = 42;
+            const right = 10;
+            const top = 7;
+            const bottom = 22;
+            const plotWidth = Math.max(1, bounds.width - left - right);
+            const plotHeight = Math.max(1, bounds.height - top - bottom);
+            const minDistance = samples[0].distance;
+            const maxDistance = samples[samples.length - 1].distance;
+            const minElevation = Math.min(...samples.map(sample => sample.elevation));
+            const maxElevation = Math.max(...samples.map(sample => sample.elevation));
+            const elevationSpan = Math.max(maxElevation - minElevation, 0.01);
+            const minAxis = minElevation - elevationSpan * 0.12;
+            const maxAxis = maxElevation + elevationSpan * 0.12;
+            const xAt = distance => left + ((distance - minDistance) / Math.max(maxDistance - minDistance, 0.001)) * plotWidth;
+            const yAt = elevation => top + ((maxAxis - elevation) / (maxAxis - minAxis)) * plotHeight;
+
+            profileContext.font = "9px IBM Plex Sans, sans-serif";
+            profileContext.lineWidth = 1;
+            profileContext.textAlign = "right";
+            for (let i = 0; i <= 3; i++) {
+                const y = top + plotHeight * i / 3;
+                const value = maxAxis - (maxAxis - minAxis) * i / 3;
+                profileContext.strokeStyle = "rgba(158, 179, 221, 0.12)";
+                profileContext.beginPath();
+                profileContext.moveTo(left, y);
+                profileContext.lineTo(left + plotWidth, y);
+                profileContext.stroke();
+                profileContext.fillStyle = "rgba(245, 241, 235, 0.52)";
+                profileContext.fillText(formatProfileValue(value, 1), left - 7, y + 3);
+            }
+
+            profileContext.textAlign = "center";
+            for (let i = 0; i <= 4; i++) {
+                const x = left + plotWidth * i / 4;
+                const distance = minDistance + (maxDistance - minDistance) * i / 4;
+                profileContext.strokeStyle = "rgba(158, 179, 221, 0.08)";
+                profileContext.beginPath();
+                profileContext.moveTo(x, top);
+                profileContext.lineTo(x, top + plotHeight);
+                profileContext.stroke();
+                profileContext.fillStyle = "rgba(245, 241, 235, 0.52)";
+                profileContext.fillText(`${formatProfileValue(distance, 0)} m`, x, bounds.height - 5);
+            }
+
+            profileContext.beginPath();
+            samples.forEach((sample, index) => {
+                const x = xAt(sample.distance);
+                const y = yAt(sample.elevation);
+                if (index === 0) profileContext.moveTo(x, y);
+                else profileContext.lineTo(x, y);
+            });
+            profileContext.lineTo(xAt(samples[samples.length - 1].distance), top + plotHeight);
+            profileContext.lineTo(xAt(samples[0].distance), top + plotHeight);
+            profileContext.closePath();
+            const fill = profileContext.createLinearGradient(0, top, 0, top + plotHeight);
+            fill.addColorStop(0, "rgba(86, 227, 240, 0.22)");
+            fill.addColorStop(1, "rgba(61, 79, 232, 0.015)");
+            profileContext.fillStyle = fill;
+            profileContext.fill();
+
+            profileContext.beginPath();
+            samples.forEach((sample, index) => {
+                const x = xAt(sample.distance);
+                const y = yAt(sample.elevation);
+                if (index === 0) profileContext.moveTo(x, y);
+                else profileContext.lineTo(x, y);
+            });
+            profileContext.strokeStyle = "#56e3f0";
+            profileContext.lineWidth = 2;
+            profileContext.shadowColor = "rgba(86, 227, 240, 0.55)";
+            profileContext.shadowBlur = 7;
+            profileContext.stroke();
+            profileContext.shadowBlur = 0;
+            profileContext.fillStyle = "#f0c089";
+            for (const index of [0, samples.length - 1]) {
+                const sample = samples[index];
+                profileContext.beginPath();
+                profileContext.arc(xAt(sample.distance), yAt(sample.elevation), 3, 0, Math.PI * 2);
+                profileContext.fill();
+            }
+            profileRange.textContent = `Mín. ${formatProfileValue(minElevation)} m  ·  Máx. ${formatProfileValue(maxElevation)} m`;
+        }
+
+        function closeProfilePanel() {
+            setProfilePanelOpen(false);
+            profileChartData = null;
+        }
+
+        document.getElementById("profile-close").addEventListener("click", () => {
+            closeProfilePanel();
+            sendViewerCommand("tool", { action: "profile-close" });
+        });
+
+        window.addEventListener("resize", drawProfileChart);
 
         function setViewerMode(mode) {
             viewerMode = mode;
@@ -751,6 +1109,18 @@
         document.querySelectorAll("[data-potree-action]").forEach(button => {
             button.addEventListener("click", () => {
                 const action = button.dataset.potreeAction;
+                if (action === "profile") {
+                    profileChartData = null;
+                    profileInstructions.textContent = "Desenhe uma linha sobre a nuvem e clique com o botão direito para concluir.";
+                    profileStatus.textContent = "Clique sobre a nuvem para marcar o início e o fim do perfil.";
+                    profileRange.textContent = "";
+                    profilePanel.querySelectorAll("[data-profile-metric]").forEach(metric => {
+                        metric.textContent = "—";
+                    });
+                    setProfilePanelOpen(true);
+                } else if (action === "clear-measurements") {
+                    closeProfilePanel();
+                }
                 sendViewerCommand("tool", { action });
 
                 if (action === "rgb") {
@@ -762,9 +1132,32 @@
 
         window.addEventListener("message", event => {
             if (event.source !== iframe.contentWindow || event.origin !== window.location.origin) return;
-            if (event.data?.channel !== "afrodite-potree" || event.data.type !== "tool-state") return;
+            if (event.data?.channel !== "afrodite-potree") return;
+            if (event.data.type === "profile-progress") {
+                if (!profilePanel.hidden) {
+                    profileChartData = event.data;
+                    updateProfileMetrics(event.data.metrics);
+                    profileStatus.textContent = event.data.status || "Processando os pontos do perfil...";
+                    requestAnimationFrame(drawProfileChart);
+                }
+                return;
+            }
+            if (event.data.type === "profile-status") {
+                profileInstructions.textContent = event.data.message || "";
+                profileStatus.textContent = event.data.status || event.data.message || "";
+                return;
+            }
+            if (event.data.type === "profile-close") {
+                closeProfilePanel();
+                return;
+            }
+            if (event.data.type !== "tool-state") return;
             if (event.data.action === "sample-elevation") {
                 document.querySelector('[data-potree-action="sample-elevation"]')
+                    ?.setAttribute("aria-pressed", String(event.data.active));
+            }
+            if (event.data.action === "profile") {
+                document.querySelector('[data-potree-action="profile"]')
                     ?.setAttribute("aria-pressed", String(event.data.active));
             }
             if (event.data.action === "elevation" && event.data.palette) {
@@ -864,6 +1257,7 @@
         }
 
         function selecionarArquivo(botaoSelecionado, urlArquivo) {
+            closeProfilePanel();
             document.querySelectorAll(".voo-btn").forEach((botao) => botao.classList.remove("ativo"));
             botaoSelecionado.classList.add("ativo");
             document.querySelector('[data-potree-action="rgb"]')

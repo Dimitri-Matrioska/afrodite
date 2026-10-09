@@ -204,6 +204,230 @@
 	let elevationPreviewTimer = null;
 	const elevationSampleLabels = new Set();
 	let activeElevationPalette = null;
+	let activeElevationProfile = null;
+	let profileDrawingActive = false;
+	let profileContextMenuHandler = null;
+	let profileRequests = [];
+	let profileGeneration = 0;
+
+	function postProfileMessage(type, details = {}) {
+		if (window.parent === window) return;
+		window.parent.postMessage({
+			channel: "afrodite-potree",
+			type,
+			...details
+		}, window.location.origin);
+	}
+
+	function setProfileDrawingActive(active) {
+		profileDrawingActive = active;
+		postProfileMessage("tool-state", {
+			action: "profile",
+			active
+		});
+	}
+
+	function stopElevationProfile(notifyParent = false) {
+		const wasDrawing = profileDrawingActive;
+		profileGeneration++;
+		profileDrawingActive = false;
+		const domElement = viewer.renderer.domElement;
+		if (profileContextMenuHandler) {
+			domElement.removeEventListener("contextmenu", profileContextMenuHandler, true);
+			profileContextMenuHandler = null;
+		}
+
+		if (wasDrawing) viewer.dispatchEvent({ type: "cancel_insertions" });
+		const requests = profileRequests;
+		profileRequests = [];
+		for (const request of requests) request.cancel();
+		if (activeElevationProfile && viewer.scene.profiles.includes(activeElevationProfile)) {
+			viewer.scene.removeProfile(activeElevationProfile);
+		}
+		activeElevationProfile = null;
+		postProfileMessage("tool-state", { action: "profile", active: false });
+		if (notifyParent) postProfileMessage("profile-close");
+	}
+
+	function formatProfileMetrics(profile) {
+		const points = profile.points;
+		let horizontalDistance = 0;
+		for (let i = 1; i < points.length; i++) {
+			const dx = points[i].x - points[i - 1].x;
+			const dy = points[i].y - points[i - 1].y;
+			horizontalDistance += Math.hypot(dx, dy);
+		}
+		const startElevation = points[0].z;
+		const endElevation = points[points.length - 1].z;
+		const deltaZ = endElevation - startElevation;
+		const angleDegrees = horizontalDistance > 0
+			? Math.atan2(deltaZ, horizontalDistance) * 180 / Math.PI
+			: null;
+		return {
+			distance: horizontalDistance,
+			deltaZ,
+			startElevation,
+			endElevation,
+			slopePercent: horizontalDistance > 0 ? deltaZ / horizontalDistance * 100 : null,
+			angleDegrees
+		};
+	}
+
+	function createElevationProfile(profile) {
+		if (!viewer.scene.pointclouds.some(pointcloud => pointcloud.visible)) {
+			postProfileMessage("profile-status", {
+				message: "Carregue uma nuvem antes de medir.",
+				status: "Nenhuma nuvem de pontos está carregada."
+			});
+			setProfileDrawingActive(false);
+			return;
+		}
+
+		const metrics = formatProfileMetrics(profile);
+		if (metrics.distance <= 0) {
+			postProfileMessage("profile-status", {
+				message: "Os pontos inicial e final precisam ser diferentes.",
+				status: "O perfil não tem distância horizontal."
+			});
+			return;
+		}
+
+		const generation = profileGeneration;
+		const binWidth = Math.max(metrics.distance / 600, 0.25);
+		const bins = new Map();
+		let pendingRequests = 0;
+		let totalPoints = 0;
+
+		const publish = finished => {
+			if (generation !== profileGeneration) return;
+			const samples = Array.from(bins.values())
+				.sort((a, b) => a.distance / a.count - b.distance / b.count)
+				.map(bin => ({
+					distance: bin.distance / bin.count,
+					elevation: bin.elevation / bin.count
+				}));
+			postProfileMessage("profile-progress", {
+				metrics,
+				samples,
+				status: finished
+					? (totalPoints ? `${totalPoints.toLocaleString("pt-BR")} pontos processados.` : "Nenhum ponto encontrado no corredor. Tente uma linha mais próxima da nuvem.")
+					: `${totalPoints.toLocaleString("pt-BR")} pontos encontrados; refinando o perfil...`,
+				finished
+			});
+		};
+
+		const collect = (pointcloud, profileData) => {
+			for (const segment of profileData.segments) {
+				const pointData = segment.points.data;
+				const positions = pointData.position;
+				const mileages = pointData.mileage;
+				if (!positions || !mileages) continue;
+				const pointCount = segment.points.numPoints;
+				const cloudZ = pointcloud.position.z;
+				for (let i = 0; i < pointCount; i++) {
+					const distance = Math.max(0, Math.min(metrics.distance, mileages[i]));
+					const key = Math.floor(distance / binWidth);
+					let bin = bins.get(key);
+					if (!bin) {
+						bin = { distance: 0, elevation: 0, count: 0 };
+						bins.set(key, bin);
+					}
+					bin.distance += distance;
+					bin.elevation += positions[i * 3 + 2] + cloudZ;
+					bin.count++;
+				}
+				totalPoints += pointCount;
+			}
+		};
+
+		const pointclouds = viewer.scene.pointclouds.filter(pointcloud => pointcloud.visible);
+		pendingRequests = pointclouds.length;
+		postProfileMessage("profile-progress", {
+			metrics,
+			samples: [],
+			status: "Buscando pontos no corredor do perfil...",
+			finished: false
+		});
+
+		for (const pointcloud of pointclouds) {
+			let request;
+			try {
+				request = pointcloud.getPointsInProfile(profile, null, {
+					onProgress: event => {
+						if (generation !== profileGeneration) return;
+						collect(pointcloud, event.points);
+						publish(false);
+					},
+					onFinish: () => {
+						profileRequests = profileRequests.filter(activeRequest => activeRequest !== request);
+						if (generation !== profileGeneration) return;
+						pendingRequests--;
+						if (pendingRequests === 0) publish(true);
+					},
+					onCancel: () => {
+						profileRequests = profileRequests.filter(activeRequest => activeRequest !== request);
+					}
+				});
+				profileRequests.push(request);
+			} catch (error) {
+				console.error("Falha ao processar o perfil de elevação:", error);
+				pendingRequests--;
+				if (pendingRequests === 0) {
+					postProfileMessage("profile-status", {
+						message: "Não foi possível processar o perfil.",
+						status: error.message
+					});
+				}
+			}
+		}
+	}
+
+	function finishElevationProfile() {
+		if (!profileDrawingActive) return;
+		profileDrawingActive = false;
+		const domElement = viewer.renderer.domElement;
+		if (profileContextMenuHandler) {
+			domElement.removeEventListener("contextmenu", profileContextMenuHandler, true);
+			profileContextMenuHandler = null;
+		}
+
+		const profile = activeElevationProfile;
+		if (!profile || profile.points.length < 2) {
+			stopElevationProfile(true);
+			return;
+		}
+		setProfileDrawingActive(false);
+		postProfileMessage("profile-status", {
+			message: "Perfil desenhado.",
+			status: "Extraindo as cotas da nuvem..."
+		});
+		createElevationProfile(profile);
+	}
+
+	function beginElevationProfile() {
+		stopElevationProfile(false);
+		if (!viewer.scene.pointclouds.some(pointcloud => pointcloud.visible)) {
+			postProfileMessage("profile-status", {
+				message: "Carregue uma nuvem antes de medir.",
+				status: "Nenhuma nuvem de pontos está carregada."
+			});
+			return;
+		}
+
+		activeElevationProfile = viewer.profileTool.startInsertion({ name: "Perfil de elevação" });
+		setProfileDrawingActive(true);
+		const domElement = viewer.renderer.domElement;
+		profileContextMenuHandler = event => {
+			if (!profileDrawingActive) return;
+			event.preventDefault();
+			finishElevationProfile();
+		};
+		domElement.addEventListener("contextmenu", profileContextMenuHandler, true);
+		postProfileMessage("profile-status", {
+			message: "Desenhe a linha.",
+			status: "Clique para marcar os pontos e use o botão direito para concluir."
+		});
+	}
 
 	function setElevationSamplingActive(active) {
 		elevationSamplingActive = active;
@@ -322,6 +546,7 @@
 	}
 
 	function clearViewerMeasurements() {
+		stopElevationProfile(true);
 		viewer.dispatchEvent({ type: "cancel_insertions" });
 		setElevationSamplingActive(false);
 		clearTimeout(elevationPreviewTimer);
@@ -432,6 +657,12 @@
 					closed: true,
 					name: "Area"
 				});
+				break;
+			case "profile":
+				beginElevationProfile();
+				break;
+			case "profile-close":
+				stopElevationProfile(true);
 				break;
 			case "elevation":
 				applyElevationPalette(event.data.palette || "SPECTRAL");
