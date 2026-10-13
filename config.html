@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clipboard Sync & Reader</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        darkBg: '#0f172a',
+                        darkCard: '#1e293b',
+                        darkBorder: '#334155'
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-slate-950 text-slate-100 min-h-screen flex flex-col font-sans selection:bg-indigo-500 selection:text-white">
+
+    <header class="border-b border-slate-800 bg-slate-900/50 backdrop-blur sticky top-0 z-30">
+        <div class="max-w-6xl mx-auto px-4 py-4 flex flex-col sm:flex-row items-center justify-between gap-4">
+            <div class="flex items-center gap-3">
+                <div class="bg-indigo-600 p-2.5 rounded-xl shadow-lg shadow-indigo-500/20 text-white">
+                    <i class="fa-solid fa-cloud-arrow-down text-xl"></i>
+                </div>
+                <div>
+                    <h1 class="text-xl font-bold tracking-tight text-white">Clipboard Sync</h1>
+                    <p class="text-xs text-slate-400">Transfira textos e códigos do celular para o PC instantaneamente</p>
+                </div>
+            </div>
+            
+            <div class="flex items-center gap-3 w-full sm:w-auto justify-end">
+                <button onclick="toggleGithubGuide()" class="px-3.5 py-2 text-xs font-medium bg-indigo-500/10 text-indigo-400 hover:bg-indigo-500/20 border border-indigo-500/20 rounded-lg transition-all flex items-center gap-2">
+                    <i class="fa-brands fa-github"></i> Guia GitHub Pages
+                </button>
+                <button onclick="clearAllItems()" class="px-3.5 py-2 text-xs font-medium bg-rose-500/10 text-rose-400 hover:bg-rose-500/20 border border-rose-500/20 rounded-lg transition-all flex items-center gap-2">
+                    <i class="fa-solid fa-trash-can"></i> Apagar Tudo
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <div id="githubGuideModal" class="hidden fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+        <div class="bg-slate-900 border border-slate-800 rounded-2xl w-full max-w-2xl max-h-[90vh] flex flex-col shadow-2xl overflow-hidden animate-in fade-in zoom-in duration-200">
+            <div class="px-6 py-4 border-b border-slate-800 flex items-center justify-between bg-slate-900/80">
+                <h3 class="text-base font-semibold text-slate-200 flex items-center gap-2">
+                    <i class="fa-brands fa-github text-indigo-400"></i> Como hospedar no GitHub Pages e acessar pelo celular
+                </h3>
+                <button onclick="toggleGithubGuide()" class="w-8 h-8 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-400 hover:text-white flex items-center justify-center transition-all">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+            <div class="p-6 flex-1 overflow-y-auto space-y-4 text-sm text-slate-300 leading-relaxed">
+                <p>Sim! Você pode colocar este código no GitHub e acessá-lo de qualquer celular, tablet ou computador de forma gratuita e rápida através do <strong>GitHub Pages</strong>.</p>
+                
+                <div class="space-y-2">
+                    <h4 class="font-semibold text-white flex items-center gap-2">
+                        <span class="w-6 h-6 rounded-full bg-indigo-600 flex items-center justify-center text-xs text-white">1</span>
+                        Crie um repositório no GitHub
+                    </h4>
+                    <p class="text-xs text-slate-400 pl-8">Acesse <a href="https://github.com" target="_blank" class="text-indigo-400 underline">github.com</a>, crie um novo repositório (pode ser público ou privado).</p>
+                </div>
+
+                <div class="space-y-2">
+                    <h4 class="font-semibold text-white flex items-center gap-2">
+                        <span class="w-6 h-6 rounded-full bg-indigo-600 flex items-center justify-center text-xs text-white">2</span>
+                        Salve o arquivo como index.html
+                    </h4>
+                    <p class="text-xs text-slate-400 pl-8">Envie este código exato para o repositório com o nome exato de <code class="bg-slate-950 px-1.5 py-0.5 rounded text-indigo-300 border border-slate-800">index.html</code> na branch principal (<code class="bg-slate-950 px-1.5 py-0.5 rounded text-indigo-300 border border-slate-800">main</code> ou <code class="bg-slate-950 px-1.5 py-0.5 rounded text-indigo-300 border border-slate-800">master</code>).</p>
+                </div>
+
+                <div class="space-y-2">
+                    <h4 class="font-semibold text-white flex items-center gap-2">
+                        <span class="w-6 h-6 rounded-full bg-indigo-600 flex items-center justify-center text-xs text-white">3</span>
+                        Ative o GitHub Pages
+                    </h4>
+                    <p class="text-xs text-slate-400 pl-8">No seu repositório, vá em <strong>Settings</strong> > <strong>Pages</strong>. Em "Build and deployment", selecione a branch <code class="bg-slate-950 px-1.5 py-0.5 rounded text-indigo-300 border border-slate-800">main</code> (ou root) e clique em Save.</p>
+                </div>
+
+                <div class="space-y-2">
+                    <h4 class="font-semibold text-white flex items-center gap-2">
+                        <span class="w-6 h-6 rounded-full bg-indigo-600 flex items-center justify-center text-xs text-white">4</span>
+                        Acesse pelo celular!
+                    </h4>
+                    <p class="text-xs text-slate-400 pl-8">O GitHub gerará um link (ex: <code class="bg-slate-950 px-1.5 py-0.5 rounded text-indigo-300 border border-slate-800">https://seu-usuario.github.io/seu-repositorio/</code>). Basta abrir esse link no navegador do celular, colar seus textos gigantes e depois abrir no PC!</p>
+                </div>
+            </div>
+            <div class="px-6 py-4 border-t border-slate-800 bg-slate-900/80 flex justify-end">
+                <button onclick="toggleGithubGuide()" class="px-4 py-2 bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-medium rounded-lg transition-all">
+                    Entendi, fechar guia
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <main class="flex-1 max-w-6xl w-full mx-auto px-4 py-6 flex flex-col gap-8">
+        
+        <section class="bg-slate-900 border border-slate-800 rounded-2xl p-5 shadow-xl">
+            <h2 class="text-sm font-semibold text-slate-300 mb-3 flex items-center gap-2">
+                <i class="fa-solid fa-paste text-indigo-400"></i> Cole seu texto ou código enorme aqui:
+            </h2>
+            <form id="syncForm" onsubmit="handleSave(event)" class="flex flex-col gap-4">
+                <div class="relative">
+                    <textarea id="pasteInput" rows="5" required
+                        placeholder="Cole aqui seu texto, trechos de código, JSON ou logs..."
+                        class="w-full bg-slate-950 border border-slate-800 rounded-xl p-4 text-sm text-slate-200 placeholder-slate-500 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition-all font-mono resize-y"></textarea>
+                </div>
+                <div class="flex flex-col sm:flex-row items-center justify-between gap-3">
+                    <div class="text-xs text-slate-400 flex items-center gap-2 w-full sm:w-auto">
+                        <span id="charCounter">0 caracteres</span> &bull; <span id="lineCounter">0 linhas</span>
+                    </div>
+                    <button type="submit" class="w-full sm:w-auto px-6 py-2.5 bg-indigo-600 hover:bg-indigo-500 text-white font-medium text-sm rounded-xl shadow-lg shadow-indigo-600/30 transition-all flex items-center justify-center gap-2 active:scale-95">
+                        <i class="fa-solid fa-paper-plane"></i> Salvar na Nuvem Local
+                    </button>
+                </div>
+            </form>
+        </section>
+
+        <section class="flex flex-col sm:flex-row items-center justify-between gap-4">
+            <div class="relative w-full sm:w-96">
+                <span class="absolute inset-y-0 left-0 flex items-center pl-3.5 pointer-events-none text-slate-500">
+                    <i class="fa-solid fa-search"></i>
+                </span>
+                <input type="text" id="searchInput" oninput="filterItems()" placeholder="Buscar nos itens salvos..."
+                    class="w-full pl-10 pr-4 py-2 bg-slate-900 border border-slate-800 rounded-xl text-sm text-slate-200 placeholder-slate-500 focus:outline-none focus:border-indigo-500 transition-all">
+            </div>
+            <div class="text-xs text-slate-400 font-medium self-end sm:self-center" id="itemCountLabel">
+                0 itens salvos
+            </div>
+        </section>
+
+        <section class="flex-1">
+            <div id="itemsContainer" class="grid grid-cols-1 gap-4">
+                <!-- Os cards salvos serão injetados aqui via JS -->
+            </div>
+            <div id="emptyState" class="hidden flex flex-col items-center justify-center py-16 text-center border border-dashed border-slate-800 rounded-2xl bg-slate-900/30">
+                <div class="w-16 h-16 bg-slate-900 rounded-full flex items-center justify-center text-slate-600 text-2xl mb-4 border border-slate-800">
+                    <i class="fa-solid fa-inbox"></i>
+                </div>
+                <h3 class="text-slate-300 font-medium text-base mb-1">Nenhum texto salvo ainda</h3>
+                <p class="text-xs text-slate-500 max-w-sm">Cole algum texto ou código acima e clique em "Salvar" para sincronizar com seu computador instantaneamente.</p>
+            </div>
+        </section>
+    </main>
+
+    <div id="modalOverlay" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-slate-900 border border-slate-800 rounded-2xl w-full max-w-4xl max-h-[90vh] flex flex-col shadow-2xl overflow-hidden animate-in fade-in zoom-in duration-200">
+            <div class="px-6 py-4 border-b border-slate-800 flex items-center justify-between bg-slate-900/80">
+                <div>
+                    <h3 id="modalTitle" class="text-base font-semibold text-slate-200">Visualizar Texto</h3>
+                    <p id="modalSubtitle" class="text-xs text-slate-400">Data e tamanho</p>
+                </div>
+                <div class="flex items-center gap-2">
+                    <button onclick="toggleModalFont()" id="modalFontToggleBtn" class="px-3 py-1.5 bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-medium rounded-lg transition-all flex items-center gap-1.5">
+                        <i class="fa-solid fa-code text-indigo-400"></i> <span id="modalFontToggleLabel">Fonte Monospace</span>
+                    </button>
+                    <button onclick="copyModalContent()" class="px-3 py-1.5 bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-medium rounded-lg transition-all flex items-center gap-1.5">
+                        <i class="fa-solid fa-copy"></i> Copiar Tudo
+                    </button>
+                    <button onclick="closeModal()" class="w-8 h-8 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-400 hover:text-white flex items-center justify-center transition-all">
+                        <i class="fa-solid fa-xmark"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="p-6 flex-1 overflow-y-auto bg-slate-950 font-sans text-sm text-slate-300 leading-relaxed whitespace-pre-wrap select-all transition-all" id="modalBody"></div>
+        </div>
+    </div>
+
+    <div id="toast" class="fixed bottom-6 right-6 z-50 transform translate-y-24 opacity-0 transition-all duration-300 bg-slate-800 border border-slate-700 text-slate-100 px-4 py-3 rounded-xl shadow-2xl flex items-center gap-3">
+        <div id="toastIcon" class="text-emerald-400 text-lg">
+            <i class="fa-solid fa-circle-check"></i>
+        </div>
+        <div>
+            <p id="toastTitle" class="text-xs font-semibold text-white">Sucesso</p>
+            <p id="toastMessage" class="text-xs text-slate-400">Ação realizada com sucesso.</p>
+        </div>
+    </div>
+
+    <script>
+        // Estado global da aplicação
+        let items = JSON.parse(localStorage.getItem('clipboard_sync_items')) || [];
+        let currentModalText = '';
+        let modalIsMonospace = false;
+
+        // Monitorar digitação no textarea para contadores em tempo real
+        const pasteInput = document.getElementById('pasteInput');
+        pasteInput.addEventListener('input', () => {
+            const val = pasteInput.value;
+            const chars = val.length;
+            const lines = val ? val.split('\n').length : 0;
+            document.getElementById('charCounter').textContent = `${chars} caracteres`;
+            document.getElementById('lineCounter').textContent = `${lines} linhas`;
+        });
+
+        // Alternar visibilidade do guia do GitHub
+        function toggleGithubGuide() {
+            const modal = document.getElementById('githubGuideModal');
+            modal.classList.toggle('hidden');
+        }
+
+        // Função para salvar novo item
+        function handleSave(e) {
+            e.preventDefault();
+            const content = pasteInput.value.trim();
+            if (!content) return;
+
+            // Gerar título automático baseado na primeira linha ou data/hora
+            const firstLine = content.split('\n')[0].trim();
+            const title = firstLine.length > 40 ? firstLine.substring(0, 40) + '...' : (firstLine || 'Snippet sem título');
+
+            const newItem = {
+                id: Date.now().toString(),
+                title: title,
+                content: content,
+                date: new Date().toLocaleString('pt-BR'),
+                chars: content.length,
+                lines: content.split('\n').length,
+                isMonospace: true // Por padrão, sugerimos código em monospace para facilitar leitura
+            };
+
+            items.unshift(newItem);
+            persistAndRender();
+
+            // Limpar formulário e contadores
+            pasteInput.value = '';
+            document.getElementById('charCounter').textContent = '0 caracteres';
+            document.getElementById('lineCounter').textContent = '0 linhas';
+
+            showToast('Texto Salvo!', 'O texto foi sincronizado com sucesso.');
+        }
+
+        // Persistir no LocalStorage e renderizar tela
+        function persistAndRender() {
+            localStorage.setItem('clipboard_sync_items', JSON.stringify(items));
+            renderItems(items);
+        }
+
+        // Alternar formatação de código (monospace) de um item específico
+        function toggleItemFont(id) {
+            items = items.map(item => {
+                if (item.id === id) {
+                    return { ...item, isMonospace: !item.isMonospace };
+                }
+                return item;
+            });
+            persistAndRender();
+        }
+
+        // Renderizar lista de itens
+        function renderItems(dataArray) {
+            const container = document.getElementById('itemsContainer');
+            const emptyState = document.getElementById('emptyState');
+            const itemCountLabel = document.getElementById('itemCountLabel');
+
+            itemCountLabel.textContent = `${items.length} ${items.length === 1 ? 'item salvo' : 'itens salvos'}`;
+
+            if (dataArray.length === 0) {
+                container.innerHTML = '';
+                emptyState.classList.remove('hidden');
+                return;
+            }
+
+            emptyState.classList.add('hidden');
+            
+            container.innerHTML = dataArray.map(item => {
+                const fontClass = item.isMonospace ? 'font-mono' : 'font-sans';
+                const codeBadgeClass = item.isMonospace ? 'bg-indigo-500/20 text-indigo-300 border-indigo-500/30' : 'bg-slate-800 text-slate-400 border-slate-700';
+                
+                return `
+                    <div class="bg-slate-900 border border-slate-800 hover:border-slate-700 rounded-2xl p-5 transition-all flex flex-col gap-3 shadow-lg group">
+                        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-slate-800/60 pb-3">
+                            <div class="flex items-center gap-2.5 overflow-hidden">
+                                <span class="w-2 h-2 rounded-full bg-indigo-500 shrink-0"></span>
+                                <h3 class="text-sm font-semibold text-white truncate" title="${escapeHtml(item.title)}">${escapeHtml(item.title)}</h3>
+                            </div>
+                            <div class="flex items-center gap-3 text-xs text-slate-400 shrink-0">
+                                <span><i class="fa-regular fa-clock mr-1"></i>${item.date}</span>
+                                <span>&bull;</span>
+                                <span>${item.chars} chars (${item.lines} linhas)</span>
+                            </div>
+                        </div>
+
+                        <!-- Prévia colapsável do conteúdo com fonte configurável -->
+                        <div class="relative bg-slate-950 rounded-xl p-3 border border-slate-800/80 ${fontClass} text-xs text-slate-300 max-h-32 overflow-hidden select-all">
+                            <div class="absolute inset-x-0 bottom-0 h-12 bg-gradient-to-t from-slate-950 to-transparent pointer-events-none"></div>
+                            <pre class="whitespace-pre-wrap break-all">${escapeHtml(item.content)}</pre>
+                        </div>
+
+                        <!-- Ações do Card -->
+                        <div class="flex flex-col sm:flex-row items-center justify-between gap-2 pt-1">
+                            <div class="flex items-center gap-2 w-full sm:w-auto">
+                                <button onclick="openModal('${item.id}')" class="text-xs font-medium text-indigo-400 hover:text-indigo-300 flex items-center gap-1.5 transition-all">
+                                    <i class="fa-solid fa-expand"></i> Expandir Tela Cheia
+                                </button>
+                                <span class="text-slate-700">&bull;</span>
+                                <button onclick="toggleItemFont('${item.id}')" class="px-2.5 py-1 text-xs font-medium rounded-lg border transition-all flex items-center gap-1.5 ${codeBadgeClass}">
+                                    <i class="fa-solid fa-code"></i> ${item.isMonospace ? 'Modo Código: Ligado' : 'Modo Código: Desligado'}
+                                </button>
+                            </div>
+                            <div class="flex items-center gap-2 self-end sm:self-center">
+                                <button onclick="copyToClipboard('${escapeHtmlForJs(item.content)}')" class="px-3 py-1.5 bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-medium rounded-lg transition-all flex items-center gap-1.5 active:scale-95">
+                                    <i class="fa-solid fa-copy text-indigo-400"></i> Copiar
+                                </button>
+                                <button onclick="deleteItem('${item.id}')" class="px-3 py-1.5 bg-rose-500/10 hover:bg-rose-500/20 text-rose-400 text-xs font-medium rounded-lg transition-all flex items-center gap-1.5 active:scale-95">
+                                    <i class="fa-solid fa-trash"></i> Excluir
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        // Filtrar itens na busca
+        function filterItems() {
+            const query = document.getElementById('searchInput').value.toLowerCase();
+            const filtered = items.filter(item => 
+                item.title.toLowerCase().includes(query) || 
+                item.content.toLowerCase().includes(query)
+            );
+            renderItems(filtered);
+        }
+
+        // Copiar conteúdo para a área de transferência com fallback seguro para iframe
+        function copyToClipboard(text) {
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+                navigator.clipboard.writeText(text).then(() => {
+                    showToast('Copiado!', 'O texto foi copiado para a área de transferência.');
+                }).catch(() => {
+                    fallbackCopyText(text);
+                });
+            } else {
+                fallbackCopyText(text);
+            }
+        }
+
+        function fallbackCopyText(text) {
+            const textArea = document.createElement("textarea");
+            textArea.value = text;
+            textArea.style.position = "fixed";
+            document.body.appendChild(textArea);
+            textArea.focus();
+            textArea.select();
+            try {
+                const successful = document.execCommand('copy');
+                if (successful) {
+                    showToast('Copiado!', 'O texto foi copiado com sucesso.');
+                } else {
+                    showToast('Erro', 'Não foi possível copiar o texto.', true);
+                }
+            } catch (err) {
+                showToast('Erro', 'Falha ao copiar.', true);
+            }
+            document.body.removeChild(textArea);
+        }
+
+        // Excluir item individual
+        function deleteItem(id) {
+            items = items.filter(i => i.id !== id);
+            persistAndRender();
+            showToast('Removido', 'Item excluído do histórico.');
+        }
+
+        // Apagar todos os itens
+        function clearAllItems() {
+            if (items.length === 0) return;
+            if (confirm('Deseja realmente apagar todo o histórico salvo?')) {
+                items = [];
+                persistAndRender();
+                showToast('Histórico Limpo', 'Todos os textos foram apagados.');
+            }
+        }
+
+        // Abrir modal de visualização expandida
+        function openModal(id) {
+            const item = items.find(i => i.id === id);
+            if (!item) return;
+
+            currentModalText = item.content;
+            modalIsMonospace = true; // Iniciar modal com monospace por padrão para código
+            updateModalFontUI();
+
+            document.getElementById('modalTitle').textContent = item.title;
+            document.getElementById('modalSubtitle').textContent = `${item.date} • ${item.chars} caracteres • ${item.lines} linhas`;
+            document.getElementById('modalBody').textContent = item.content;
+            document.getElementById('modalOverlay').classList.remove('hidden');
+        }
+
+        function toggleModalFont() {
+            modalIsMonospace = !modalIsMonospace;
+            updateModalFontUI();
+        }
+
+        function updateModalFontUI() {
+            const body = document.getElementById('modalBody');
+            const label = document.getElementById('modalFontToggleLabel');
+            const btn = document.getElementById('modalFontToggleBtn');
+
+            if (modalIsMonospace) {
+                body.className = "p-6 flex-1 overflow-y-auto bg-slate-950 font-mono text-sm text-slate-300 leading-relaxed whitespace-pre-wrap select-all transition-all";
+                label.textContent = "Fonte Monospace";
+                btn.className = "px-3 py-1.5 bg-indigo-500/20 hover:bg-indigo-500/30 text-indigo-300 border border-indigo-500/30 text-xs font-medium rounded-lg transition-all flex items-center gap-1.5";
+            } else {
+                body.className = "p-6 flex-1 overflow-y-auto bg-slate-950 font-sans text-sm text-slate-300 leading-relaxed whitespace-pre-wrap select-all transition-all";
+                label.textContent = "Fonte Padrão";
+                btn.className = "px-3 py-1.5 bg-slate-800 hover:bg-slate-700 text-slate-300 border border-slate-700 text-xs font-medium rounded-lg transition-all flex items-center gap-1.5";
+            }
+        }
+
+        function closeModal() {
+            document.getElementById('modalOverlay').classList.add('hidden');
+        }
+
+        function copyModalContent() {
+            copyToClipboard(currentModalText);
+        }
+
+        // Fechar modal clicando fora
+        document.getElementById('modalOverlay').addEventListener('click', (e) => {
+            if (e.target === document.getElementById('modalOverlay')) {
+                closeModal();
+            }
+        });
+
+        // Sistema de Toast flutuante
+        let toastTimeout;
+        function showToast(title, message, isError = false) {
+            const toast = document.getElementById('toast');
+            const toastTitle = document.getElementById('toastTitle');
+            const toastMessage = document.getElementById('toastMessage');
+            const toastIcon = document.getElementById('toastIcon');
+
+            toastTitle.textContent = title;
+            toastMessage.textContent = message;
+
+            if (isError) {
+                toastIcon.innerHTML = '<i class="fa-solid fa-circle-exclamation text-rose-400"></i>';
+            } else {
+                toastIcon.innerHTML = '<i class="fa-solid fa-circle-check text-emerald-400"></i>';
+            }
+
+            toast.classList.remove('translate-y-24', 'opacity-0');
+            clearTimeout(toastTimeout);
+            toastTimeout = setTimeout(() => {
+                toast.classList.add('translate-y-24', 'opacity-0');
+            }, 3000);
+        }
+
+        // Funções auxiliares de escape de strings para HTML e JS
+        function escapeHtml(str) {
+            return str
+                .replace(/&/g, "&amp;")
+                .replace(/</g, "&lt;")
+                .replace(/>/g, "&gt;")
+                .replace(/"/g, "&quot;")
+                .replace(/'/g, "&#039;");
+        }
+
+        function escapeHtmlForJs(str) {
+            return str.replace(/\\/g, '\\\\').replace(/'/g, "\\'").replace(/\n/g, '\\n').replace(/\r/g, '');
+        }
+
+        // Renderizar inicialização na carga da página
+        renderItems(items);
+    </script>
+</body>
+</html>
+```
+eof
+
+### O que foi adicionado/atualizado:
+1. **Modo Código / Monospace Ajustável:** Cada card agora possui um botão dedicado ("Modo Código: Ligado/Desligado") para alternar instantaneamente entre fonte monoespaçada (ideal para códigos) e fonte padrão, além de um controle similar dentro do modal de visualização em tela cheia.
+2. **Guia Completo para o GitHub Pages:** Adicionado um botão **"Guia GitHub Pages"** no topo que abre um passo a passo detalhado explicando como subir o arquivo para o GitHub e gerar o link público para acessar diretamente do navegador do celular.
