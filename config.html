@@ -88,6 +88,8 @@
     .btn svg { width: 16px; height: 16px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
     .btn-salmao { background: var(--salmao); border-color: var(--salmao); color: var(--azul-escuro); }
     .btn-salmao:hover { background: var(--salmao-forte); border-color: var(--salmao-forte); }
+    .btn-azul { background: var(--azul); border-color: var(--azul); color: #fff; }
+    .btn-azul:hover { background: #1c41cc; border-color: #1c41cc; }
 
     #titulo-bar {
         position: sticky; top: var(--altura-topo); z-index: 39;
@@ -224,15 +226,112 @@
     .kpi-value.neg { color: var(--erro); }
     .kpi-value.warn { color: var(--alerta); }
 
-    .charts-row {
+    /* ===========================
+       VELOCÍMETRO (GAUGE)
+       =========================== */
+    .gauge-row {
         display: grid;
-        grid-template-columns: minmax(0, 1.7fr) minmax(0, 1fr);
+        grid-template-columns: 1fr 1fr;
         gap: 14px;
+        align-items: stretch;
     }
+    @media (max-width: 800px) {
+        .gauge-row { grid-template-columns: 1fr; }
+    }
+
+    .gauge-card {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 18px 14px 20px;
+    }
+    .gauge-canvas-wrap {
+        position: relative;
+        width: 100%;
+        max-width: 260px;
+        aspect-ratio: 1 / 1;
+    }
+    .gauge-canvas-wrap canvas { display: block; width: 100%; height: 100%; }
+
+    .gauge-legend {
+        display: flex;
+        gap: 14px;
+        flex-wrap: wrap;
+        justify-content: center;
+        margin-top: 12px;
+        font-size: 11px;
+        color: var(--texto-suave);
+    }
+    .gauge-legend span { display: inline-flex; align-items: center; gap: 6px; }
+    .gauge-legend i {
+        display: inline-block; width: 10px; height: 10px;
+        border-radius: 50%;
+    }
+
+    /* ===========================
+       TABELA DE DESVIOS
+       =========================== */
+    .desvio-tabela-wrap {
+        max-height: 380px;
+        overflow: auto;
+        border: 1px solid var(--linha);
+        border-radius: 11px;
+    }
+    .desvio-tabela { width: 100%; border-collapse: collapse; font-size: 12.5px; }
+    .desvio-tabela thead th {
+        position: sticky; top: 0; z-index: 2;
+        background: var(--off-white); color: var(--texto-suave);
+        font-size: 10px; font-weight: 700; letter-spacing: .8px;
+        text-transform: uppercase; text-align: left;
+        padding: 10px 12px; border-bottom: 1px solid var(--linha-forte);
+        white-space: nowrap;
+    }
+    .desvio-tabela tbody td {
+        padding: 9px 12px;
+        border-bottom: 1px solid rgba(1,30,56,.06);
+        vertical-align: middle;
+    }
+    .desvio-tabela tbody tr:hover { background: rgba(240,192,137,.09); }
+    .desvio-tabela tbody tr:last-child td { border-bottom: 0; }
+    .desvio-tabela .col-num { text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; }
+    .desvio-tabela .col-nome { font-weight: 600; }
+
+    .badge-desvio {
+        display: inline-flex; align-items: center; justify-content: center;
+        min-width: 62px; height: 22px; padding: 0 9px;
+        border-radius: 20px;
+        font-size: 11px; font-weight: 700; font-variant-numeric: tabular-nums;
+    }
+    .badge-desvio.neg { background: rgba(192,69,59,.12); color: var(--erro); }
+    .badge-desvio.pos { background: rgba(27,138,99,.12); color: var(--ok); }
+    .badge-desvio.zero { background: rgba(138,147,166,.16); color: #5d6678; }
+
+    .mini-barra {
+        position: relative;
+        width: 100%;
+        height: 6px;
+        border-radius: 4px;
+        background: rgba(1,30,56,.08);
+        overflow: hidden;
+    }
+    .mini-barra i {
+        display: block;
+        height: 100%;
+        border-radius: 4px;
+        background: var(--azul);
+        transition: width .4s ease;
+    }
+    .mini-barra i.neg { background: var(--erro); }
+
+    /* ===========================
+       CURVA COM ZOOM
+       =========================== */
+    #s-curve-box { height: 420px; position: relative; cursor: zoom-in; }
+    #s-curve-box.zoomed { cursor: zoom-out; }
 
     .chart-box { position: relative; width: 100%; }
     .chart-box canvas { display: block; width: 100%; }
-    #s-curve-box { height: 420px; }
 
     .legenda {
         display: flex; flex-wrap: wrap; gap: 14px; align-items: center;
@@ -246,12 +345,29 @@
     .legenda .lg-base i { border-top-color: var(--marinho); border-top-style: dashed; }
     .legenda .lg-real i { border-top-color: var(--azul); }
     .legenda .lg-tend i { border-top-color: var(--salmao); border-top-style: dashed; }
-    .legenda .lg-corte i { border-top-color: var(--erro); border-top-style: dotted; }
     .legenda span { display: inline-flex; align-items: center; }
+
+    .zoom-hint {
+        display: inline-flex; align-items: center; gap: 6px;
+        padding: 4px 10px; border-radius: 20px;
+        background: rgba(38,79,236,.09);
+        border: 1px solid rgba(38,79,236,.22);
+        color: var(--azul);
+        font-size: 10.5px; font-weight: 700; letter-spacing: .4px;
+        text-transform: uppercase;
+    }
+    .zoom-hint::before {
+        content: "🔍"; font-size: 11px;
+    }
+    .zoom-reset {
+        display: none;
+        margin-left: 8px;
+    }
+    .zoom-reset.on { display: inline-flex; }
 
     .chart-tip {
         position: absolute; z-index: 6;
-        min-width: 188px; padding: 9px 11px;
+        min-width: 200px; padding: 9px 11px;
         border-radius: 10px;
         background: rgba(1, 30, 56, .95); color: var(--off-white);
         font-size: 11px; line-height: 1.65; pointer-events: none;
@@ -262,35 +378,6 @@
     .chart-tip b { display: block; font-size: 11.5px; margin-bottom: 4px; color: var(--salmao); }
     .chart-tip .row { display: flex; justify-content: space-between; gap: 16px; }
     .chart-tip .row span:last-child { font-variant-numeric: tabular-nums; font-weight: 600; }
-
-    .status-list { display: flex; flex-direction: column; gap: 11px; }
-    .status-row {
-        display: grid;
-        grid-template-columns: 12px minmax(84px, auto) minmax(0, 1fr) 78px;
-        align-items: center; gap: 10px; font-size: 12px;
-    }
-    .status-dot { width: 10px; height: 10px; border-radius: 50%; }
-    .status-nome { color: var(--texto); font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-    .status-barra { height: 8px; border-radius: 6px; background: rgba(1,30,56,.07); overflow: hidden; }
-    .status-barra i { display: block; height: 100%; border-radius: 6px; transition: width .5s ease; }
-    .status-num { text-align: right; font-variant-numeric: tabular-nums; color: var(--texto-suave); }
-    .status-num b { color: var(--azul-escuro); }
-
-    .filtros-ativos {
-        display: flex; flex-wrap: wrap; gap: 6px; margin-top: 10px;
-    }
-    .filtro-chip {
-        display: inline-flex; align-items: center; gap: 6px;
-        height: 24px; padding: 0 9px; border-radius: 20px;
-        background: rgba(38,79,236,.09); border: 1px solid rgba(38,79,236,.22);
-        color: var(--azul); font-size: 11px; font-weight: 600;
-    }
-    .filtro-chip button {
-        background: none; border: 0; cursor: pointer;
-        color: inherit; padding: 0; font-size: 13px; line-height: 1;
-        opacity: .7;
-    }
-    .filtro-chip button:hover { opacity: 1; }
 
     .tabela-wrap {
         max-height: 480px; overflow: auto;
@@ -323,9 +410,8 @@
     }
     .tag.concluida { background: rgba(27,138,99,.12); color: var(--ok); }
     .tag.andamento { background: rgba(var(--azul-rgb),.11); color: var(--azul); }
-    .tag.atrasada { background: rgba(192,69,59,.12); color: var(--erro); }
+    .tag.atrasada  { background: rgba(192,69,59,.12); color: var(--erro); }
     .tag.naoiniciada { background: rgba(138,147,166,.16); color: #5d6678; }
-    .tag.futura { background: rgba(138,147,166,.16); color: #5d6678; }
 
     .prog {
         display: flex; align-items: center; gap: 6px; min-width: 96px;
@@ -340,6 +426,22 @@
     .prog-txt { font-size: 10.5px; font-variant-numeric: tabular-nums; color: var(--texto-suave); min-width: 32px; text-align: right; }
 
     .tabela-vazia { padding: 26px; text-align: center; color: var(--texto-fraco); font-size: 13px; }
+
+    .filtros-ativos {
+        display: flex; flex-wrap: wrap; gap: 6px; margin-top: 10px;
+    }
+    .filtro-chip {
+        display: inline-flex; align-items: center; gap: 6px;
+        height: 24px; padding: 0 9px; border-radius: 20px;
+        background: rgba(38,79,236,.09); border: 1px solid rgba(38,79,236,.22);
+        color: var(--azul); font-size: 11px; font-weight: 600;
+    }
+    .filtro-chip button {
+        background: none; border: 0; cursor: pointer;
+        color: inherit; padding: 0; font-size: 13px; line-height: 1;
+        opacity: .7;
+    }
+    .filtro-chip button:hover { opacity: 1; }
 
     .destaque-curva {
         display: inline-flex; align-items: center; gap: 6px;
@@ -356,7 +458,6 @@
     }
 
     @media (max-width: 1080px) {
-        .charts-row { grid-template-columns: minmax(0, 1fr); }
         #s-curve-box { height: 340px; }
     }
     @media (max-width: 700px) {
@@ -387,9 +488,13 @@
         </div>
         <div class="topo-acoes">
             <span class="chip" id="file-chip" hidden></span>
-            <label class="btn btn-salmao" for="file-input">
+            <button class="btn btn-azul" type="button" id="btn-recarregar" title="Buscar a planilha novamente">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 12a9 9 0 1 1-3-6.7"/><path d="M21 4v5h-5"/></svg>
+                <span>Recarregar</span>
+            </button>
+            <label class="btn btn-salmao" for="file-input" title="Se preferir, envie um arquivo local">
                 <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 16V4m0 0L8 8m4-4 4 4"/><path d="M4 16v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-2"/></svg>
-                <span>Abrir planilha</span>
+                <span>Upload local</span>
             </label>
             <input id="file-input" type="file" accept=".xlsx,.xls" hidden>
             <a class="btn" href="index.html" title="Voltar ao visualizador 3D">
@@ -402,7 +507,7 @@
     <div id="titulo-bar">
         <span class="acento"></span>
         <h1>PROJETO AFRODITE</h1>
-        <span class="sub">dashboard de cronograma · curva S pré-calculada · filtros por Squad, Workstream e Disciplina</span>
+        <span class="sub">dashboard de cronograma · curva S · velocímetro · desvios por squad</span>
     </div>
 
     <main>
@@ -410,12 +515,12 @@
         <section class="card" id="load-card">
             <div class="card-head">
                 <div class="card-title">Base do cronograma</div>
-                <div class="card-sub">O dashboard espera duas abas: <b>Tarefas</b> (atividades e filtros) e <b>Dados_Curva</b> (curva S já calculada).</div>
+                <div class="card-sub">O dashboard busca automaticamente <b>cronograma.xlsx</b> no endereço configurado. Use "Upload local" se quiser testar outro arquivo.</div>
             </div>
             <div id="dropzone" tabindex="0" role="button" aria-label="Selecionar planilha de cronograma">
                 <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 3v5h5"/><path d="M19 8v11a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h7z"/><path d="M9 13h6M9 17h4"/></svg>
-                <strong>Arraste o Modelo.xlsx aqui</strong>
-                <span>ou clique para selecionar · o arquivo precisa ter as abas "Tarefas" e "Dados_Curva"</span>
+                <strong>Carregando cronograma.xlsx...</strong>
+                <span>ou arraste um arquivo local · abas "Tarefas" e "Dados_Curva"</span>
             </div>
             <div id="load-msg"></div>
         </section>
@@ -463,10 +568,14 @@
 
             <section class="card" id="scurve-card" hidden>
                 <div class="card-head">
-                    <div class="card-title">
-                        Curva S · avanço acumulado
+                    <div class="card-title">Curva S · avanço acumulado</div>
+                    <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap">
+                        <span class="zoom-hint">Clique em um mês para dar zoom</span>
+                        <button class="btn zoom-reset" type="button" id="btn-zoom-reset">
+                            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 4v6h6M20 20v-6h-6"/><path d="M4 10 10 4M20 14l-6 6"/></svg>
+                            <span>Ver tudo</span>
+                        </button>
                     </div>
-                    <span class="destaque-curva">Fonte: aba Dados_Curva</span>
                 </div>
                 <div class="chart-box" id="s-curve-box">
                     <canvas id="s-curve"></canvas>
@@ -479,15 +588,44 @@
                 </div>
             </section>
 
-            <section class="card" id="status-card" hidden>
-                <div class="card-head">
-                    <div class="card-title">Situação das atividades</div>
-                    <div class="card-sub" id="status-resumo"></div>
+            <section class="card gauge-card" id="gauge-card" hidden>
+                <div class="card-head" style="width:100%;margin-bottom:6px">
+                    <div class="card-title">Avanço global</div>
                 </div>
-                <div class="status-list" id="status-list"></div>
+                <div class="gauge-canvas-wrap">
+                    <canvas id="gauge-canvas" width="520" height="520"></canvas>
+                </div>
+                <div class="gauge-legend">
+                    <span><i style="background:#C0453B"></i>Atrasado &lt; 5 pp</span>
+                    <span><i style="background:#C98B3E"></i>No prazo ± 5 pp</span>
+                    <span><i style="background:#1B8A63"></i>Adiantado &gt; 5 pp</span>
+                </div>
             </section>
 
         </div>
+
+        <section class="card" id="desvio-card" hidden>
+            <div class="card-head">
+                <div class="card-title">Desvios por Squad · prioridade de atuação</div>
+                <div class="card-sub" id="desvio-resumo"></div>
+            </div>
+            <div class="desvio-tabela-wrap">
+                <table class="desvio-tabela">
+                    <thead>
+                        <tr>
+                            <th style="width:38px">#</th>
+                            <th>Squad</th>
+                            <th class="col-num">Tarefas</th>
+                            <th class="col-num">% Prev.</th>
+                            <th class="col-num">% Exec.</th>
+                            <th class="col-num">Desvio</th>
+                            <th style="min-width:140px">Magnitude</th>
+                        </tr>
+                    </thead>
+                    <tbody id="desvio-body"></tbody>
+                </table>
+            </div>
+        </section>
 
         <section class="card" id="tabela-card" hidden>
             <div class="card-head">
@@ -522,8 +660,23 @@
 <script>
 /* =========================================================================
    Projeto Afrodite — Dashboard de Cronograma
-   Lê as abas "Tarefas" e "Dados_Curva" do Modelo.xlsx
+   - Carrega cronograma.xlsx automaticamente do GitHub Pages
+   - Velocímetro (gauge) para avanço global
+   - Tabela de desvios por Squad
+   - Curva S com zoom por clique no mês
    ========================================================================= */
+
+/* ------------------------------------------------------------------
+   CONFIGURAÇÃO — AJUSTE A URL ABAIXO
+   ------------------------------------------------------------------ */
+const CONFIG = {
+    // 👇 Troque SEU-USUARIO pelo seu usuário do GitHub
+    planilhaUrl: 'https://SEU-USUARIO.github.io/afrodite/cronograma.xlsx',
+    // Fallback local (caso queira testar sem internet)
+    planilhaLocal: 'cronograma.xlsx',
+    // Cores do velocímetro
+    coresGauge: { atraso:'#C0453B', ok:'#C98B3E', adiantado:'#1B8A63', fundo:'rgba(1,30,56,.10)' }
+};
 
 const $ = (s, el = document) => el.querySelector(s);
 const $$ = (s, el = document) => [...el.querySelectorAll(s)];
@@ -574,7 +727,6 @@ function parseData(v) {
     if (v === null || v === undefined || v === '') return null;
     if (v instanceof Date) return isNaN(v) ? null : startOfDay(v);
     if (typeof v === 'number') {
-        // Serial do Excel (base 1900)
         const ms = Math.round((v - 25569) * 86400 * 1000);
         const d = new Date(ms);
         if (isNaN(d)) return null;
@@ -582,7 +734,6 @@ function parseData(v) {
     }
     const s = String(v).trim();
     if (!s) return null;
-
     let m = s.match(/^(\d{1,2})[\/\-.](\d{1,2})[\/\-.](\d{2,4})/);
     if (m) {
         let [, dd, mm, yy] = m;
@@ -615,8 +766,6 @@ function parseNum(v) {
     const n = parseFloat(s);
     return isFinite(n) ? n : null;
 }
-
-/** Normaliza % que pode vir como 0–1 ou 0–100. */
 function normalizarPct(v) {
     const n = parseNum(v);
     if (n === null) return null;
@@ -624,7 +773,7 @@ function normalizarPct(v) {
 }
 
 /* ------------------------------------------------------------------ */
-/* Carregamento do SheetJS                                             */
+/* SheetJS sob demanda                                                 */
 /* ------------------------------------------------------------------ */
 
 let xlsxPromise = null;
@@ -635,7 +784,7 @@ function garantirXLSX() {
         const s = document.createElement('script');
         s.src = 'https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js';
         s.onload = () => window.XLSX ? res(window.XLSX) : rej(new Error('SheetJS indisponível.'));
-        s.onerror = () => rej(new Error('Falha ao carregar a biblioteca de planilhas. Verifique a conexão.'));
+        s.onerror = () => rej(new Error('Falha ao carregar biblioteca de planilhas.'));
         document.head.appendChild(s);
     });
     return xlsxPromise;
@@ -647,69 +796,88 @@ function garantirXLSX() {
 
 const state = {
     fileName: '',
-    tasks: [],           // atividades da aba Tarefas
+    tasks: [],
     filtered: [],
-    curve: null,         // dados da aba Dados_Curva
-    filters: { squad:'all', workstream:'all', disciplina:'all', vendor:'all', search:'' }
+    curve: null,
+    filters: { squad:'all', workstream:'all', disciplina:'all', vendor:'all', search:'' },
+    zoom: { ativo:false, inicio:null, fim:null, mesIdx:-1 }
 };
 
 /* ------------------------------------------------------------------ */
-/* Leitura do arquivo                                                  */
+/* CARREGAMENTO AUTOMÁTICO via fetch                                   */
 /* ------------------------------------------------------------------ */
 
-async function lerArquivo(file) {
+async function carregarRemoto(url = CONFIG.planilhaUrl) {
     const msg = $('#load-msg');
+    const drop = $('#dropzone');
+    drop.querySelector('strong').textContent = 'Carregando cronograma.xlsx...';
+    drop.querySelector('span').textContent = url;
     msg.innerHTML = '';
 
     try {
-        const XLSX = await garantirXLSX();
-        const buffer = await file.arrayBuffer();
-        const wb = XLSX.read(buffer, { type: 'array', cellDates: true });
+        const resp = await fetch(url, { cache: 'no-store' });
+        if (!resp.ok) throw new Error(`HTTP ${resp.status} — ${resp.statusText}`);
+        const buffer = await resp.arrayBuffer();
 
-        // Localiza as abas
-        const nomes = wb.SheetNames;
-        const abaTarefas = encontrarAba(nomes, ['tarefa','tasks','atividades','cronograma']) || nomes[0];
-        const abaCurva   = encontrarAba(nomes, ['dados_curva','dados curva','curva','curva_s','scurve']) 
-                        || nomes.find(n => n !== abaTarefas);
+        // Extrai nome do arquivo da URL
+        const nome = url.split('/').pop() || 'cronograma.xlsx';
 
-        if (!abaTarefas) throw new Error('Não foi possível localizar a aba de tarefas.');
-        if (!abaCurva)   throw new Error('Não foi possível localizar a aba da curva (Dados_Curva).');
-
-        const matrizTarefas = XLSX.utils.sheet_to_json(wb.Sheets[abaTarefas], { header:1, raw:true, defval:null, blankrows:false });
-        const matrizCurva   = XLSX.utils.sheet_to_json(wb.Sheets[abaCurva],   { header:1, raw:true, defval:null, blankrows:false });
-
-        state.fileName = file.name;
-        state.tasks = parseTarefas(matrizTarefas);
-        state.curve = parseCurva(matrizCurva);
-
-        if (!state.tasks.length) throw new Error('Nenhuma tarefa válida foi encontrada na aba "' + abaTarefas + '".');
-        if (!state.curve || !state.curve.pontos.length) throw new Error('Nenhum dado de curva foi encontrado na aba "' + abaCurva + '".');
-
-        // UI
-        const chip = $('#file-chip');
-        chip.textContent = file.name;
-        chip.hidden = false;
-
-        $('#load-card').hidden = true;
-        $('#filtros-card').hidden = false;
-        $('#kpi-grid').hidden = false;
-        $('#scurve-card').hidden = false;
-        $('#status-card').hidden = false;
-        $('#tabela-card').hidden = false;
-
-        montarFiltros();
-        aplicarFiltros();
-        renderTudo();
-
+        await processarBuffer(buffer, nome, url);
         msg.innerHTML = `<div class="aviso ok">
             <span>✓</span>
-            <div><b>${state.tasks.length}</b> tarefas lidas de <b>${abaTarefas}</b> · curva S de <b>${abaCurva}</b> (${state.curve.pontos.length} meses).</div>
+            <div>Planilha carregada de <b>${escaparHtml(url)}</b> · <b>${state.tasks.length}</b> tarefas · <b>${state.curve ? state.curve.pontos.length : 0}</b> meses de curva.</div>
         </div>`;
-
     } catch (err) {
         console.error(err);
-        msg.innerHTML = `<div class="aviso erro"><strong>Erro:</strong>&nbsp;${err.message}</div>`;
+        msg.innerHTML = `<div class="aviso erro">
+            <strong>Não foi possível carregar a planilha remota:</strong>&nbsp;${escaparHtml(err.message)}.<br>
+            Verifique se o arquivo <b>cronograma.xlsx</b> está publicado em <code>${escaparHtml(url)}</code>.<br>
+            Você também pode usar o botão <b>Upload local</b> para carregar o arquivo manualmente.
+        </div>`;
+        drop.querySelector('strong').textContent = 'Arraste sua planilha de cronograma aqui';
+        drop.querySelector('span').textContent = 'ou clique para selecionar · abas "Tarefas" e "Dados_Curva"';
     }
+}
+
+async function processarBuffer(buffer, nomeArquivo, origem) {
+    const XLSX = await garantirXLSX();
+    const wb = XLSX.read(buffer, { type: 'array', cellDates: true });
+
+    const nomes = wb.SheetNames;
+    const abaTarefas = encontrarAba(nomes, ['tarefa','tasks','atividades','cronograma']) || nomes[0];
+    const abaCurva   = encontrarAba(nomes, ['dados_curva','dados curva','curva','curva_s','scurve'])
+                    || nomes.find(n => n !== abaTarefas);
+
+    if (!abaTarefas) throw new Error('Aba de tarefas não localizada.');
+    if (!abaCurva)   throw new Error('Aba "Dados_Curva" não localizada.');
+
+    const matrizTarefas = XLSX.utils.sheet_to_json(wb.Sheets[abaTarefas], { header:1, raw:true, defval:null, blankrows:false });
+    const matrizCurva   = XLSX.utils.sheet_to_json(wb.Sheets[abaCurva],   { header:1, raw:true, defval:null, blankrows:false });
+
+    state.fileName = nomeArquivo;
+    state.tasks = parseTarefas(matrizTarefas);
+    state.curve = parseCurva(matrizCurva);
+    state.zoom = { ativo:false, inicio:null, fim:null, mesIdx:-1 };
+
+    if (!state.tasks.length) throw new Error('Nenhuma tarefa válida encontrada.');
+    if (!state.curve || !state.curve.pontos.length) throw new Error('Nenhum dado de curva encontrado.');
+
+    const chip = $('#file-chip');
+    chip.textContent = nomeArquivo;
+    chip.hidden = false;
+
+    $('#load-card').hidden = true;
+    $('#filtros-card').hidden = false;
+    $('#kpi-grid').hidden = false;
+    $('#scurve-card').hidden = false;
+    $('#gauge-card').hidden = false;
+    $('#desvio-card').hidden = false;
+    $('#tabela-card').hidden = false;
+
+    montarFiltros();
+    aplicarFiltros();
+    renderTudo();
+    desenharGauge();
 }
 
 function encontrarAba(nomes, chaves) {
@@ -735,10 +903,8 @@ function encontrarAba(nomes, chaves) {
 function parseTarefas(matriz) {
     if (!matriz.length) return [];
 
-    // Localiza a linha de cabeçalho: linha que contém palavras-chave conhecidas
     const chavesCab = ['nome da tarefa','atividade','tarefa','task','inicio','termino','vendor','squad','workstream','disciplina'];
-    let headerRow = 0;
-    let melhorScore = -1;
+    let headerRow = 0, melhorScore = -1;
     for (let i = 0; i < Math.min(8, matriz.length); i++) {
         const row = matriz[i].map(c => normalizar(c));
         const score = chavesCab.reduce((s, k) => s + (row.some(h => h.includes(k)) ? 1 : 0), 0);
@@ -765,12 +931,8 @@ function parseTarefas(matriz) {
                    idxContem(['nome da tarefa','atividade','tarefa','task','nome']),
         prev:      idxContem(['previsto','planejado','baseline']),
         exec:      idxContem(['executado','realizado','avanco','real']),
-        inicio:    idxContem(['inicio']) !== -1 ? norm.indexOf(norm.find(h => h === 'inicio')) !== -1
-                        ? idxExato('Início') : idxExato('Inicio')
-                        : idxContem(['inicio'], ['linha de base','baseline','base']),
-        termino:   idxExato('Término') !== -1 ? idxExato('Término') :
-                   idxExato('Termino') !== -1 ? idxExato('Termino') :
-                   idxContem(['termino','fim'], ['linha de base','baseline','base']),
+        inicio:    idxContem(['inicio'], ['linha de base','baseline','base']),
+        termino:   idxContem(['termino','fim'], ['linha de base','baseline','base']),
         inicioLB:  idxContem(['inicio'], ['linha de base','baseline','lb']),
         terminoLB: idxContem(['termino','fim'], ['linha de base','baseline','lb']),
         vendor:    idxExato('Vendor') !== -1 ? idxExato('Vendor') : idxContem(['vendor','fornecedor']),
@@ -779,8 +941,7 @@ function parseTarefas(matriz) {
         disciplina: idxExato('Disciplina') !== -1 ? idxExato('Disciplina') : idxContem(['disciplina'])
     };
 
-    // Ajuste: "inicio" e "termino" precisam evitar "início da linha de base"
-    // Estratégia: pegar o primeiro que NÃO tenha "linha de base" / "baseline" / "lb"
+    // Ajuste fino para "inicio" e "termino" (evitar pegar linha de base)
     ['inicio','termino'].forEach(k => {
         const termos = k === 'inicio' ? ['inicio'] : ['termino','fim'];
         const candidato = norm.findIndex(h => {
@@ -791,7 +952,7 @@ function parseTarefas(matriz) {
         if (candidato !== -1) col[k] = candidato;
     });
 
-    if (col.name === -1) throw new Error('Coluna "Nome da Tarefa" não encontrada na aba Tarefas.');
+    if (col.name === -1) throw new Error('Coluna "Nome da Tarefa" não encontrada.');
 
     const hoje = startOfDay(new Date());
     const tasks = [];
@@ -799,7 +960,6 @@ function parseTarefas(matriz) {
     for (let r = headerRow + 1; r < matriz.length; r++) {
         const row = matriz[r];
         if (!row || !row.length) continue;
-
         const nome = String(row[col.name] ?? '').trim();
         if (!nome || nome.length < 2) continue;
 
@@ -807,14 +967,12 @@ function parseTarefas(matriz) {
         const termino = col.termino !== -1 ? parseData(row[col.termino]) : null;
         const inicioLB = col.inicioLB !== -1 ? parseData(row[col.inicioLB]) : null;
         const terminoLB = col.terminoLB !== -1 ? parseData(row[col.terminoLB]) : null;
-
         const prev = col.prev !== -1 ? normalizarPct(row[col.prev]) : null;
         const exec = col.exec !== -1 ? normalizarPct(row[col.exec]) : null;
 
         const pStart = inicioLB || inicio;
         const pFinish = terminoLB || termino;
 
-        // Situação
         let status;
         const p = prev ?? 0, e = exec ?? 0;
         if (e >= 0.999) status = 'Concluída';
@@ -828,11 +986,10 @@ function parseTarefas(matriz) {
             name: nome,
             prev: prev ?? 0,
             exec: exec ?? 0,
-            inicio, termino,
-            inicioLB, terminoLB,
+            inicio, termino, inicioLB, terminoLB,
             pStart, pFinish,
-            vendor:    col.vendor    !== -1 ? String(row[col.vendor]    ?? '').trim() || '—' : '—',
-            squad:     col.squad     !== -1 ? String(row[col.squad]     ?? '').trim() || '—' : '—',
+            vendor:     col.vendor     !== -1 ? String(row[col.vendor]     ?? '').trim() || '—' : '—',
+            squad:      col.squad      !== -1 ? String(row[col.squad]      ?? '').trim() || '—' : '—',
             workstream: col.workstream !== -1 ? String(row[col.workstream] ?? '').trim() || '—' : '—',
             disciplina: col.disciplina !== -1 ? String(row[col.disciplina] ?? '').trim() || '—' : '—',
             status,
@@ -850,18 +1007,15 @@ function parseTarefas(matriz) {
 function parseCurva(matriz) {
     if (!matriz.length) return null;
 
-    // Localiza a linha de cabeçalho (contém "DADOS" ou nomes de meses)
     let headerRow = -1;
     for (let i = 0; i < Math.min(6, matriz.length); i++) {
         const row = matriz[i] || [];
         const textos = row.map(c => normalizar(c));
         if (textos.some(t => t === 'dados') || textos.filter(t => MESES.includes(t)).length >= 3) {
-            headerRow = i;
-            break;
+            headerRow = i; break;
         }
     }
     if (headerRow === -1) {
-        // Fallback: procura primeira linha com pelo menos 3 células
         for (let i = 0; i < Math.min(6, matriz.length); i++) {
             if ((matriz[i] || []).filter(c => c !== null && c !== '').length >= 3) { headerRow = i; break; }
         }
@@ -871,24 +1025,20 @@ function parseCurva(matriz) {
     const rowHeader = matriz[headerRow] || [];
     const rowAno = matriz[headerRow + 1] || [];
 
-    // Descobre coluna inicial dos meses (primeira célula que case com mês)
     let colInicial = -1;
     for (let c = 0; c < rowHeader.length; c++) {
         const t = normalizar(rowHeader[c]);
         if (MESES.includes(t) || /^[a-z]{3}$/.test(t)) { colInicial = c; break; }
     }
-    if (colInicial === -1) colInicial = 2; // fallback: coluna C
+    if (colInicial === -1) colInicial = 2;
 
-    // Monta lista de meses válidos (ano entre 1900 e 2100)
     const pontos = [];
     for (let c = colInicial; c < Math.max(rowHeader.length, rowAno.length); c++) {
         const mesTexto = normalizar(rowHeader[c] || '');
         const ano = Number(rowAno[c]);
         if (!ano || ano < 1900 || ano > 2100) continue;
-
         const mesIdx = MESES.findIndex(m => mesTexto.startsWith(m));
         if (mesIdx === -1) continue;
-
         pontos.push({
             data: new Date(ano, mesIdx, 1),
             label: `${MESES[mesIdx]}/${String(ano).slice(2)}`,
@@ -898,11 +1048,9 @@ function parseCurva(matriz) {
 
     if (!pontos.length) return null;
 
-    // Encontra linhas por rótulo
     function encontrarLinha(predicado) {
         for (let r = headerRow + 1; r < matriz.length; r++) {
             const linha = matriz[r] || [];
-            // Procura o rótulo na primeira célula de texto (colunas A/B)
             const celulas = linha.slice(0, Math.min(3, linha.length)).map(c => normalizar(c));
             for (const cel of celulas) {
                 if (!cel) continue;
@@ -913,14 +1061,11 @@ function parseCurva(matriz) {
     }
 
     const linhaPlan = encontrarLinha(l =>
-        (l.includes('prev') || l.includes('baseline') || l.includes('planej')) && l.includes('acum')
-    );
+        (l.includes('prev') || l.includes('baseline') || l.includes('planej')) && l.includes('acum'));
     const linhaReal = encontrarLinha(l =>
-        (l.includes('real') || l.includes('execut')) && l.includes('acum')
-    );
+        (l.includes('real') || l.includes('execut')) && l.includes('acum'));
     const linhaTend = encontrarLinha(l =>
-        (l.includes('tend') || l.includes('forecast') || l.includes('proje')) && l.includes('acum')
-    );
+        (l.includes('tend') || l.includes('forecast') || l.includes('proje')) && l.includes('acum'));
 
     function extrair(linha) {
         return pontos.map(p => {
@@ -936,18 +1081,13 @@ function parseCurva(matriz) {
     const actual = extrair(linhaReal);
     const forecast = extrair(linhaTend);
 
-    // Última atualização = último índice com valor real
     let ultimoIdx = -1;
     for (let i = actual.length - 1; i >= 0; i--) {
         if (actual[i] !== null) { ultimoIdx = i; break; }
     }
 
     return {
-        pontos,
-        planned,
-        actual,
-        forecast,
-        ultimoIdx,
+        pontos, planned, actual, forecast, ultimoIdx,
         ultimaData: ultimoIdx >= 0 ? pontos[ultimoIdx].data : null,
         planejadoAtual: ultimoIdx >= 0 ? planned[ultimoIdx] : null,
         realizadoAtual: ultimoIdx >= 0 ? actual[ultimoIdx] : null
@@ -960,11 +1100,11 @@ function parseCurva(matriz) {
 
 function montarFiltros() {
     const dims = ['squad','workstream','disciplina','vendor'];
-    const labels = { squad:'Squad', workstream:'Workstream', disciplina:'Disciplina', vendor:'Vendor' };
-
     dims.forEach(dim => {
         const sel = document.getElementById('sel-' + dim);
-        const valores = [...new Set(state.tasks.map(t => t[dim]))].filter(v => v && v !== '—').sort((a,b) => a.localeCompare(b,'pt-BR'));
+        const valores = [...new Set(state.tasks.map(t => t[dim]))]
+            .filter(v => v && v !== '—')
+            .sort((a,b) => a.localeCompare(b,'pt-BR'));
         sel.innerHTML = '<option value="all">' + (dim === 'disciplina' ? 'Todas' : 'Todos') + '</option>';
         valores.forEach(v => {
             const o = document.createElement('option');
@@ -974,7 +1114,6 @@ function montarFiltros() {
         sel.value = 'all';
         state.filters[dim] = 'all';
     });
-
     $('#in-busca').value = '';
     state.filters.search = '';
 }
@@ -982,7 +1121,6 @@ function montarFiltros() {
 function aplicarFiltros() {
     const f = state.filters;
     const busca = normalizar(f.search);
-
     state.filtered = state.tasks.filter(t => {
         if (f.squad !== 'all' && t.squad !== f.squad) return false;
         if (f.workstream !== 'all' && t.workstream !== f.workstream) return false;
@@ -991,7 +1129,6 @@ function aplicarFiltros() {
         if (busca && !normalizar(t.name).includes(busca)) return false;
         return true;
     });
-
     renderChipsAtivos();
 }
 
@@ -1039,7 +1176,8 @@ function renderChipsAtivos() {
 function renderTudo() {
     renderKPIs();
     drawCurva();
-    renderStatus();
+    desenharGauge();
+    renderDesvios();
     renderTabela();
     const total = state.tasks.length;
     const vis = state.filtered.length;
@@ -1062,76 +1200,34 @@ function renderKPIs() {
     const desvio = (plan !== null && real !== null) ? (real - plan) : null;
 
     const total = at.length;
-    const concluidas  = at.filter(t => t.status === 'Concluída').length;
-    const andamento   = at.filter(t => t.status === 'Em andamento').length;
-    const atrasadas   = at.filter(t => t.status === 'Atrasada').length;
-    const naoInic     = at.filter(t => t.status === 'Não iniciada').length;
+    const concluidas = at.filter(t => t.status === 'Concluída').length;
+    const andamento = at.filter(t => t.status === 'Em andamento').length;
+    const atrasadas = at.filter(t => t.status === 'Atrasada').length;
+    const naoInic = at.filter(t => t.status === 'Não iniciada').length;
 
-    const cards = [];
-
-    cards.push({
-        label:'Avanço previsto (global)',
-        valor: plan === null ? '—' : fmtPct(plan) + '<small>%</small>',
-        sub: c?.ultimaData ? `em ${fmtMes(c.ultimaData)}` : 'sem dados',
-        classe:'is-marinho'
-    });
-
-    cards.push({
-        label:'Avanço realizado (global)',
-        valor: real === null ? '—' : fmtPct(real) + '<small>%</small>',
-        sub: c?.ultimaData ? `até ${fmtMes(c.ultimaData)}` : 'sem dados',
-        classe:'is-azul'
-    });
-
-    cards.push({
-        label:'Desvio (real − prev.)',
-        valor: desvio === null ? '—' : (desvio >= 0 ? '+' : '') + fmtPct(desvio) + '<small>pp</small>',
-        sub: desvio === null ? '—' : (desvio >= 0 ? 'adiantado em relação à base' : 'atrasado em relação à base'),
-        classe: desvio === null ? '' : (desvio >= -0.005 ? 'is-ok' : 'is-erro'),
-        cor: desvio === null ? '' : (desvio >= 0 ? 'pos' : 'neg')
-    });
-
-    cards.push({
-        label:'Última atualização',
-        valor: c?.ultimaData ? fmtMes(c.ultimaData) : '—',
-        sub: 'data do último realizado',
-        classe:'is-neutro'
-    });
-
-    cards.push({
-        label:'Atividades (filtro)',
-        valor: fmtNum(total, 0),
-        sub: total === state.tasks.length ? 'carteira completa' : `de ${state.tasks.length} no total`,
-        classe:'is-marinho'
-    });
-
-    cards.push({
-        label:'Concluídas',
-        valor: fmtNum(concluidas, 0),
-        sub: total ? `${fmtPct(concluidas/total, 0)}% do filtro` : '—',
-        classe:'is-ok'
-    });
-
-    cards.push({
-        label:'Em andamento',
-        valor: fmtNum(andamento, 0),
-        sub: total ? `${fmtPct(andamento/total, 0)}% do filtro` : '—',
-        classe:'is-azul'
-    });
-
-    cards.push({
-        label:'Atrasadas',
-        valor: fmtNum(atrasadas, 0),
-        sub: total ? `${fmtPct(atrasadas/total, 0)}% do filtro` : '—',
-        classe: atrasadas ? 'is-erro' : ''
-    });
-
-    cards.push({
-        label:'Não iniciadas',
-        valor: fmtNum(naoInic, 0),
-        sub: total ? `${fmtPct(naoInic/total, 0)}% do filtro` : '—',
-        classe:'is-neutro'
-    });
+    const cards = [
+        { label:'Avanço previsto (global)', valor: plan === null ? '—' : fmtPct(plan) + '<small>%</small>',
+          sub: c?.ultimaData ? `em ${fmtMes(c.ultimaData)}` : 'sem dados', classe:'is-marinho' },
+        { label:'Avanço realizado (global)', valor: real === null ? '—' : fmtPct(real) + '<small>%</small>',
+          sub: c?.ultimaData ? `até ${fmtMes(c.ultimaData)}` : 'sem dados', classe:'is-azul' },
+        { label:'Desvio (real − prev.)', valor: desvio === null ? '—' : (desvio >= 0 ? '+' : '') + fmtPct(desvio) + '<small>pp</small>',
+          sub: desvio === null ? '—' : (desvio >= 0 ? 'adiantado em relação à base' : 'atrasado em relação à base'),
+          classe: desvio === null ? '' : (desvio >= -0.005 ? 'is-ok' : 'is-erro'),
+          cor: desvio === null ? '' : (desvio >= 0 ? 'pos' : 'neg') },
+        { label:'Última atualização', valor: c?.ultimaData ? fmtMes(c.ultimaData) : '—',
+          sub: 'data do último realizado', classe:'is-neutro' },
+        { label:'Atividades (filtro)', valor: fmtNum(total, 0),
+          sub: total === state.tasks.length ? 'carteira completa' : `de ${state.tasks.length} no total`,
+          classe:'is-marinho' },
+        { label:'Concluídas', valor: fmtNum(concluidas, 0),
+          sub: total ? `${fmtPct(concluidas/total, 0)}% do filtro` : '—', classe:'is-ok' },
+        { label:'Em andamento', valor: fmtNum(andamento, 0),
+          sub: total ? `${fmtPct(andamento/total, 0)}% do filtro` : '—', classe:'is-azul' },
+        { label:'Atrasadas', valor: fmtNum(atrasadas, 0),
+          sub: total ? `${fmtPct(atrasadas/total, 0)}% do filtro` : '—', classe: atrasadas ? 'is-erro' : '' },
+        { label:'Não iniciadas', valor: fmtNum(naoInic, 0),
+          sub: total ? `${fmtPct(naoInic/total, 0)}% do filtro` : '—', classe:'is-neutro' }
+    ];
 
     grid.innerHTML = cards.map(c => `
         <div class="kpi ${c.classe || ''}">
@@ -1143,7 +1239,126 @@ function renderKPIs() {
 }
 
 /* ------------------------------------------------------------------ */
-/* Curva S (canvas)                                                    */
+/* VELOCÍMETRO (GAUGE) — canvas                                        */
+/* ------------------------------------------------------------------ */
+
+function desenharGauge() {
+    const canvas = $('#gauge-canvas');
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
+
+    const W = canvas.width;
+    const H = canvas.height;
+    const cx = W / 2;
+    const cy = H / 2 + 20;
+    const raio = Math.min(W, H) * 0.38;
+    const largura = Math.min(W, H) * 0.10;
+
+    ctx.clearRect(0, 0, W, H);
+
+    // Estado atual: pega da curva
+    const c = state.curve;
+    const plan = c?.planejadoAtual ?? null;
+    const real = c?.realizadoAtual ?? null;
+
+    if (plan === null || real === null) {
+        ctx.fillStyle = 'rgba(1,30,56,.4)';
+        ctx.font = '600 20px "IBM Plex Sans", sans-serif';
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+        ctx.fillText('Sem dados de curva', cx, cy);
+        return;
+    }
+
+    const pct = clamp(real, 0, 1);
+    const desvio = real - plan;
+
+    // Define cor conforme desvio (5 pp de tolerância)
+    let cor;
+    if (desvio < -0.05) cor = CONFIG.coresGauge.atraso;
+    else if (desvio > 0.05) cor = CONFIG.coresGauge.adiantado;
+    else cor = CONFIG.coresGauge.ok;
+
+    // Arco de fundo (270° iniciando no canto inferior-esquerdo)
+    const anguloInicio = Math.PI * 0.75;   // 135°
+    const anguloFim   = Math.PI * 2.25;    // 405° = 45°
+    const span = anguloFim - anguloInicio;
+
+    // Fundo
+    ctx.beginPath();
+    ctx.strokeStyle = CONFIG.coresGauge.fundo;
+    ctx.lineWidth = largura;
+    ctx.lineCap = 'round';
+    ctx.arc(cx, cy, raio, anguloInicio, anguloFim);
+    ctx.stroke();
+
+    // Faixas de referência (leve)
+    ctx.beginPath();
+    ctx.strokeStyle = 'rgba(1,30,56,.04)';
+    ctx.lineWidth = largura * 1.05;
+    ctx.arc(cx, cy, raio, anguloInicio, anguloFim);
+    ctx.stroke();
+
+    // Arco do valor (animado suave)
+    const anguloValor = anguloInicio + span * pct;
+    ctx.beginPath();
+    ctx.strokeStyle = cor;
+    ctx.lineWidth = largura;
+    ctx.lineCap = 'round';
+    ctx.arc(cx, cy, raio, anguloInicio, anguloValor);
+    ctx.stroke();
+
+    // Marcador do previsto (pequeno traço)
+    const anguloPrev = anguloInicio + span * clamp(plan, 0, 1);
+    const xPrev = cx + Math.cos(anguloPrev) * (raio - largura / 2 - 6);
+    const yPrev = cy + Math.sin(anguloPrev) * (raio - largura / 2 - 6);
+    const xPrev2 = cx + Math.cos(anguloPrev) * (raio + largura / 2 + 6);
+    const yPrev2 = cy + Math.sin(anguloPrev) * (raio + largura / 2 + 6);
+    ctx.beginPath();
+    ctx.strokeStyle = '#10192E';
+    ctx.lineWidth = 4;
+    ctx.lineCap = 'round';
+    ctx.moveTo(xPrev, yPrev);
+    ctx.lineTo(xPrev2, yPrev2);
+    ctx.stroke();
+
+    // Texto central
+    ctx.fillStyle = '#011E38';
+    ctx.font = '700 64px "IBM Plex Sans", sans-serif';
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    const texto = fmtPct(pct, 1);
+    ctx.fillText(texto + '%', cx, cy - 4);
+
+    // Subtexto
+    ctx.font = '600 18px "IBM Plex Sans", sans-serif';
+    ctx.fillStyle = 'rgba(1,30,56,.55)';
+    ctx.fillText('realizado', cx, cy + 38);
+
+    // Desvio abaixo
+    const sinal = desvio >= 0 ? '+' : '';
+    ctx.font = '700 20px "IBM Plex Sans", sans-serif';
+    ctx.fillStyle = cor;
+    ctx.fillText(`${sinal}${fmtPct(desvio)} pp`, cx, cy + 68);
+
+    // Rótulos dos extremos
+    ctx.font = '600 14px "IBM Plex Sans", sans-serif';
+    ctx.fillStyle = 'rgba(1,30,56,.5)';
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    const rLabel = raio + largura / 2 + 20;
+    ctx.fillText('0%', cx + Math.cos(anguloInicio) * rLabel, cy + Math.sin(anguloInicio) * rLabel);
+    ctx.fillText('100%', cx + Math.cos(anguloFim) * rLabel, cy + Math.sin(anguloFim) * rLabel);
+
+    // Indicador do previsto em número
+    ctx.font = '600 13px "IBM Plex Sans", sans-serif';
+    ctx.fillStyle = 'rgba(1,30,56,.6)';
+    ctx.textAlign = 'center';
+    ctx.fillText(`previsto: ${fmtPct(plan)}%`, cx, cy + 96);
+}
+
+/* ------------------------------------------------------------------ */
+/* Curva S com ZOOM por clique                                         */
 /* ------------------------------------------------------------------ */
 
 let sCurveGeom = null;
@@ -1174,12 +1389,22 @@ function drawCurva() {
         return;
     }
 
+    // Filtra pontos visíveis conforme zoom
+    const zoom = state.zoom;
+    const pontosVisiveis = zoom.ativo
+        ? c.pontos.map((p, i) => ({ p, i })).filter(({ p }) =>
+            p.data.getTime() >= zoom.inicio.getTime() &&
+            p.data.getTime() <= zoom.fim.getTime())
+        : c.pontos.map((p, i) => ({ p, i }));
+
+    if (pontosVisiveis.length < 2) return;
+
     const pad = { l: 52, r: 18, t: 14, b: 34 };
     const W = Math.max(10, w - pad.l - pad.r);
     const H = Math.max(10, h - pad.t - pad.b);
 
-    const t0 = c.pontos[0].data.getTime();
-    const t1 = c.pontos[c.pontos.length - 1].data.getTime();
+    const t0 = pontosVisiveis[0].p.data.getTime();
+    const t1 = pontosVisiveis[pontosVisiveis.length - 1].p.data.getTime();
     const xAt = t => pad.l + ((t - t0) / Math.max(t1 - t0, 1)) * W;
     const yAt = v => pad.t + (1 - clamp(v, 0, 1.05)) * H;
 
@@ -1199,12 +1424,10 @@ function drawCurva() {
         ctx.fillText((v * 100).toFixed(0) + '%', pad.l - 9, y);
     }
 
-    // Grade vertical + rótulos (a cada N meses)
-    const passo = Math.max(1, Math.ceil(c.pontos.length / 12));
-    ctx.textAlign = 'center';
-    ctx.textBaseline = 'top';
-    c.pontos.forEach((p, i) => {
-        if (i % passo !== 0 && i !== c.pontos.length - 1) return;
+    // Grade vertical + rótulos
+    const passo = Math.max(1, Math.ceil(pontosVisiveis.length / 14));
+    pontosVisiveis.forEach(({ p }, i) => {
+        if (i % passo !== 0 && i !== pontosVisiveis.length - 1) return;
         const x = xAt(p.data.getTime());
         ctx.strokeStyle = 'rgba(1,30,56,.06)';
         ctx.beginPath();
@@ -1212,17 +1435,30 @@ function drawCurva() {
         ctx.lineTo(x, pad.t + H);
         ctx.stroke();
         ctx.fillStyle = 'rgba(1,30,56,.5)';
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'top';
         ctx.fillText(p.label, x, pad.t + H + 8);
     });
 
-    // ---- Linha de base (marinho, tracejada)
+    // Destaca o mês em zoom
+    if (zoom.ativo) {
+        const idx = zoom.mesIdx;
+        if (idx >= 0 && idx < c.pontos.length) {
+            const x = xAt(c.pontos[idx].data.getTime());
+            ctx.fillStyle = 'rgba(38,79,236,.06)';
+            ctx.fillRect(x - W / (pontosVisiveis.length * 2), pad.t, W / pontosVisiveis.length, H);
+        }
+    }
+
+    // ---- Linha de base
     ctx.save();
     ctx.setLineDash([6, 4]);
     ctx.lineWidth = 2;
     ctx.strokeStyle = 'rgba(16,25,46,.85)';
     ctx.beginPath();
     let iniciado = false;
-    c.planned.forEach((v, i) => {
+    pontosVisiveis.forEach(({ i }) => {
+        const v = c.planned[i];
         if (v === null) return;
         const x = xAt(c.pontos[i].data.getTime());
         const y = yAt(v);
@@ -1232,18 +1468,19 @@ function drawCurva() {
     ctx.stroke();
     ctx.restore();
 
-    // ---- Realizado (azul, com área)
-    const idxReais = c.actual.map((v, i) => v !== null ? i : -1).filter(i => i >= 0);
-    if (idxReais.length > 1) {
+    // ---- Realizado (com área)
+    const pontosReal = pontosVisiveis.filter(({ i }) => c.actual[i] !== null);
+    if (pontosReal.length > 1) {
         ctx.beginPath();
-        idxReais.forEach((i, k) => {
+        pontosReal.forEach(({ i }, k) => {
             const x = xAt(c.pontos[i].data.getTime());
             const y = yAt(c.actual[i]);
             if (k === 0) ctx.moveTo(x, y);
             else ctx.lineTo(x, y);
         });
-        ctx.lineTo(xAt(c.pontos[idxReais[idxReais.length - 1]].data.getTime()), pad.t + H);
-        ctx.lineTo(xAt(c.pontos[idxReais[0]].data.getTime()), pad.t + H);
+        const ultimoX = xAt(c.pontos[pontosReal[pontosReal.length - 1].i].data.getTime());
+        ctx.lineTo(ultimoX, pad.t + H);
+        ctx.lineTo(xAt(c.pontos[pontosReal[0].i].data.getTime()), pad.t + H);
         ctx.closePath();
         const grad = ctx.createLinearGradient(0, pad.t, 0, pad.t + H);
         grad.addColorStop(0, 'rgba(38,79,236,.22)');
@@ -1252,7 +1489,7 @@ function drawCurva() {
         ctx.fill();
 
         ctx.beginPath();
-        idxReais.forEach((i, k) => {
+        pontosReal.forEach(({ i }, k) => {
             const x = xAt(c.pontos[i].data.getTime());
             const y = yAt(c.actual[i]);
             if (k === 0) ctx.moveTo(x, y);
@@ -1267,16 +1504,16 @@ function drawCurva() {
         ctx.shadowBlur = 0;
     }
 
-    // ---- Tendência (salmão, tracejada)
-    const idxTend = c.forecast.map((v, i) => v !== null ? i : -1).filter(i => i >= 0);
-    if (idxTend.length > 1) {
+    // ---- Tendência
+    const pontosTend = pontosVisiveis.filter(({ i }) => c.forecast[i] !== null);
+    if (pontosTend.length > 1) {
         ctx.save();
         ctx.setLineDash([7, 5]);
         ctx.lineWidth = 2.4;
         ctx.strokeStyle = '#F0C089';
         ctx.lineJoin = 'round';
         ctx.beginPath();
-        idxTend.forEach((i, k) => {
+        pontosTend.forEach(({ i }, k) => {
             const x = xAt(c.pontos[i].data.getTime());
             const y = yAt(c.forecast[i]);
             if (k === 0) ctx.moveTo(x, y);
@@ -1287,10 +1524,10 @@ function drawCurva() {
     }
 
     // Marcador do último realizado
-    if (idxReais.length) {
-        const i = idxReais[idxReais.length - 1];
-        const x = xAt(c.pontos[i].data.getTime());
-        const y = yAt(c.actual[i]);
+    if (pontosReal.length) {
+        const ult = pontosReal[pontosReal.length - 1];
+        const x = xAt(c.pontos[ult.i].data.getTime());
+        const y = yAt(c.actual[ult.i]);
         ctx.beginPath();
         ctx.arc(x, y, 5, 0, Math.PI * 2);
         ctx.fillStyle = '#264FEC';
@@ -1298,51 +1535,68 @@ function drawCurva() {
         ctx.strokeStyle = '#fff';
         ctx.lineWidth = 1.8;
         ctx.stroke();
-
-        // Rótulo do valor
         ctx.fillStyle = 'rgba(1,30,56,.8)';
         ctx.font = '700 10.5px "IBM Plex Sans", sans-serif';
         ctx.textAlign = 'left';
         ctx.textBaseline = 'middle';
-        ctx.fillText(fmtPct(c.actual[i]) + '%', x + 9, y);
+        ctx.fillText(fmtPct(c.actual[ult.i]) + '%', x + 9, y);
     }
 
     // Hover
     if (sCurveHover !== null && c.pontos[sCurveHover]) {
         const i = sCurveHover;
-        const x = xAt(c.pontos[i].data.getTime());
-        ctx.strokeStyle = 'rgba(1,30,56,.22)';
-        ctx.lineWidth = 1;
-        ctx.beginPath();
-        ctx.moveTo(x, pad.t);
-        ctx.lineTo(x, pad.t + H);
-        ctx.stroke();
+        if (pontosVisiveis.some(v => v.i === i)) {
+            const x = xAt(c.pontos[i].data.getTime());
+            ctx.strokeStyle = 'rgba(1,30,56,.22)';
+            ctx.lineWidth = 1;
+            ctx.beginPath();
+            ctx.moveTo(x, pad.t);
+            ctx.lineTo(x, pad.t + H);
+            ctx.stroke();
 
-        if (c.planned[i] !== null) {
-            ctx.beginPath();
-            ctx.arc(x, yAt(c.planned[i]), 3.6, 0, Math.PI * 2);
-            ctx.fillStyle = '#10192E'; ctx.fill();
-        }
-        if (c.actual[i] !== null) {
-            ctx.beginPath();
-            ctx.arc(x, yAt(c.actual[i]), 4.6, 0, Math.PI * 2);
-            ctx.fillStyle = '#264FEC'; ctx.fill();
-            ctx.strokeStyle = '#fff'; ctx.lineWidth = 1.6; ctx.stroke();
-        }
-        if (c.forecast[i] !== null) {
-            ctx.beginPath();
-            ctx.arc(x, yAt(c.forecast[i]), 4, 0, Math.PI * 2);
-            ctx.fillStyle = '#F0C089'; ctx.fill();
+            if (c.planned[i] !== null) {
+                ctx.beginPath();
+                ctx.arc(x, yAt(c.planned[i]), 3.6, 0, Math.PI * 2);
+                ctx.fillStyle = '#10192E'; ctx.fill();
+            }
+            if (c.actual[i] !== null) {
+                ctx.beginPath();
+                ctx.arc(x, yAt(c.actual[i]), 4.6, 0, Math.PI * 2);
+                ctx.fillStyle = '#264FEC'; ctx.fill();
+                ctx.strokeStyle = '#fff'; ctx.lineWidth = 1.6; ctx.stroke();
+            }
+            if (c.forecast[i] !== null) {
+                ctx.beginPath();
+                ctx.arc(x, yAt(c.forecast[i]), 4, 0, Math.PI * 2);
+                ctx.fillStyle = '#F0C089'; ctx.fill();
+            }
         }
     }
 
-    sCurveGeom = { xAt, yAt, pontos: c.pontos, pad, W, H, curve: c };
+    sCurveGeom = { xAt, yAt, pontos: c.pontos, pontosVisiveis, pad, W, H, curve: c };
 }
 
-/* Tooltip da curva */
+/* ------------------------------------------------------------------ */
+/* Interação com a curva: hover + click para zoom                      */
+/* ------------------------------------------------------------------ */
+
 (function interacaoCurva() {
     const canvas = $('#s-curve');
     const tip = $('#s-curve-tip');
+    const box = $('#s-curve-box');
+    const btnReset = $('#btn-zoom-reset');
+
+    function acharMesPorX(x) {
+        if (!sCurveGeom) return -1;
+        const { pontosVisiveis, xAt } = sCurveGeom;
+        let melhor = -1, dist = Infinity;
+        pontosVisiveis.forEach(({ i }) => {
+            const px = xAt(sCurveGeom.curve.pontos[i].data.getTime());
+            const d = Math.abs(px - x);
+            if (d < dist) { dist = d; melhor = i; }
+        });
+        return melhor;
+    }
 
     canvas.addEventListener('mousemove', ev => {
         if (!sCurveGeom) return;
@@ -1350,27 +1604,22 @@ function drawCurva() {
         const x = ev.clientX - rect.left;
         const y = ev.clientY - rect.top;
 
-        let melhor = -1, dist = Infinity;
-        sCurveGeom.pontos.forEach((p, i) => {
-            const px = sCurveGeom.xAt(p.data.getTime());
-            const d = Math.abs(px - x);
-            if (d < dist) { dist = d; melhor = i; }
-        });
+        const idx = acharMesPorX(x);
 
-        if (melhor < 0 || dist > 60) {
+        if (idx < 0) {
             if (sCurveHover !== null) { sCurveHover = null; drawCurva(); }
             tip.classList.remove('on');
             return;
         }
 
         const c = sCurveGeom.curve;
-        const plan = c.planned[melhor];
-        const real = c.actual[melhor];
-        const tend = c.forecast[melhor];
+        const plan = c.planned[idx];
+        const real = c.actual[idx];
+        const tend = c.forecast[idx];
         const desvio = (plan !== null && real !== null) ? (real - plan) : null;
 
         tip.innerHTML = `
-            <b>${c.pontos[melhor].label}</b>
+            <b>${c.pontos[idx].label}${state.zoom.ativo ? ' · clique para voltar' : ' · clique para zoom'}</b>
             <div class="row"><span>Linha de base</span><span>${plan === null ? '—' : fmtPct(plan) + '%'}</span></div>
             <div class="row"><span>Realizado</span><span>${real === null ? '—' : fmtPct(real) + '%'}</span></div>
             <div class="row"><span>Tendência</span><span>${tend === null ? '—' : fmtPct(tend) + '%'}</span></div>
@@ -1380,59 +1629,132 @@ function drawCurva() {
 
         const boxW = canvas.parentElement.clientWidth;
         const tipW = tip.offsetWidth || 200;
-        let left = sCurveGeom.xAt(c.pontos[melhor].data.getTime()) + 14;
-        if (left + tipW > boxW - 6) left = sCurveGeom.xAt(c.pontos[melhor].data.getTime()) - tipW - 14;
+        let left = sCurveGeom.xAt(c.pontos[idx].data.getTime()) + 14;
+        if (left + tipW > boxW - 6) left = sCurveGeom.xAt(c.pontos[idx].data.getTime()) - tipW - 14;
         tip.style.left = Math.max(6, left) + 'px';
         tip.style.top = Math.max(8, y - 10) + 'px';
 
-        if (sCurveHover !== melhor) { sCurveHover = melhor; drawCurva(); }
+        if (sCurveHover !== idx) { sCurveHover = idx; drawCurva(); }
     });
 
     canvas.addEventListener('mouseleave', () => {
         tip.classList.remove('on');
         if (sCurveHover !== null) { sCurveHover = null; drawCurva(); }
     });
+
+    // Clique para zoom
+    canvas.addEventListener('click', ev => {
+        if (!sCurveGeom) return;
+
+        // Se já está com zoom ativo, clique volta ao normal
+        if (state.zoom.ativo) {
+            state.zoom = { ativo:false, inicio:null, fim:null, mesIdx:-1 };
+            box.classList.remove('zoomed');
+            btnReset.classList.remove('on');
+            drawCurva();
+            return;
+        }
+
+        // Senão, dá zoom no mês clicado
+        const rect = canvas.getBoundingClientRect();
+        const x = ev.clientX - rect.left;
+        const idx = acharMesPorX(x);
+        if (idx < 0) return;
+
+        const c = state.curve;
+        const p = c.pontos[idx];
+
+        // Janela: mês anterior até mês seguinte (para contexto)
+        const inicio = idx > 0 ? c.pontos[idx - 1].data : p.data;
+        const fim = idx < c.pontos.length - 1 ? c.pontos[idx + 1].data : p.data;
+
+        state.zoom = {
+            ativo: true,
+            inicio: new Date(inicio.getTime()),
+            fim: new Date(fim.getTime()),
+            mesIdx: idx
+        };
+        box.classList.add('zoomed');
+        btnReset.classList.add('on');
+        drawCurva();
+    });
+
+    // Botão "Ver tudo"
+    btnReset.addEventListener('click', () => {
+        state.zoom = { ativo:false, inicio:null, fim:null, mesIdx:-1 };
+        box.classList.remove('zoomed');
+        btnReset.classList.remove('on');
+        drawCurva();
+    });
 })();
 
 /* ------------------------------------------------------------------ */
-/* Distribuição por situação                                           */
+/* Tabela de desvios por Squad                                         */
 /* ------------------------------------------------------------------ */
 
-const CORES_STATUS = {
-    'Concluída': '#1B8A63',
-    'Em andamento': '#264FEC',
-    'Atrasada': '#C0453B',
-    'Não iniciada': '#8A93A6'
-};
-
-function renderStatus() {
-    const lista = $('#status-list');
-    const resumo = $('#status-resumo');
+function renderDesvios() {
+    const tbody = $('#desvio-body');
+    const resumo = $('#desvio-resumo');
     const at = state.filtered;
 
-    const ordem = ['Concluída','Em andamento','Atrasada','Não iniciada'];
-    const contagem = {}; ordem.forEach(k => contagem[k] = 0);
-    at.forEach(t => { contagem[t.status] = (contagem[t.status] || 0) + 1; });
+    if (!at.length) {
+        tbody.innerHTML = `<tr><td colspan="7" class="tabela-vazia">Nenhuma atividade no filtro atual.</td></tr>`;
+        resumo.textContent = '';
+        return;
+    }
 
-    const total = at.length || 1;
-    lista.innerHTML = ordem.map(k => {
-        const n = contagem[k] || 0;
-        const pct = (n / total) * 100;
+    // Agrupa por Squad
+    const map = {};
+    at.forEach(t => {
+        const k = t.squad || '—';
+        if (!map[k]) map[k] = { squad: k, n: 0, sumPrev: 0, sumExec: 0 };
+        map[k].n++;
+        map[k].sumPrev += t.prev;
+        map[k].sumExec += t.exec;
+    });
+
+    const linhas = Object.values(map).map(g => {
+        const prev = g.sumPrev / g.n;
+        const exec = g.sumExec / g.n;
+        return { ...g, prev, exec, desvio: exec - prev };
+    }).sort((a, b) => a.desvio - b.desvio);  // pior desvio primeiro
+
+    const maxAbs = Math.max(...linhas.map(l => Math.abs(l.desvio)), 0.01);
+
+    tbody.innerHTML = linhas.map((g, i) => {
+        const d = g.desvio;
+        const classe = d < -0.001 ? 'neg' : (d > 0.001 ? 'pos' : 'zero');
+        const sinal = d >= 0 ? '+' : '';
+        const largura = Math.min(100, (Math.abs(d) / maxAbs) * 100);
+        const classeBarra = d < 0 ? 'neg' : '';
+
         return `
-            <div class="status-row">
-                <span class="status-dot" style="background:${CORES_STATUS[k]}"></span>
-                <span class="status-nome">${k}</span>
-                <span class="status-barra"><i style="width:${pct.toFixed(1)}%;background:${CORES_STATUS[k]}"></i></span>
-                <span class="status-num"><b>${n}</b> · ${pct.toFixed(0)}%</span>
-            </div>
+            <tr>
+                <td class="col-num" style="color:var(--texto-fraco)">${i + 1}</td>
+                <td class="col-nome">${escaparHtml(g.squad)}</td>
+                <td class="col-num">${g.n}</td>
+                <td class="col-num">${fmtPct(g.prev)}%</td>
+                <td class="col-num">${fmtPct(g.exec)}%</td>
+                <td class="col-num">
+                    <span class="badge-desvio ${classe}">${sinal}${fmtPct(d)} pp</span>
+                </td>
+                <td>
+                    <div class="mini-barra"><i class="${classeBarra}" style="width:${largura}%"></i></div>
+                </td>
+            </tr>
         `;
     }).join('');
 
-    resumo.textContent = `${at.length} atividade${at.length === 1 ? '' : 's'} no filtro atual`;
+    // Resumo: pior squad
+    const pior = linhas[0];
+    const melhor = linhas[linhas.length - 1];
+    resumo.innerHTML = linhas.length === 1
+        ? `1 squad no filtro · desvio ${fmtPct(linhas[0].desvio)} pp`
+        : `Pior: <b>${escaparHtml(pior.squad)}</b> (${fmtPct(pior.desvio)} pp) · Melhor: <b>${escaparHtml(melhor.squad)}</b> (${fmtPct(melhor.desvio)} pp)`;
 }
 
 /* ------------------------------------------------------------------ */
-/* Tabela                                                              */
+/* Tabela detalhada de atividades                                      */
 /* ------------------------------------------------------------------ */
 
 function renderTabela() {
@@ -1463,7 +1785,6 @@ function renderTabela() {
         const ePct = t.exec * 100;
         const classeBarra = t.status === 'Concluída' ? 'completo' : (t.status === 'Atrasada' ? 'atraso' : '');
         const desvio = t.desvio;
-        const classeDesvio = desvio >= 0 ? 'pos' : 'neg';
 
         return `
             <tr>
@@ -1499,12 +1820,27 @@ function renderTabela() {
 /* Eventos                                                             */
 /* ------------------------------------------------------------------ */
 
-$('#file-input').addEventListener('change', ev => {
+// Upload local (fallback)
+$('#file-input').addEventListener('change', async ev => {
     const f = ev.target.files && ev.target.files[0];
-    if (f) lerArquivo(f);
+    if (!f) return;
+    const msg = $('#load-msg');
+    msg.innerHTML = '';
+    try {
+        const buffer = await f.arrayBuffer();
+        await processarBuffer(buffer, f.name, 'upload local');
+        msg.innerHTML = `<div class="aviso ok">Planilha local <b>${escaparHtml(f.name)}</b> carregada.</div>`;
+    } catch (err) {
+        console.error(err);
+        msg.innerHTML = `<div class="aviso erro"><strong>Erro:</strong>&nbsp;${escaparHtml(err.message)}</div>`;
+    }
     ev.target.value = '';
 });
 
+// Botão recarregar
+$('#btn-recarregar').addEventListener('click', () => carregarRemoto());
+
+// Dropzone (fallback para upload local)
 const dz = $('#dropzone');
 dz.addEventListener('click', () => $('#file-input').click());
 dz.addEventListener('keydown', ev => {
@@ -1518,14 +1854,13 @@ dz.addEventListener('keydown', ev => {
 });
 dz.addEventListener('drop', ev => {
     const f = ev.dataTransfer.files && ev.dataTransfer.files[0];
-    if (f) lerArquivo(f);
-});
-document.addEventListener('dragover', e => e.preventDefault());
-document.addEventListener('drop', e => {
-    if (e.target.closest('#dropzone')) return;
-    e.preventDefault();
-    const f = e.dataTransfer.files && e.dataTransfer.files[0];
-    if (f) lerArquivo(f);
+    if (f) {
+        const input = $('#file-input');
+        const dt = new DataTransfer();
+        dt.items.add(f);
+        input.files = dt.files;
+        input.dispatchEvent(new Event('change'));
+    }
 });
 
 // Filtros
@@ -1557,7 +1892,26 @@ $('#btn-limpar').addEventListener('click', () => {
 // Redimensionamento
 window.addEventListener('resize', debounce(() => {
     drawCurva();
+    desenharGauge();
 }, 150));
+
+// ESC limpa o zoom
+document.addEventListener('keydown', ev => {
+    if (ev.key === 'Escape' && state.zoom.ativo) {
+        state.zoom = { ativo:false, inicio:null, fim:null, mesIdx:-1 };
+        $('#s-curve-box').classList.remove('zoomed');
+        $('#btn-zoom-reset').classList.remove('on');
+        drawCurva();
+    }
+});
+
+/* ------------------------------------------------------------------ */
+/* Boot — carrega automaticamente a planilha remota                    */
+/* ------------------------------------------------------------------ */
+
+window.addEventListener('load', () => {
+    carregarRemoto();
+});
 
 </script>
 </body>
