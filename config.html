@@ -1,479 +1,1564 @@
 <!DOCTYPE html>
-<html lang="pt-BR" class="dark">
+<html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Clipboard Sync & Reader</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <script>
-        tailwind.config = {
-            darkMode: 'class',
-            theme: {
-                extend: {
-                    colors: {
-                        darkBg: '#0f172a',
-                        darkCard: '#1e293b',
-                        darkBorder: '#334155'
-                    }
-                }
-            }
-        }
-    </script>
-</head>
-<body class="bg-slate-950 text-slate-100 min-h-screen flex flex-col font-sans selection:bg-indigo-500 selection:text-white">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dashboard de Cronograma · Projeto Afrodite</title>
 
-    <header class="border-b border-slate-800 bg-slate-900/50 backdrop-blur sticky top-0 z-30">
-        <div class="max-w-6xl mx-auto px-4 py-4 flex flex-col sm:flex-row items-center justify-between gap-4">
-            <div class="flex items-center gap-3">
-                <div class="bg-indigo-600 p-2.5 rounded-xl shadow-lg shadow-indigo-500/20 text-white">
-                    <i class="fa-solid fa-cloud-arrow-down text-xl"></i>
-                </div>
-                <div>
-                    <h1 class="text-xl font-bold tracking-tight text-white">Clipboard Sync</h1>
-                    <p class="text-xs text-slate-400">Transfira textos e códigos do celular para o PC instantaneamente</p>
-                </div>
-            </div>
-            
-            <div class="flex items-center gap-3 w-full sm:w-auto justify-end">
-                <button onclick="toggleGithubGuide()" class="px-3.5 py-2 text-xs font-medium bg-indigo-500/10 text-indigo-400 hover:bg-indigo-500/20 border border-indigo-500/20 rounded-lg transition-all flex items-center gap-2">
-                    <i class="fa-brands fa-github"></i> Guia GitHub Pages
-                </button>
-                <button onclick="clearAllItems()" class="px-3.5 py-2 text-xs font-medium bg-rose-500/10 text-rose-400 hover:bg-rose-500/20 border border-rose-500/20 rounded-lg transition-all flex items-center gap-2">
-                    <i class="fa-solid fa-trash-can"></i> Apagar Tudo
-                </button>
-            </div>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+<style>
+    :root {
+        --azul-escuro: #011E38;
+        --azul: #264FEC;
+        --azul-rgb: 38, 79, 236;
+        --salmao: #F0C089;
+        --salmao-forte: #FFBC82;
+        --off-white: #F5F1EB;
+        --branco: #FFFFFF;
+        --marinho: #10192E;
+        --cinza: #E8E4DE;
+
+        --texto: #011E38;
+        --texto-suave: rgba(1, 30, 56, 0.60);
+        --texto-fraco: rgba(1, 30, 56, 0.42);
+        --linha: rgba(1, 30, 56, 0.10);
+        --linha-forte: rgba(1, 30, 56, 0.18);
+
+        --ok: #1B8A63;
+        --alerta: #C98B3E;
+        --erro: #C0453B;
+        --neutro: #8A93A6;
+
+        --altura-topo: 56px;
+        --altura-titulo: 48px;
+        --raio: 14px;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+        background: var(--off-white);
+        color: var(--texto);
+        font-family: "IBM Plex Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
+        -webkit-font-smoothing: antialiased;
+        min-height: 100vh;
+        padding-bottom: 40px;
+    }
+
+    button, input, select { font-family: inherit; }
+
+    #topo {
+        position: sticky; top: 0; z-index: 40;
+        height: var(--altura-topo);
+        display: flex; align-items: center; justify-content: space-between;
+        gap: 16px; padding: 0 20px;
+        background: var(--branco);
+        border-bottom: 1px solid var(--cinza);
+    }
+    #topo .marca { display: flex; align-items: center; gap: 16px; }
+    #topo img { height: 25px; width: auto; display: block; }
+    .topo-acoes { display: flex; align-items: center; gap: 9px; }
+
+    .chip {
+        display: inline-flex; align-items: center; gap: 7px;
+        max-width: 260px; height: 30px; padding: 0 11px;
+        border-radius: 20px;
+        background: var(--off-white); border: 1px solid var(--linha);
+        color: var(--texto-suave); font-size: 11.5px; font-weight: 500;
+        white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+    }
+    .chip::before {
+        content: ""; width: 7px; height: 7px; border-radius: 50%;
+        background: var(--ok); flex: 0 0 7px;
+    }
+
+    .btn {
+        display: inline-flex; align-items: center; gap: 7px;
+        height: 34px; padding: 0 14px; border-radius: 9px;
+        border: 1px solid var(--linha-forte); background: var(--branco);
+        color: var(--texto); font-size: 12.5px; font-weight: 600;
+        text-decoration: none; cursor: pointer;
+        transition: background .18s ease, border-color .18s ease, transform .18s ease;
+    }
+    .btn:hover { background: var(--off-white); border-color: rgba(1,30,56,.3); }
+    .btn:active { transform: translateY(1px); }
+    .btn svg { width: 16px; height: 16px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+    .btn-salmao { background: var(--salmao); border-color: var(--salmao); color: var(--azul-escuro); }
+    .btn-salmao:hover { background: var(--salmao-forte); border-color: var(--salmao-forte); }
+
+    #titulo-bar {
+        position: sticky; top: var(--altura-topo); z-index: 39;
+        height: var(--altura-titulo);
+        display: flex; align-items: center; gap: 12px;
+        padding: 0 20px;
+        background: var(--azul-escuro); color: var(--off-white);
+    }
+    #titulo-bar .acento {
+        width: 4px; height: 18px; border-radius: 3px;
+        background: var(--salmao); flex: 0 0 4px;
+    }
+    #titulo-bar h1 { font-size: 14px; font-weight: 800; letter-spacing: .2px; white-space: nowrap; }
+    #titulo-bar .sub { font-size: 12px; color: rgba(245,241,235,.6); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+    main {
+        max-width: 1560px; margin: 0 auto;
+        padding: 18px 20px 0;
+        display: flex; flex-direction: column; gap: 14px;
+    }
+
+    .card {
+        background: var(--branco);
+        border: 1px solid var(--linha);
+        border-radius: var(--raio);
+        box-shadow: 0 1px 2px rgba(1,30,56,.04), 0 8px 24px rgba(1,30,56,.045);
+        padding: 16px 18px;
+        position: relative;
+    }
+    .card-head {
+        display: flex; align-items: center; justify-content: space-between;
+        gap: 12px; flex-wrap: wrap; margin-bottom: 12px;
+    }
+    .card-title {
+        display: flex; align-items: center; gap: 9px;
+        font-size: 11px; font-weight: 800; letter-spacing: 1.1px;
+        text-transform: uppercase; color: var(--azul-escuro);
+    }
+    .card-title::before {
+        content: ""; width: 8px; height: 8px; border-radius: 50%;
+        background: var(--salmao); box-shadow: 0 0 0 3px rgba(240,192,137,.25);
+    }
+    .card-sub { font-size: 11.5px; color: var(--texto-suave); }
+
+    #dropzone {
+        display: flex; flex-direction: column; align-items: center; justify-content: center;
+        gap: 10px; padding: 44px 20px;
+        border: 2px dashed rgba(1,30,56,.18); border-radius: 12px;
+        background: linear-gradient(180deg, rgba(240,192,137,.08), rgba(245,241,235,.4));
+        cursor: pointer; text-align: center;
+        transition: border-color .2s ease, background .2s ease, transform .2s ease;
+    }
+    #dropzone:hover, #dropzone.drag {
+        border-color: var(--salmao);
+        background: linear-gradient(180deg, rgba(240,192,137,.22), rgba(245,241,235,.5));
+    }
+    #dropzone.drag { transform: scale(1.005); }
+    #dropzone svg { width: 42px; height: 42px; fill: none; stroke: var(--azul); stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
+    #dropzone strong { font-size: 15px; font-weight: 700; color: var(--azul-escuro); }
+    #dropzone span { font-size: 12px; color: var(--texto-suave); }
+
+    .aviso {
+        display: flex; gap: 10px; align-items: flex-start;
+        margin-top: 12px; padding: 10px 12px; border-radius: 10px;
+        background: rgba(240,192,137,.16); border: 1px solid rgba(240,192,137,.5);
+        color: #6b4a1c; font-size: 12px; line-height: 1.5;
+    }
+    .aviso.erro { background: rgba(192,69,59,.08); border-color: rgba(192,69,59,.35); color: #8d3229; }
+    .aviso.ok { background: rgba(27,138,99,.08); border-color: rgba(27,138,99,.35); color: #0f5c42; }
+
+    .config-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+        gap: 12px;
+    }
+    .campo { display: flex; flex-direction: column; gap: 5px; min-width: 0; }
+    .campo label {
+        font-size: 10px; font-weight: 700; letter-spacing: .7px;
+        text-transform: uppercase; color: var(--texto-suave);
+    }
+    .campo select, .campo input[type="search"] {
+        height: 36px; padding: 0 10px;
+        border: 1px solid var(--linha-forte); border-radius: 9px;
+        background: var(--branco); color: var(--texto);
+        font-size: 12.5px; outline: none; width: 100%;
+        transition: border-color .18s ease, box-shadow .18s ease;
+    }
+    .campo select:focus, .campo input:focus {
+        border-color: var(--azul);
+        box-shadow: 0 0 0 3px rgba(var(--azul-rgb), .13);
+    }
+
+    #kpi-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(178px, 1fr));
+        gap: 12px;
+    }
+    .kpi {
+        position: relative; overflow: hidden;
+        padding: 13px 15px 14px;
+        border: 1px solid var(--linha); border-radius: var(--raio);
+        background: var(--branco);
+        box-shadow: 0 1px 2px rgba(1,30,56,.04), 0 8px 22px rgba(1,30,56,.04);
+    }
+    .kpi::after {
+        content: ""; position: absolute; left: 0; top: 0; bottom: 0;
+        width: 3px; background: var(--salmao); opacity: .85;
+    }
+    .kpi.is-azul::after { background: var(--azul); }
+    .kpi.is-marinho::after { background: var(--marinho); }
+    .kpi.is-ok::after { background: var(--ok); }
+    .kpi.is-erro::after { background: var(--erro); }
+    .kpi.is-neutro::after { background: var(--neutro); }
+
+    .kpi-label {
+        display: block; font-size: 9.5px; font-weight: 700;
+        letter-spacing: .8px; text-transform: uppercase;
+        color: var(--texto-suave);
+        white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+    }
+    .kpi-value {
+        display: block; margin-top: 5px;
+        font-size: 25px; font-weight: 700; line-height: 1.1;
+        letter-spacing: -.5px; color: var(--azul-escuro);
+        font-variant-numeric: tabular-nums;
+    }
+    .kpi-value small { font-size: 13px; font-weight: 600; opacity: .7; margin-left: 2px; }
+    .kpi-sub {
+        display: block; margin-top: 4px;
+        font-size: 11px; color: var(--texto-fraco);
+        white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+    }
+    .kpi-value.pos { color: var(--ok); }
+    .kpi-value.neg { color: var(--erro); }
+    .kpi-value.warn { color: var(--alerta); }
+
+    .charts-row {
+        display: grid;
+        grid-template-columns: minmax(0, 1.7fr) minmax(0, 1fr);
+        gap: 14px;
+    }
+
+    .chart-box { position: relative; width: 100%; }
+    .chart-box canvas { display: block; width: 100%; }
+    #s-curve-box { height: 420px; }
+
+    .legenda {
+        display: flex; flex-wrap: wrap; gap: 14px; align-items: center;
+        font-size: 11.5px; color: var(--texto-suave);
+    }
+    .legenda i {
+        display: inline-block; width: 22px; height: 0;
+        margin-right: 6px; vertical-align: middle;
+        border-top-width: 3px; border-top-style: solid;
+    }
+    .legenda .lg-base i { border-top-color: var(--marinho); border-top-style: dashed; }
+    .legenda .lg-real i { border-top-color: var(--azul); }
+    .legenda .lg-tend i { border-top-color: var(--salmao); border-top-style: dashed; }
+    .legenda .lg-corte i { border-top-color: var(--erro); border-top-style: dotted; }
+    .legenda span { display: inline-flex; align-items: center; }
+
+    .chart-tip {
+        position: absolute; z-index: 6;
+        min-width: 188px; padding: 9px 11px;
+        border-radius: 10px;
+        background: rgba(1, 30, 56, .95); color: var(--off-white);
+        font-size: 11px; line-height: 1.65; pointer-events: none;
+        box-shadow: 0 10px 26px rgba(1,30,56,.28);
+        opacity: 0; transition: opacity .12s ease;
+    }
+    .chart-tip.on { opacity: 1; }
+    .chart-tip b { display: block; font-size: 11.5px; margin-bottom: 4px; color: var(--salmao); }
+    .chart-tip .row { display: flex; justify-content: space-between; gap: 16px; }
+    .chart-tip .row span:last-child { font-variant-numeric: tabular-nums; font-weight: 600; }
+
+    .status-list { display: flex; flex-direction: column; gap: 11px; }
+    .status-row {
+        display: grid;
+        grid-template-columns: 12px minmax(84px, auto) minmax(0, 1fr) 78px;
+        align-items: center; gap: 10px; font-size: 12px;
+    }
+    .status-dot { width: 10px; height: 10px; border-radius: 50%; }
+    .status-nome { color: var(--texto); font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .status-barra { height: 8px; border-radius: 6px; background: rgba(1,30,56,.07); overflow: hidden; }
+    .status-barra i { display: block; height: 100%; border-radius: 6px; transition: width .5s ease; }
+    .status-num { text-align: right; font-variant-numeric: tabular-nums; color: var(--texto-suave); }
+    .status-num b { color: var(--azul-escuro); }
+
+    .filtros-ativos {
+        display: flex; flex-wrap: wrap; gap: 6px; margin-top: 10px;
+    }
+    .filtro-chip {
+        display: inline-flex; align-items: center; gap: 6px;
+        height: 24px; padding: 0 9px; border-radius: 20px;
+        background: rgba(38,79,236,.09); border: 1px solid rgba(38,79,236,.22);
+        color: var(--azul); font-size: 11px; font-weight: 600;
+    }
+    .filtro-chip button {
+        background: none; border: 0; cursor: pointer;
+        color: inherit; padding: 0; font-size: 13px; line-height: 1;
+        opacity: .7;
+    }
+    .filtro-chip button:hover { opacity: 1; }
+
+    .tabela-wrap {
+        max-height: 480px; overflow: auto;
+        border: 1px solid var(--linha); border-radius: 11px;
+    }
+    table { width: 100%; border-collapse: collapse; font-size: 12.5px; }
+    thead th {
+        position: sticky; top: 0; z-index: 2;
+        background: var(--off-white); color: var(--texto-suave);
+        font-size: 10px; font-weight: 700; letter-spacing: .8px;
+        text-transform: uppercase; text-align: left;
+        padding: 10px 12px; border-bottom: 1px solid var(--linha-forte);
+        white-space: nowrap;
+    }
+    tbody td {
+        padding: 9px 12px;
+        border-bottom: 1px solid rgba(1,30,56,.06);
+        vertical-align: middle;
+    }
+    tbody tr:hover { background: rgba(240,192,137,.09); }
+    tbody tr:last-child td { border-bottom: 0; }
+
+    .col-num { text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; }
+    .col-nome { min-width: 240px; font-weight: 500; }
+    .col-dim { color: var(--texto-suave); white-space: nowrap; }
+
+    .tag {
+        display: inline-block; padding: 3px 9px; border-radius: 20px;
+        font-size: 10.5px; font-weight: 700; white-space: nowrap;
+    }
+    .tag.concluida { background: rgba(27,138,99,.12); color: var(--ok); }
+    .tag.andamento { background: rgba(var(--azul-rgb),.11); color: var(--azul); }
+    .tag.atrasada { background: rgba(192,69,59,.12); color: var(--erro); }
+    .tag.naoiniciada { background: rgba(138,147,166,.16); color: #5d6678; }
+    .tag.futura { background: rgba(138,147,166,.16); color: #5d6678; }
+
+    .prog {
+        display: flex; align-items: center; gap: 6px; min-width: 96px;
+    }
+    .prog-barra {
+        flex: 1; height: 6px; border-radius: 5px;
+        background: rgba(1,30,56,.08); overflow: hidden;
+    }
+    .prog-barra i { display: block; height: 100%; border-radius: 5px; background: var(--azul); }
+    .prog-barra i.completo { background: var(--ok); }
+    .prog-barra i.atraso { background: var(--erro); }
+    .prog-txt { font-size: 10.5px; font-variant-numeric: tabular-nums; color: var(--texto-suave); min-width: 32px; text-align: right; }
+
+    .tabela-vazia { padding: 26px; text-align: center; color: var(--texto-fraco); font-size: 13px; }
+
+    .destaque-curva {
+        display: inline-flex; align-items: center; gap: 6px;
+        padding: 4px 10px; border-radius: 20px;
+        background: rgba(240,192,137,.22);
+        border: 1px solid rgba(240,192,137,.6);
+        color: #6b4a1c;
+        font-size: 10.5px; font-weight: 700; letter-spacing: .4px;
+        text-transform: uppercase;
+    }
+    .destaque-curva::before {
+        content: ""; width: 6px; height: 6px; border-radius: 50%;
+        background: var(--salmao);
+    }
+
+    @media (max-width: 1080px) {
+        .charts-row { grid-template-columns: minmax(0, 1fr); }
+        #s-curve-box { height: 340px; }
+    }
+    @media (max-width: 700px) {
+        :root { --altura-topo: 50px; --altura-titulo: 42px; }
+        main { padding: 12px 12px 0; }
+        #topo { padding: 0 12px; }
+        #topo img { height: 20px; }
+        #topo .marca { gap: 10px; }
+        .btn span { display: none; }
+        .btn { padding: 0 10px; }
+        .chip { max-width: 120px; }
+        #titulo-bar { padding: 0 12px; }
+        #titulo-bar .sub { display: none; }
+        .card { padding: 13px 13px; }
+        .kpi-value { font-size: 21px; }
+        #s-curve-box { height: 280px; }
+        .col-nome { min-width: 180px; }
+    }
+</style>
+</head>
+
+<body>
+
+    <header id="topo">
+        <div class="marca">
+            <img src="Imagens_Logos/logo_GB2.png" alt="GB">
+            <img src="Imagens_Logos/logo_AFRY.png" alt="AFRY">
+        </div>
+        <div class="topo-acoes">
+            <span class="chip" id="file-chip" hidden></span>
+            <label class="btn btn-salmao" for="file-input">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 16V4m0 0L8 8m4-4 4 4"/><path d="M4 16v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-2"/></svg>
+                <span>Abrir planilha</span>
+            </label>
+            <input id="file-input" type="file" accept=".xlsx,.xls" hidden>
+            <a class="btn" href="index.html" title="Voltar ao visualizador 3D">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m3 12 9-8 9 8"/><path d="M5 10v10h14V10"/></svg>
+                <span>Visualizador 3D</span>
+            </a>
         </div>
     </header>
 
-    <div id="githubGuideModal" class="hidden fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4">
-        <div class="bg-slate-900 border border-slate-800 rounded-2xl w-full max-w-2xl max-h-[90vh] flex flex-col shadow-2xl overflow-hidden animate-in fade-in zoom-in duration-200">
-            <div class="px-6 py-4 border-b border-slate-800 flex items-center justify-between bg-slate-900/80">
-                <h3 class="text-base font-semibold text-slate-200 flex items-center gap-2">
-                    <i class="fa-brands fa-github text-indigo-400"></i> Como hospedar no GitHub Pages e acessar pelo celular
-                </h3>
-                <button onclick="toggleGithubGuide()" class="w-8 h-8 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-400 hover:text-white flex items-center justify-center transition-all">
-                    <i class="fa-solid fa-xmark"></i>
-                </button>
-            </div>
-            <div class="p-6 flex-1 overflow-y-auto space-y-4 text-sm text-slate-300 leading-relaxed">
-                <p>Sim! Você pode colocar este código no GitHub e acessá-lo de qualquer celular, tablet ou computador de forma gratuita e rápida através do <strong>GitHub Pages</strong>.</p>
-                
-                <div class="space-y-2">
-                    <h4 class="font-semibold text-white flex items-center gap-2">
-                        <span class="w-6 h-6 rounded-full bg-indigo-600 flex items-center justify-center text-xs text-white">1</span>
-                        Crie um repositório no GitHub
-                    </h4>
-                    <p class="text-xs text-slate-400 pl-8">Acesse <a href="https://github.com" target="_blank" class="text-indigo-400 underline">github.com</a>, crie um novo repositório (pode ser público ou privado).</p>
-                </div>
-
-                <div class="space-y-2">
-                    <h4 class="font-semibold text-white flex items-center gap-2">
-                        <span class="w-6 h-6 rounded-full bg-indigo-600 flex items-center justify-center text-xs text-white">2</span>
-                        Salve o arquivo como index.html
-                    </h4>
-                    <p class="text-xs text-slate-400 pl-8">Envie este código exato para o repositório com o nome exato de <code class="bg-slate-950 px-1.5 py-0.5 rounded text-indigo-300 border border-slate-800">index.html</code> na branch principal (<code class="bg-slate-950 px-1.5 py-0.5 rounded text-indigo-300 border border-slate-800">main</code> ou <code class="bg-slate-950 px-1.5 py-0.5 rounded text-indigo-300 border border-slate-800">master</code>).</p>
-                </div>
-
-                <div class="space-y-2">
-                    <h4 class="font-semibold text-white flex items-center gap-2">
-                        <span class="w-6 h-6 rounded-full bg-indigo-600 flex items-center justify-center text-xs text-white">3</span>
-                        Ative o GitHub Pages
-                    </h4>
-                    <p class="text-xs text-slate-400 pl-8">No seu repositório, vá em <strong>Settings</strong> > <strong>Pages</strong>. Em "Build and deployment", selecione a branch <code class="bg-slate-950 px-1.5 py-0.5 rounded text-indigo-300 border border-slate-800">main</code> (ou root) e clique em Save.</p>
-                </div>
-
-                <div class="space-y-2">
-                    <h4 class="font-semibold text-white flex items-center gap-2">
-                        <span class="w-6 h-6 rounded-full bg-indigo-600 flex items-center justify-center text-xs text-white">4</span>
-                        Acesse pelo celular!
-                    </h4>
-                    <p class="text-xs text-slate-400 pl-8">O GitHub gerará um link (ex: <code class="bg-slate-950 px-1.5 py-0.5 rounded text-indigo-300 border border-slate-800">https://seu-usuario.github.io/seu-repositorio/</code>). Basta abrir esse link no navegador do celular, colar seus textos gigantes e depois abrir no PC!</p>
-                </div>
-            </div>
-            <div class="px-6 py-4 border-t border-slate-800 bg-slate-900/80 flex justify-end">
-                <button onclick="toggleGithubGuide()" class="px-4 py-2 bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-medium rounded-lg transition-all">
-                    Entendi, fechar guia
-                </button>
-            </div>
-        </div>
+    <div id="titulo-bar">
+        <span class="acento"></span>
+        <h1>PROJETO AFRODITE</h1>
+        <span class="sub">dashboard de cronograma · curva S pré-calculada · filtros por Squad, Workstream e Disciplina</span>
     </div>
 
-    <main class="flex-1 max-w-6xl w-full mx-auto px-4 py-6 flex flex-col gap-8">
-        
-        <section class="bg-slate-900 border border-slate-800 rounded-2xl p-5 shadow-xl">
-            <h2 class="text-sm font-semibold text-slate-300 mb-3 flex items-center gap-2">
-                <i class="fa-solid fa-paste text-indigo-400"></i> Cole seu texto ou código enorme aqui:
-            </h2>
-            <form id="syncForm" onsubmit="handleSave(event)" class="flex flex-col gap-4">
-                <div class="relative">
-                    <textarea id="pasteInput" rows="5" required
-                        placeholder="Cole aqui seu texto, trechos de código, JSON ou logs..."
-                        class="w-full bg-slate-950 border border-slate-800 rounded-xl p-4 text-sm text-slate-200 placeholder-slate-500 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition-all font-mono resize-y"></textarea>
+    <main>
+
+        <section class="card" id="load-card">
+            <div class="card-head">
+                <div class="card-title">Base do cronograma</div>
+                <div class="card-sub">O dashboard espera duas abas: <b>Tarefas</b> (atividades e filtros) e <b>Dados_Curva</b> (curva S já calculada).</div>
+            </div>
+            <div id="dropzone" tabindex="0" role="button" aria-label="Selecionar planilha de cronograma">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 3v5h5"/><path d="M19 8v11a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h7z"/><path d="M9 13h6M9 17h4"/></svg>
+                <strong>Arraste o Modelo.xlsx aqui</strong>
+                <span>ou clique para selecionar · o arquivo precisa ter as abas "Tarefas" e "Dados_Curva"</span>
+            </div>
+            <div id="load-msg"></div>
+        </section>
+
+        <section class="card" id="filtros-card" hidden>
+            <div class="card-head">
+                <div class="card-title">Filtros de atividades</div>
+                <div class="card-sub" id="filtros-resumo"></div>
+            </div>
+            <div class="config-grid">
+                <div class="campo">
+                    <label for="sel-squad">Squad</label>
+                    <select id="sel-squad"><option value="all">Todos</option></select>
                 </div>
-                <div class="flex flex-col sm:flex-row items-center justify-between gap-3">
-                    <div class="text-xs text-slate-400 flex items-center gap-2 w-full sm:w-auto">
-                        <span id="charCounter">0 caracteres</span> &bull; <span id="lineCounter">0 linhas</span>
-                    </div>
-                    <button type="submit" class="w-full sm:w-auto px-6 py-2.5 bg-indigo-600 hover:bg-indigo-500 text-white font-medium text-sm rounded-xl shadow-lg shadow-indigo-600/30 transition-all flex items-center justify-center gap-2 active:scale-95">
-                        <i class="fa-solid fa-paper-plane"></i> Salvar na Nuvem Local
+                <div class="campo">
+                    <label for="sel-workstream">Workstream</label>
+                    <select id="sel-workstream"><option value="all">Todos</option></select>
+                </div>
+                <div class="campo">
+                    <label for="sel-disciplina">Disciplina</label>
+                    <select id="sel-disciplina"><option value="all">Todas</option></select>
+                </div>
+                <div class="campo">
+                    <label for="sel-vendor">Vendor</label>
+                    <select id="sel-vendor"><option value="all">Todos</option></select>
+                </div>
+                <div class="campo">
+                    <label for="in-busca">Buscar tarefa</label>
+                    <input type="search" id="in-busca" placeholder="Digite parte do nome...">
+                </div>
+                <div class="campo">
+                    <label for="btn-limpar">&nbsp;</label>
+                    <button class="btn" type="button" id="btn-limpar" style="justify-content:center;height:36px">
+                        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 4l16 16M20 4L4 20"/></svg>
+                        Limpar filtros
                     </button>
                 </div>
-            </form>
+            </div>
+            <div class="filtros-ativos" id="filtros-ativos"></div>
         </section>
 
-        <section class="flex flex-col sm:flex-row items-center justify-between gap-4">
-            <div class="relative w-full sm:w-96">
-                <span class="absolute inset-y-0 left-0 flex items-center pl-3.5 pointer-events-none text-slate-500">
-                    <i class="fa-solid fa-search"></i>
-                </span>
-                <input type="text" id="searchInput" oninput="filterItems()" placeholder="Buscar nos itens salvos..."
-                    class="w-full pl-10 pr-4 py-2 bg-slate-900 border border-slate-800 rounded-xl text-sm text-slate-200 placeholder-slate-500 focus:outline-none focus:border-indigo-500 transition-all">
-            </div>
-            <div class="text-xs text-slate-400 font-medium self-end sm:self-center" id="itemCountLabel">
-                0 itens salvos
-            </div>
-        </section>
+        <section id="kpi-grid" hidden></section>
 
-        <section class="flex-1">
-            <div id="itemsContainer" class="grid grid-cols-1 gap-4">
-                <!-- Os cards salvos serão injetados aqui via JS -->
-            </div>
-            <div id="emptyState" class="hidden flex flex-col items-center justify-center py-16 text-center border border-dashed border-slate-800 rounded-2xl bg-slate-900/30">
-                <div class="w-16 h-16 bg-slate-900 rounded-full flex items-center justify-center text-slate-600 text-2xl mb-4 border border-slate-800">
-                    <i class="fa-solid fa-inbox"></i>
+        <div class="charts-row">
+
+            <section class="card" id="scurve-card" hidden>
+                <div class="card-head">
+                    <div class="card-title">
+                        Curva S · avanço acumulado
+                    </div>
+                    <span class="destaque-curva">Fonte: aba Dados_Curva</span>
                 </div>
-                <h3 class="text-slate-300 font-medium text-base mb-1">Nenhum texto salvo ainda</h3>
-                <p class="text-xs text-slate-500 max-w-sm">Cole algum texto ou código acima e clique em "Salvar" para sincronizar com seu computador instantaneamente.</p>
+                <div class="chart-box" id="s-curve-box">
+                    <canvas id="s-curve"></canvas>
+                    <div class="chart-tip" id="s-curve-tip"></div>
+                </div>
+                <div class="legenda" style="margin-top:10px">
+                    <span class="lg-base"><i></i>Linha de base (Prev.Acum.)</span>
+                    <span class="lg-real"><i></i>Realizado (RealAcum.)</span>
+                    <span class="lg-tend"><i></i>Tendência (TendênciaAcum.)</span>
+                </div>
+            </section>
+
+            <section class="card" id="status-card" hidden>
+                <div class="card-head">
+                    <div class="card-title">Situação das atividades</div>
+                    <div class="card-sub" id="status-resumo"></div>
+                </div>
+                <div class="status-list" id="status-list"></div>
+            </section>
+
+        </div>
+
+        <section class="card" id="tabela-card" hidden>
+            <div class="card-head">
+                <div class="card-title">Detalhamento das atividades</div>
+                <div class="card-sub" id="tabela-resumo"></div>
+            </div>
+            <div class="tabela-wrap">
+                <table>
+                    <thead>
+                        <tr>
+                            <th style="width:38px">#</th>
+                            <th>Nome da Tarefa</th>
+                            <th>Squad</th>
+                            <th>Workstream</th>
+                            <th>Disciplina</th>
+                            <th>Vendor</th>
+                            <th>Início</th>
+                            <th>Término</th>
+                            <th class="col-num">% Prev.</th>
+                            <th class="col-num">% Exec.</th>
+                            <th class="col-num">Desvio</th>
+                            <th>Situação</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tabela-body"></tbody>
+                </table>
             </div>
         </section>
+
     </main>
 
-    <div id="modalOverlay" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
-        <div class="bg-slate-900 border border-slate-800 rounded-2xl w-full max-w-4xl max-h-[90vh] flex flex-col shadow-2xl overflow-hidden animate-in fade-in zoom-in duration-200">
-            <div class="px-6 py-4 border-b border-slate-800 flex items-center justify-between bg-slate-900/80">
-                <div>
-                    <h3 id="modalTitle" class="text-base font-semibold text-slate-200">Visualizar Texto</h3>
-                    <p id="modalSubtitle" class="text-xs text-slate-400">Data e tamanho</p>
-                </div>
-                <div class="flex items-center gap-2">
-                    <button onclick="toggleModalFont()" id="modalFontToggleBtn" class="px-3 py-1.5 bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-medium rounded-lg transition-all flex items-center gap-1.5">
-                        <i class="fa-solid fa-code text-indigo-400"></i> <span id="modalFontToggleLabel">Fonte Monospace</span>
-                    </button>
-                    <button onclick="copyModalContent()" class="px-3 py-1.5 bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-medium rounded-lg transition-all flex items-center gap-1.5">
-                        <i class="fa-solid fa-copy"></i> Copiar Tudo
-                    </button>
-                    <button onclick="closeModal()" class="w-8 h-8 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-400 hover:text-white flex items-center justify-center transition-all">
-                        <i class="fa-solid fa-xmark"></i>
-                    </button>
-                </div>
+<script>
+/* =========================================================================
+   Projeto Afrodite — Dashboard de Cronograma
+   Lê as abas "Tarefas" e "Dados_Curva" do Modelo.xlsx
+   ========================================================================= */
+
+const $ = (s, el = document) => el.querySelector(s);
+const $$ = (s, el = document) => [...el.querySelectorAll(s)];
+const DIAS = 86400000;
+const MESES = ['jan','fev','mar','abr','mai','jun','jul','ago','set','out','nov','dez'];
+
+/* ------------------------------------------------------------------ */
+/* Utilitários                                                         */
+/* ------------------------------------------------------------------ */
+
+const clamp = (v, min, max) => Math.min(max, Math.max(min, v));
+
+function fmtPct(v, d = 1) {
+    if (v === null || v === undefined || !isFinite(v)) return '—';
+    return new Intl.NumberFormat('pt-BR', {
+        minimumFractionDigits: d, maximumFractionDigits: d
+    }).format(v * 100);
+}
+function fmtNum(v, d = 2) {
+    if (v === null || v === undefined || !isFinite(v)) return '—';
+    return new Intl.NumberFormat('pt-BR', {
+        minimumFractionDigits: 0, maximumFractionDigits: d
+    }).format(v);
+}
+function fmtData(d) {
+    if (!d) return '—';
+    return `${String(d.getDate()).padStart(2,'0')}/${String(d.getMonth()+1).padStart(2,'0')}/${d.getFullYear()}`;
+}
+function fmtMes(d) {
+    if (!d) return '—';
+    return `${MESES[d.getMonth()]}/${d.getFullYear()}`;
+}
+function normalizar(s) {
+    return String(s ?? '').normalize('NFD').replace(/[\u0300-\u036f]/g,'')
+        .toLowerCase().replace(/[^a-z0-9 ]+/g,' ').replace(/\s+/g,' ').trim();
+}
+function escaparHtml(t) {
+    return String(t ?? '')
+        .replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')
+        .replace(/"/g,'&quot;').replace(/'/g,'&#39;');
+}
+function debounce(fn, ms) {
+    let t; return (...a) => { clearTimeout(t); t = setTimeout(() => fn(...a), ms); };
+}
+function startOfDay(d) { return new Date(d.getFullYear(), d.getMonth(), d.getDate()); }
+
+function parseData(v) {
+    if (v === null || v === undefined || v === '') return null;
+    if (v instanceof Date) return isNaN(v) ? null : startOfDay(v);
+    if (typeof v === 'number') {
+        // Serial do Excel (base 1900)
+        const ms = Math.round((v - 25569) * 86400 * 1000);
+        const d = new Date(ms);
+        if (isNaN(d)) return null;
+        return new Date(d.getUTCFullYear(), d.getUTCMonth(), d.getUTCDate());
+    }
+    const s = String(v).trim();
+    if (!s) return null;
+
+    let m = s.match(/^(\d{1,2})[\/\-.](\d{1,2})[\/\-.](\d{2,4})/);
+    if (m) {
+        let [, dd, mm, yy] = m;
+        let ano = Number(yy);
+        if (ano < 100) ano += ano < 70 ? 2000 : 1900;
+        const dt = new Date(ano, Number(mm) - 1, Number(dd));
+        return isNaN(dt) ? null : dt;
+    }
+    m = s.match(/^(\d{4})[\/\-.](\d{1,2})[\/\-.](\d{1,2})/);
+    if (m) {
+        const dt = new Date(Number(m[1]), Number(m[2]) - 1, Number(m[3]));
+        return isNaN(dt) ? null : dt;
+    }
+    const t = Date.parse(s);
+    return isNaN(t) ? null : startOfDay(new Date(t));
+}
+
+function parseNum(v) {
+    if (v === null || v === undefined || v === '') return null;
+    if (typeof v === 'number') return isFinite(v) ? v : null;
+    let s = String(v).trim().replace(/%/g,'').replace(/[^\d,.\-]/g,'');
+    if (!s) return null;
+    if (s.includes(',') && s.includes('.')) {
+        s = s.lastIndexOf(',') > s.lastIndexOf('.')
+            ? s.replace(/\./g,'').replace(',','.')
+            : s.replace(/,/g,'');
+    } else if (s.includes(',')) {
+        s = s.replace(',','.');
+    }
+    const n = parseFloat(s);
+    return isFinite(n) ? n : null;
+}
+
+/** Normaliza % que pode vir como 0–1 ou 0–100. */
+function normalizarPct(v) {
+    const n = parseNum(v);
+    if (n === null) return null;
+    return n > 1.5 ? n / 100 : n;
+}
+
+/* ------------------------------------------------------------------ */
+/* Carregamento do SheetJS                                             */
+/* ------------------------------------------------------------------ */
+
+let xlsxPromise = null;
+function garantirXLSX() {
+    if (window.XLSX) return Promise.resolve(window.XLSX);
+    if (xlsxPromise) return xlsxPromise;
+    xlsxPromise = new Promise((res, rej) => {
+        const s = document.createElement('script');
+        s.src = 'https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js';
+        s.onload = () => window.XLSX ? res(window.XLSX) : rej(new Error('SheetJS indisponível.'));
+        s.onerror = () => rej(new Error('Falha ao carregar a biblioteca de planilhas. Verifique a conexão.'));
+        document.head.appendChild(s);
+    });
+    return xlsxPromise;
+}
+
+/* ------------------------------------------------------------------ */
+/* Estado                                                              */
+/* ------------------------------------------------------------------ */
+
+const state = {
+    fileName: '',
+    tasks: [],           // atividades da aba Tarefas
+    filtered: [],
+    curve: null,         // dados da aba Dados_Curva
+    filters: { squad:'all', workstream:'all', disciplina:'all', vendor:'all', search:'' }
+};
+
+/* ------------------------------------------------------------------ */
+/* Leitura do arquivo                                                  */
+/* ------------------------------------------------------------------ */
+
+async function lerArquivo(file) {
+    const msg = $('#load-msg');
+    msg.innerHTML = '';
+
+    try {
+        const XLSX = await garantirXLSX();
+        const buffer = await file.arrayBuffer();
+        const wb = XLSX.read(buffer, { type: 'array', cellDates: true });
+
+        // Localiza as abas
+        const nomes = wb.SheetNames;
+        const abaTarefas = encontrarAba(nomes, ['tarefa','tasks','atividades','cronograma']) || nomes[0];
+        const abaCurva   = encontrarAba(nomes, ['dados_curva','dados curva','curva','curva_s','scurve']) 
+                        || nomes.find(n => n !== abaTarefas);
+
+        if (!abaTarefas) throw new Error('Não foi possível localizar a aba de tarefas.');
+        if (!abaCurva)   throw new Error('Não foi possível localizar a aba da curva (Dados_Curva).');
+
+        const matrizTarefas = XLSX.utils.sheet_to_json(wb.Sheets[abaTarefas], { header:1, raw:true, defval:null, blankrows:false });
+        const matrizCurva   = XLSX.utils.sheet_to_json(wb.Sheets[abaCurva],   { header:1, raw:true, defval:null, blankrows:false });
+
+        state.fileName = file.name;
+        state.tasks = parseTarefas(matrizTarefas);
+        state.curve = parseCurva(matrizCurva);
+
+        if (!state.tasks.length) throw new Error('Nenhuma tarefa válida foi encontrada na aba "' + abaTarefas + '".');
+        if (!state.curve || !state.curve.pontos.length) throw new Error('Nenhum dado de curva foi encontrado na aba "' + abaCurva + '".');
+
+        // UI
+        const chip = $('#file-chip');
+        chip.textContent = file.name;
+        chip.hidden = false;
+
+        $('#load-card').hidden = true;
+        $('#filtros-card').hidden = false;
+        $('#kpi-grid').hidden = false;
+        $('#scurve-card').hidden = false;
+        $('#status-card').hidden = false;
+        $('#tabela-card').hidden = false;
+
+        montarFiltros();
+        aplicarFiltros();
+        renderTudo();
+
+        msg.innerHTML = `<div class="aviso ok">
+            <span>✓</span>
+            <div><b>${state.tasks.length}</b> tarefas lidas de <b>${abaTarefas}</b> · curva S de <b>${abaCurva}</b> (${state.curve.pontos.length} meses).</div>
+        </div>`;
+
+    } catch (err) {
+        console.error(err);
+        msg.innerHTML = `<div class="aviso erro"><strong>Erro:</strong>&nbsp;${err.message}</div>`;
+    }
+}
+
+function encontrarAba(nomes, chaves) {
+    const norm = nomes.map(n => normalizar(n));
+    for (const chave of chaves) {
+        const c = normalizar(chave);
+        const idx = norm.indexOf(c);
+        if (idx !== -1) return nomes[idx];
+    }
+    for (let i = 0; i < norm.length; i++) {
+        for (const chave of chaves) {
+            const c = normalizar(chave);
+            if (norm[i].includes(c)) return nomes[i];
+        }
+    }
+    return null;
+}
+
+/* ------------------------------------------------------------------ */
+/* Parser da aba Tarefas                                               */
+/* ------------------------------------------------------------------ */
+
+function parseTarefas(matriz) {
+    if (!matriz.length) return [];
+
+    // Localiza a linha de cabeçalho: linha que contém palavras-chave conhecidas
+    const chavesCab = ['nome da tarefa','atividade','tarefa','task','inicio','termino','vendor','squad','workstream','disciplina'];
+    let headerRow = 0;
+    let melhorScore = -1;
+    for (let i = 0; i < Math.min(8, matriz.length); i++) {
+        const row = matriz[i].map(c => normalizar(c));
+        const score = chavesCab.reduce((s, k) => s + (row.some(h => h.includes(k)) ? 1 : 0), 0);
+        if (score > melhorScore) { melhorScore = score; headerRow = i; }
+    }
+
+    const headers = (matriz[headerRow] || []).map(h => String(h ?? '').trim());
+    const norm = headers.map(h => normalizar(h));
+
+    function idxExato(alvo) {
+        const a = normalizar(alvo);
+        return norm.findIndex(h => h === a);
+    }
+    function idxContem(includes, excludes = []) {
+        return norm.findIndex(h => {
+            if (!h) return false;
+            if (excludes.some(e => h.includes(normalizar(e)))) return false;
+            return includes.some(i => h.includes(normalizar(i)));
+        });
+    }
+
+    const col = {
+        name:      idxExato('Nome da Tarefa') !== -1 ? idxExato('Nome da Tarefa') :
+                   idxContem(['nome da tarefa','atividade','tarefa','task','nome']),
+        prev:      idxContem(['previsto','planejado','baseline']),
+        exec:      idxContem(['executado','realizado','avanco','real']),
+        inicio:    idxContem(['inicio']) !== -1 ? norm.indexOf(norm.find(h => h === 'inicio')) !== -1
+                        ? idxExato('Início') : idxExato('Inicio')
+                        : idxContem(['inicio'], ['linha de base','baseline','base']),
+        termino:   idxExato('Término') !== -1 ? idxExato('Término') :
+                   idxExato('Termino') !== -1 ? idxExato('Termino') :
+                   idxContem(['termino','fim'], ['linha de base','baseline','base']),
+        inicioLB:  idxContem(['inicio'], ['linha de base','baseline','lb']),
+        terminoLB: idxContem(['termino','fim'], ['linha de base','baseline','lb']),
+        vendor:    idxExato('Vendor') !== -1 ? idxExato('Vendor') : idxContem(['vendor','fornecedor']),
+        squad:     idxExato('Squad') !== -1 ? idxExato('Squad') : idxContem(['squad','equipe']),
+        workstream: idxExato('Workstream') !== -1 ? idxExato('Workstream') : idxContem(['workstream','work stream','frente']),
+        disciplina: idxExato('Disciplina') !== -1 ? idxExato('Disciplina') : idxContem(['disciplina'])
+    };
+
+    // Ajuste: "inicio" e "termino" precisam evitar "início da linha de base"
+    // Estratégia: pegar o primeiro que NÃO tenha "linha de base" / "baseline" / "lb"
+    ['inicio','termino'].forEach(k => {
+        const termos = k === 'inicio' ? ['inicio'] : ['termino','fim'];
+        const candidato = norm.findIndex(h => {
+            if (!h) return false;
+            if (!termos.some(t => h.includes(t))) return false;
+            return !h.includes('linha de base') && !h.includes('baseline') && !h.includes(' lb') && !h.endsWith('lb');
+        });
+        if (candidato !== -1) col[k] = candidato;
+    });
+
+    if (col.name === -1) throw new Error('Coluna "Nome da Tarefa" não encontrada na aba Tarefas.');
+
+    const hoje = startOfDay(new Date());
+    const tasks = [];
+
+    for (let r = headerRow + 1; r < matriz.length; r++) {
+        const row = matriz[r];
+        if (!row || !row.length) continue;
+
+        const nome = String(row[col.name] ?? '').trim();
+        if (!nome || nome.length < 2) continue;
+
+        const inicio = col.inicio !== -1 ? parseData(row[col.inicio]) : null;
+        const termino = col.termino !== -1 ? parseData(row[col.termino]) : null;
+        const inicioLB = col.inicioLB !== -1 ? parseData(row[col.inicioLB]) : null;
+        const terminoLB = col.terminoLB !== -1 ? parseData(row[col.terminoLB]) : null;
+
+        const prev = col.prev !== -1 ? normalizarPct(row[col.prev]) : null;
+        const exec = col.exec !== -1 ? normalizarPct(row[col.exec]) : null;
+
+        const pStart = inicioLB || inicio;
+        const pFinish = terminoLB || termino;
+
+        // Situação
+        let status;
+        const p = prev ?? 0, e = exec ?? 0;
+        if (e >= 0.999) status = 'Concluída';
+        else if (e > 0) status = 'Em andamento';
+        else if (pStart && pStart > hoje) status = 'Não iniciada';
+        else if (pFinish && pFinish < hoje && e === 0) status = 'Atrasada';
+        else if (e === 0 && p > 0.05) status = 'Atrasada';
+        else status = 'Não iniciada';
+
+        tasks.push({
+            name: nome,
+            prev: prev ?? 0,
+            exec: exec ?? 0,
+            inicio, termino,
+            inicioLB, terminoLB,
+            pStart, pFinish,
+            vendor:    col.vendor    !== -1 ? String(row[col.vendor]    ?? '').trim() || '—' : '—',
+            squad:     col.squad     !== -1 ? String(row[col.squad]     ?? '').trim() || '—' : '—',
+            workstream: col.workstream !== -1 ? String(row[col.workstream] ?? '').trim() || '—' : '—',
+            disciplina: col.disciplina !== -1 ? String(row[col.disciplina] ?? '').trim() || '—' : '—',
+            status,
+            desvio: (exec ?? 0) - (prev ?? 0)
+        });
+    }
+
+    return tasks;
+}
+
+/* ------------------------------------------------------------------ */
+/* Parser da aba Dados_Curva                                           */
+/* ------------------------------------------------------------------ */
+
+function parseCurva(matriz) {
+    if (!matriz.length) return null;
+
+    // Localiza a linha de cabeçalho (contém "DADOS" ou nomes de meses)
+    let headerRow = -1;
+    for (let i = 0; i < Math.min(6, matriz.length); i++) {
+        const row = matriz[i] || [];
+        const textos = row.map(c => normalizar(c));
+        if (textos.some(t => t === 'dados') || textos.filter(t => MESES.includes(t)).length >= 3) {
+            headerRow = i;
+            break;
+        }
+    }
+    if (headerRow === -1) {
+        // Fallback: procura primeira linha com pelo menos 3 células
+        for (let i = 0; i < Math.min(6, matriz.length); i++) {
+            if ((matriz[i] || []).filter(c => c !== null && c !== '').length >= 3) { headerRow = i; break; }
+        }
+    }
+    if (headerRow === -1) return null;
+
+    const rowHeader = matriz[headerRow] || [];
+    const rowAno = matriz[headerRow + 1] || [];
+
+    // Descobre coluna inicial dos meses (primeira célula que case com mês)
+    let colInicial = -1;
+    for (let c = 0; c < rowHeader.length; c++) {
+        const t = normalizar(rowHeader[c]);
+        if (MESES.includes(t) || /^[a-z]{3}$/.test(t)) { colInicial = c; break; }
+    }
+    if (colInicial === -1) colInicial = 2; // fallback: coluna C
+
+    // Monta lista de meses válidos (ano entre 1900 e 2100)
+    const pontos = [];
+    for (let c = colInicial; c < Math.max(rowHeader.length, rowAno.length); c++) {
+        const mesTexto = normalizar(rowHeader[c] || '');
+        const ano = Number(rowAno[c]);
+        if (!ano || ano < 1900 || ano > 2100) continue;
+
+        const mesIdx = MESES.findIndex(m => mesTexto.startsWith(m));
+        if (mesIdx === -1) continue;
+
+        pontos.push({
+            data: new Date(ano, mesIdx, 1),
+            label: `${MESES[mesIdx]}/${String(ano).slice(2)}`,
+            colIdx: c
+        });
+    }
+
+    if (!pontos.length) return null;
+
+    // Encontra linhas por rótulo
+    function encontrarLinha(predicado) {
+        for (let r = headerRow + 1; r < matriz.length; r++) {
+            const linha = matriz[r] || [];
+            // Procura o rótulo na primeira célula de texto (colunas A/B)
+            const celulas = linha.slice(0, Math.min(3, linha.length)).map(c => normalizar(c));
+            for (const cel of celulas) {
+                if (!cel) continue;
+                if (predicado(cel)) return linha;
+            }
+        }
+        return null;
+    }
+
+    const linhaPlan = encontrarLinha(l =>
+        (l.includes('prev') || l.includes('baseline') || l.includes('planej')) && l.includes('acum')
+    );
+    const linhaReal = encontrarLinha(l =>
+        (l.includes('real') || l.includes('execut')) && l.includes('acum')
+    );
+    const linhaTend = encontrarLinha(l =>
+        (l.includes('tend') || l.includes('forecast') || l.includes('proje')) && l.includes('acum')
+    );
+
+    function extrair(linha) {
+        return pontos.map(p => {
+            if (!linha) return null;
+            const v = linha[p.colIdx];
+            if (v === null || v === undefined || v === '') return null;
+            const n = Number(v);
+            return isFinite(n) ? n : null;
+        });
+    }
+
+    const planned = extrair(linhaPlan);
+    const actual = extrair(linhaReal);
+    const forecast = extrair(linhaTend);
+
+    // Última atualização = último índice com valor real
+    let ultimoIdx = -1;
+    for (let i = actual.length - 1; i >= 0; i--) {
+        if (actual[i] !== null) { ultimoIdx = i; break; }
+    }
+
+    return {
+        pontos,
+        planned,
+        actual,
+        forecast,
+        ultimoIdx,
+        ultimaData: ultimoIdx >= 0 ? pontos[ultimoIdx].data : null,
+        planejadoAtual: ultimoIdx >= 0 ? planned[ultimoIdx] : null,
+        realizadoAtual: ultimoIdx >= 0 ? actual[ultimoIdx] : null
+    };
+}
+
+/* ------------------------------------------------------------------ */
+/* Filtros                                                             */
+/* ------------------------------------------------------------------ */
+
+function montarFiltros() {
+    const dims = ['squad','workstream','disciplina','vendor'];
+    const labels = { squad:'Squad', workstream:'Workstream', disciplina:'Disciplina', vendor:'Vendor' };
+
+    dims.forEach(dim => {
+        const sel = document.getElementById('sel-' + dim);
+        const valores = [...new Set(state.tasks.map(t => t[dim]))].filter(v => v && v !== '—').sort((a,b) => a.localeCompare(b,'pt-BR'));
+        sel.innerHTML = '<option value="all">' + (dim === 'disciplina' ? 'Todas' : 'Todos') + '</option>';
+        valores.forEach(v => {
+            const o = document.createElement('option');
+            o.value = v; o.textContent = v;
+            sel.appendChild(o);
+        });
+        sel.value = 'all';
+        state.filters[dim] = 'all';
+    });
+
+    $('#in-busca').value = '';
+    state.filters.search = '';
+}
+
+function aplicarFiltros() {
+    const f = state.filters;
+    const busca = normalizar(f.search);
+
+    state.filtered = state.tasks.filter(t => {
+        if (f.squad !== 'all' && t.squad !== f.squad) return false;
+        if (f.workstream !== 'all' && t.workstream !== f.workstream) return false;
+        if (f.disciplina !== 'all' && t.disciplina !== f.disciplina) return false;
+        if (f.vendor !== 'all' && t.vendor !== f.vendor) return false;
+        if (busca && !normalizar(t.name).includes(busca)) return false;
+        return true;
+    });
+
+    renderChipsAtivos();
+}
+
+function renderChipsAtivos() {
+    const cont = $('#filtros-ativos');
+    const f = state.filters;
+    const labels = { squad:'Squad', workstream:'Workstream', disciplina:'Disciplina', vendor:'Vendor' };
+    const ativos = [];
+
+    ['squad','workstream','disciplina','vendor'].forEach(dim => {
+        if (f[dim] !== 'all') ativos.push({ dim, valor: f[dim], label: labels[dim] });
+    });
+    if (f.search) ativos.push({ dim:'search', valor: f.search, label:'Busca' });
+
+    if (!ativos.length) { cont.innerHTML = ''; return; }
+
+    cont.innerHTML = ativos.map(a => `
+        <span class="filtro-chip">
+            <b style="font-weight:700;opacity:.7">${a.label}:</b>
+            ${escaparHtml(a.valor)}
+            <button type="button" data-dim="${a.dim}" title="Remover filtro">×</button>
+        </span>
+    `).join('');
+
+    $$('.filtro-chip button', cont).forEach(b => {
+        b.addEventListener('click', () => {
+            const dim = b.dataset.dim;
+            if (dim === 'search') {
+                $('#in-busca').value = '';
+                state.filters.search = '';
+            } else {
+                document.getElementById('sel-' + dim).value = 'all';
+                state.filters[dim] = 'all';
+            }
+            aplicarFiltros();
+            renderTudo();
+        });
+    });
+}
+
+/* ------------------------------------------------------------------ */
+/* Renderização geral                                                  */
+/* ------------------------------------------------------------------ */
+
+function renderTudo() {
+    renderKPIs();
+    drawCurva();
+    renderStatus();
+    renderTabela();
+    const total = state.tasks.length;
+    const vis = state.filtered.length;
+    $('#filtros-resumo').textContent = vis === total
+        ? `${total} atividades no total`
+        : `${vis} de ${total} atividades após filtros`;
+}
+
+/* ------------------------------------------------------------------ */
+/* KPIs                                                                */
+/* ------------------------------------------------------------------ */
+
+function renderKPIs() {
+    const grid = $('#kpi-grid');
+    const c = state.curve;
+    const at = state.filtered;
+
+    const plan = c?.planejadoAtual ?? null;
+    const real = c?.realizadoAtual ?? null;
+    const desvio = (plan !== null && real !== null) ? (real - plan) : null;
+
+    const total = at.length;
+    const concluidas  = at.filter(t => t.status === 'Concluída').length;
+    const andamento   = at.filter(t => t.status === 'Em andamento').length;
+    const atrasadas   = at.filter(t => t.status === 'Atrasada').length;
+    const naoInic     = at.filter(t => t.status === 'Não iniciada').length;
+
+    const cards = [];
+
+    cards.push({
+        label:'Avanço previsto (global)',
+        valor: plan === null ? '—' : fmtPct(plan) + '<small>%</small>',
+        sub: c?.ultimaData ? `em ${fmtMes(c.ultimaData)}` : 'sem dados',
+        classe:'is-marinho'
+    });
+
+    cards.push({
+        label:'Avanço realizado (global)',
+        valor: real === null ? '—' : fmtPct(real) + '<small>%</small>',
+        sub: c?.ultimaData ? `até ${fmtMes(c.ultimaData)}` : 'sem dados',
+        classe:'is-azul'
+    });
+
+    cards.push({
+        label:'Desvio (real − prev.)',
+        valor: desvio === null ? '—' : (desvio >= 0 ? '+' : '') + fmtPct(desvio) + '<small>pp</small>',
+        sub: desvio === null ? '—' : (desvio >= 0 ? 'adiantado em relação à base' : 'atrasado em relação à base'),
+        classe: desvio === null ? '' : (desvio >= -0.005 ? 'is-ok' : 'is-erro'),
+        cor: desvio === null ? '' : (desvio >= 0 ? 'pos' : 'neg')
+    });
+
+    cards.push({
+        label:'Última atualização',
+        valor: c?.ultimaData ? fmtMes(c.ultimaData) : '—',
+        sub: 'data do último realizado',
+        classe:'is-neutro'
+    });
+
+    cards.push({
+        label:'Atividades (filtro)',
+        valor: fmtNum(total, 0),
+        sub: total === state.tasks.length ? 'carteira completa' : `de ${state.tasks.length} no total`,
+        classe:'is-marinho'
+    });
+
+    cards.push({
+        label:'Concluídas',
+        valor: fmtNum(concluidas, 0),
+        sub: total ? `${fmtPct(concluidas/total, 0)}% do filtro` : '—',
+        classe:'is-ok'
+    });
+
+    cards.push({
+        label:'Em andamento',
+        valor: fmtNum(andamento, 0),
+        sub: total ? `${fmtPct(andamento/total, 0)}% do filtro` : '—',
+        classe:'is-azul'
+    });
+
+    cards.push({
+        label:'Atrasadas',
+        valor: fmtNum(atrasadas, 0),
+        sub: total ? `${fmtPct(atrasadas/total, 0)}% do filtro` : '—',
+        classe: atrasadas ? 'is-erro' : ''
+    });
+
+    cards.push({
+        label:'Não iniciadas',
+        valor: fmtNum(naoInic, 0),
+        sub: total ? `${fmtPct(naoInic/total, 0)}% do filtro` : '—',
+        classe:'is-neutro'
+    });
+
+    grid.innerHTML = cards.map(c => `
+        <div class="kpi ${c.classe || ''}">
+            <span class="kpi-label">${c.label}</span>
+            <strong class="kpi-value ${c.cor || ''}">${c.valor}</strong>
+            <span class="kpi-sub">${c.sub}</span>
+        </div>
+    `).join('');
+}
+
+/* ------------------------------------------------------------------ */
+/* Curva S (canvas)                                                    */
+/* ------------------------------------------------------------------ */
+
+let sCurveGeom = null;
+let sCurveHover = null;
+
+function drawCurva() {
+    const canvas = $('#s-curve');
+    const box = canvas.parentElement;
+    const w = box.clientWidth;
+    const h = box.clientHeight;
+    if (!w || !h) return;
+
+    const dpr = window.devicePixelRatio || 1;
+    canvas.width = Math.round(w * dpr);
+    canvas.height = Math.round(h * dpr);
+    canvas.style.height = h + 'px';
+    const ctx = canvas.getContext('2d');
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    ctx.clearRect(0, 0, w, h);
+
+    const c = state.curve;
+    if (!c || c.pontos.length < 2) {
+        ctx.fillStyle = 'rgba(1,30,56,.42)';
+        ctx.font = '13px "IBM Plex Sans", sans-serif';
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+        ctx.fillText('Sem dados de curva para exibir.', w / 2, h / 2);
+        return;
+    }
+
+    const pad = { l: 52, r: 18, t: 14, b: 34 };
+    const W = Math.max(10, w - pad.l - pad.r);
+    const H = Math.max(10, h - pad.t - pad.b);
+
+    const t0 = c.pontos[0].data.getTime();
+    const t1 = c.pontos[c.pontos.length - 1].data.getTime();
+    const xAt = t => pad.l + ((t - t0) / Math.max(t1 - t0, 1)) * W;
+    const yAt = v => pad.t + (1 - clamp(v, 0, 1.05)) * H;
+
+    // Grade horizontal
+    ctx.font = '10px "IBM Plex Sans", sans-serif';
+    ctx.textAlign = 'right';
+    ctx.textBaseline = 'middle';
+    for (let i = 0; i <= 4; i++) {
+        const v = i / 4;
+        const y = yAt(v);
+        ctx.strokeStyle = 'rgba(1,30,56,.09)';
+        ctx.beginPath();
+        ctx.moveTo(pad.l, y);
+        ctx.lineTo(pad.l + W, y);
+        ctx.stroke();
+        ctx.fillStyle = 'rgba(1,30,56,.5)';
+        ctx.fillText((v * 100).toFixed(0) + '%', pad.l - 9, y);
+    }
+
+    // Grade vertical + rótulos (a cada N meses)
+    const passo = Math.max(1, Math.ceil(c.pontos.length / 12));
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'top';
+    c.pontos.forEach((p, i) => {
+        if (i % passo !== 0 && i !== c.pontos.length - 1) return;
+        const x = xAt(p.data.getTime());
+        ctx.strokeStyle = 'rgba(1,30,56,.06)';
+        ctx.beginPath();
+        ctx.moveTo(x, pad.t);
+        ctx.lineTo(x, pad.t + H);
+        ctx.stroke();
+        ctx.fillStyle = 'rgba(1,30,56,.5)';
+        ctx.fillText(p.label, x, pad.t + H + 8);
+    });
+
+    // ---- Linha de base (marinho, tracejada)
+    ctx.save();
+    ctx.setLineDash([6, 4]);
+    ctx.lineWidth = 2;
+    ctx.strokeStyle = 'rgba(16,25,46,.85)';
+    ctx.beginPath();
+    let iniciado = false;
+    c.planned.forEach((v, i) => {
+        if (v === null) return;
+        const x = xAt(c.pontos[i].data.getTime());
+        const y = yAt(v);
+        if (!iniciado) { ctx.moveTo(x, y); iniciado = true; }
+        else ctx.lineTo(x, y);
+    });
+    ctx.stroke();
+    ctx.restore();
+
+    // ---- Realizado (azul, com área)
+    const idxReais = c.actual.map((v, i) => v !== null ? i : -1).filter(i => i >= 0);
+    if (idxReais.length > 1) {
+        ctx.beginPath();
+        idxReais.forEach((i, k) => {
+            const x = xAt(c.pontos[i].data.getTime());
+            const y = yAt(c.actual[i]);
+            if (k === 0) ctx.moveTo(x, y);
+            else ctx.lineTo(x, y);
+        });
+        ctx.lineTo(xAt(c.pontos[idxReais[idxReais.length - 1]].data.getTime()), pad.t + H);
+        ctx.lineTo(xAt(c.pontos[idxReais[0]].data.getTime()), pad.t + H);
+        ctx.closePath();
+        const grad = ctx.createLinearGradient(0, pad.t, 0, pad.t + H);
+        grad.addColorStop(0, 'rgba(38,79,236,.22)');
+        grad.addColorStop(1, 'rgba(38,79,236,.02)');
+        ctx.fillStyle = grad;
+        ctx.fill();
+
+        ctx.beginPath();
+        idxReais.forEach((i, k) => {
+            const x = xAt(c.pontos[i].data.getTime());
+            const y = yAt(c.actual[i]);
+            if (k === 0) ctx.moveTo(x, y);
+            else ctx.lineTo(x, y);
+        });
+        ctx.lineWidth = 2.8;
+        ctx.lineJoin = 'round';
+        ctx.strokeStyle = '#264FEC';
+        ctx.shadowColor = 'rgba(38,79,236,.3)';
+        ctx.shadowBlur = 8;
+        ctx.stroke();
+        ctx.shadowBlur = 0;
+    }
+
+    // ---- Tendência (salmão, tracejada)
+    const idxTend = c.forecast.map((v, i) => v !== null ? i : -1).filter(i => i >= 0);
+    if (idxTend.length > 1) {
+        ctx.save();
+        ctx.setLineDash([7, 5]);
+        ctx.lineWidth = 2.4;
+        ctx.strokeStyle = '#F0C089';
+        ctx.lineJoin = 'round';
+        ctx.beginPath();
+        idxTend.forEach((i, k) => {
+            const x = xAt(c.pontos[i].data.getTime());
+            const y = yAt(c.forecast[i]);
+            if (k === 0) ctx.moveTo(x, y);
+            else ctx.lineTo(x, y);
+        });
+        ctx.stroke();
+        ctx.restore();
+    }
+
+    // Marcador do último realizado
+    if (idxReais.length) {
+        const i = idxReais[idxReais.length - 1];
+        const x = xAt(c.pontos[i].data.getTime());
+        const y = yAt(c.actual[i]);
+        ctx.beginPath();
+        ctx.arc(x, y, 5, 0, Math.PI * 2);
+        ctx.fillStyle = '#264FEC';
+        ctx.fill();
+        ctx.strokeStyle = '#fff';
+        ctx.lineWidth = 1.8;
+        ctx.stroke();
+
+        // Rótulo do valor
+        ctx.fillStyle = 'rgba(1,30,56,.8)';
+        ctx.font = '700 10.5px "IBM Plex Sans", sans-serif';
+        ctx.textAlign = 'left';
+        ctx.textBaseline = 'middle';
+        ctx.fillText(fmtPct(c.actual[i]) + '%', x + 9, y);
+    }
+
+    // Hover
+    if (sCurveHover !== null && c.pontos[sCurveHover]) {
+        const i = sCurveHover;
+        const x = xAt(c.pontos[i].data.getTime());
+        ctx.strokeStyle = 'rgba(1,30,56,.22)';
+        ctx.lineWidth = 1;
+        ctx.beginPath();
+        ctx.moveTo(x, pad.t);
+        ctx.lineTo(x, pad.t + H);
+        ctx.stroke();
+
+        if (c.planned[i] !== null) {
+            ctx.beginPath();
+            ctx.arc(x, yAt(c.planned[i]), 3.6, 0, Math.PI * 2);
+            ctx.fillStyle = '#10192E'; ctx.fill();
+        }
+        if (c.actual[i] !== null) {
+            ctx.beginPath();
+            ctx.arc(x, yAt(c.actual[i]), 4.6, 0, Math.PI * 2);
+            ctx.fillStyle = '#264FEC'; ctx.fill();
+            ctx.strokeStyle = '#fff'; ctx.lineWidth = 1.6; ctx.stroke();
+        }
+        if (c.forecast[i] !== null) {
+            ctx.beginPath();
+            ctx.arc(x, yAt(c.forecast[i]), 4, 0, Math.PI * 2);
+            ctx.fillStyle = '#F0C089'; ctx.fill();
+        }
+    }
+
+    sCurveGeom = { xAt, yAt, pontos: c.pontos, pad, W, H, curve: c };
+}
+
+/* Tooltip da curva */
+(function interacaoCurva() {
+    const canvas = $('#s-curve');
+    const tip = $('#s-curve-tip');
+
+    canvas.addEventListener('mousemove', ev => {
+        if (!sCurveGeom) return;
+        const rect = canvas.getBoundingClientRect();
+        const x = ev.clientX - rect.left;
+        const y = ev.clientY - rect.top;
+
+        let melhor = -1, dist = Infinity;
+        sCurveGeom.pontos.forEach((p, i) => {
+            const px = sCurveGeom.xAt(p.data.getTime());
+            const d = Math.abs(px - x);
+            if (d < dist) { dist = d; melhor = i; }
+        });
+
+        if (melhor < 0 || dist > 60) {
+            if (sCurveHover !== null) { sCurveHover = null; drawCurva(); }
+            tip.classList.remove('on');
+            return;
+        }
+
+        const c = sCurveGeom.curve;
+        const plan = c.planned[melhor];
+        const real = c.actual[melhor];
+        const tend = c.forecast[melhor];
+        const desvio = (plan !== null && real !== null) ? (real - plan) : null;
+
+        tip.innerHTML = `
+            <b>${c.pontos[melhor].label}</b>
+            <div class="row"><span>Linha de base</span><span>${plan === null ? '—' : fmtPct(plan) + '%'}</span></div>
+            <div class="row"><span>Realizado</span><span>${real === null ? '—' : fmtPct(real) + '%'}</span></div>
+            <div class="row"><span>Tendência</span><span>${tend === null ? '—' : fmtPct(tend) + '%'}</span></div>
+            <div class="row"><span>Desvio</span><span>${desvio === null ? '—' : (desvio >= 0 ? '+' : '') + fmtPct(desvio) + ' pp'}</span></div>
+        `;
+        tip.classList.add('on');
+
+        const boxW = canvas.parentElement.clientWidth;
+        const tipW = tip.offsetWidth || 200;
+        let left = sCurveGeom.xAt(c.pontos[melhor].data.getTime()) + 14;
+        if (left + tipW > boxW - 6) left = sCurveGeom.xAt(c.pontos[melhor].data.getTime()) - tipW - 14;
+        tip.style.left = Math.max(6, left) + 'px';
+        tip.style.top = Math.max(8, y - 10) + 'px';
+
+        if (sCurveHover !== melhor) { sCurveHover = melhor; drawCurva(); }
+    });
+
+    canvas.addEventListener('mouseleave', () => {
+        tip.classList.remove('on');
+        if (sCurveHover !== null) { sCurveHover = null; drawCurva(); }
+    });
+})();
+
+/* ------------------------------------------------------------------ */
+/* Distribuição por situação                                           */
+/* ------------------------------------------------------------------ */
+
+const CORES_STATUS = {
+    'Concluída': '#1B8A63',
+    'Em andamento': '#264FEC',
+    'Atrasada': '#C0453B',
+    'Não iniciada': '#8A93A6'
+};
+
+function renderStatus() {
+    const lista = $('#status-list');
+    const resumo = $('#status-resumo');
+    const at = state.filtered;
+
+    const ordem = ['Concluída','Em andamento','Atrasada','Não iniciada'];
+    const contagem = {}; ordem.forEach(k => contagem[k] = 0);
+    at.forEach(t => { contagem[t.status] = (contagem[t.status] || 0) + 1; });
+
+    const total = at.length || 1;
+    lista.innerHTML = ordem.map(k => {
+        const n = contagem[k] || 0;
+        const pct = (n / total) * 100;
+        return `
+            <div class="status-row">
+                <span class="status-dot" style="background:${CORES_STATUS[k]}"></span>
+                <span class="status-nome">${k}</span>
+                <span class="status-barra"><i style="width:${pct.toFixed(1)}%;background:${CORES_STATUS[k]}"></i></span>
+                <span class="status-num"><b>${n}</b> · ${pct.toFixed(0)}%</span>
             </div>
-            <div class="p-6 flex-1 overflow-y-auto bg-slate-950 font-sans text-sm text-slate-300 leading-relaxed whitespace-pre-wrap select-all transition-all" id="modalBody"></div>
-        </div>
-    </div>
+        `;
+    }).join('');
 
-    <div id="toast" class="fixed bottom-6 right-6 z-50 transform translate-y-24 opacity-0 transition-all duration-300 bg-slate-800 border border-slate-700 text-slate-100 px-4 py-3 rounded-xl shadow-2xl flex items-center gap-3">
-        <div id="toastIcon" class="text-emerald-400 text-lg">
-            <i class="fa-solid fa-circle-check"></i>
-        </div>
-        <div>
-            <p id="toastTitle" class="text-xs font-semibold text-white">Sucesso</p>
-            <p id="toastMessage" class="text-xs text-slate-400">Ação realizada com sucesso.</p>
-        </div>
-    </div>
+    resumo.textContent = `${at.length} atividade${at.length === 1 ? '' : 's'} no filtro atual`;
+}
 
-    <script>
-        // Estado global da aplicação
-        let items = JSON.parse(localStorage.getItem('clipboard_sync_items')) || [];
-        let currentModalText = '';
-        let modalIsMonospace = false;
+/* ------------------------------------------------------------------ */
+/* Tabela                                                              */
+/* ------------------------------------------------------------------ */
 
-        // Monitorar digitação no textarea para contadores em tempo real
-        const pasteInput = document.getElementById('pasteInput');
-        pasteInput.addEventListener('input', () => {
-            const val = pasteInput.value;
-            const chars = val.length;
-            const lines = val ? val.split('\n').length : 0;
-            document.getElementById('charCounter').textContent = `${chars} caracteres`;
-            document.getElementById('lineCounter').textContent = `${lines} linhas`;
-        });
+function renderTabela() {
+    const tbody = $('#tabela-body');
+    const resumo = $('#tabela-resumo');
+    const at = state.filtered;
 
-        // Alternar visibilidade do guia do GitHub
-        function toggleGithubGuide() {
-            const modal = document.getElementById('githubGuideModal');
-            modal.classList.toggle('hidden');
-        }
+    if (!at.length) {
+        tbody.innerHTML = `<tr><td colspan="12" class="tabela-vazia">Nenhuma atividade encontrada com os filtros atuais.</td></tr>`;
+        resumo.textContent = '';
+        return;
+    }
 
-        // Função para salvar novo item
-        function handleSave(e) {
-            e.preventDefault();
-            const content = pasteInput.value.trim();
-            if (!content) return;
+    const limite = 600;
+    const lista = at.slice().sort((a, b) => {
+        const ta = a.pStart ? a.pStart.getTime() : Infinity;
+        const tb = b.pStart ? b.pStart.getTime() : Infinity;
+        return ta - tb || a.name.localeCompare(b.name, 'pt-BR');
+    });
+    const exibidas = lista.slice(0, limite);
 
-            // Gerar título automático baseado na primeira linha ou data/hora
-            const firstLine = content.split('\n')[0].trim();
-            const title = firstLine.length > 40 ? firstLine.substring(0, 40) + '...' : (firstLine || 'Snippet sem título');
+    const classeTag = s => s === 'Concluída' ? 'concluida'
+        : s === 'Em andamento' ? 'andamento'
+        : s === 'Atrasada' ? 'atrasada' : 'naoiniciada';
 
-            const newItem = {
-                id: Date.now().toString(),
-                title: title,
-                content: content,
-                date: new Date().toLocaleString('pt-BR'),
-                chars: content.length,
-                lines: content.split('\n').length,
-                isMonospace: true // Por padrão, sugerimos código em monospace para facilitar leitura
-            };
+    tbody.innerHTML = exibidas.map((t, i) => {
+        const pPct = t.prev * 100;
+        const ePct = t.exec * 100;
+        const classeBarra = t.status === 'Concluída' ? 'completo' : (t.status === 'Atrasada' ? 'atraso' : '');
+        const desvio = t.desvio;
+        const classeDesvio = desvio >= 0 ? 'pos' : 'neg';
 
-            items.unshift(newItem);
-            persistAndRender();
-
-            // Limpar formulário e contadores
-            pasteInput.value = '';
-            document.getElementById('charCounter').textContent = '0 caracteres';
-            document.getElementById('lineCounter').textContent = '0 linhas';
-
-            showToast('Texto Salvo!', 'O texto foi sincronizado com sucesso.');
-        }
-
-        // Persistir no LocalStorage e renderizar tela
-        function persistAndRender() {
-            localStorage.setItem('clipboard_sync_items', JSON.stringify(items));
-            renderItems(items);
-        }
-
-        // Alternar formatação de código (monospace) de um item específico
-        function toggleItemFont(id) {
-            items = items.map(item => {
-                if (item.id === id) {
-                    return { ...item, isMonospace: !item.isMonospace };
-                }
-                return item;
-            });
-            persistAndRender();
-        }
-
-        // Renderizar lista de itens
-        function renderItems(dataArray) {
-            const container = document.getElementById('itemsContainer');
-            const emptyState = document.getElementById('emptyState');
-            const itemCountLabel = document.getElementById('itemCountLabel');
-
-            itemCountLabel.textContent = `${items.length} ${items.length === 1 ? 'item salvo' : 'itens salvos'}`;
-
-            if (dataArray.length === 0) {
-                container.innerHTML = '';
-                emptyState.classList.remove('hidden');
-                return;
-            }
-
-            emptyState.classList.add('hidden');
-            
-            container.innerHTML = dataArray.map(item => {
-                const fontClass = item.isMonospace ? 'font-mono' : 'font-sans';
-                const codeBadgeClass = item.isMonospace ? 'bg-indigo-500/20 text-indigo-300 border-indigo-500/30' : 'bg-slate-800 text-slate-400 border-slate-700';
-                
-                return `
-                    <div class="bg-slate-900 border border-slate-800 hover:border-slate-700 rounded-2xl p-5 transition-all flex flex-col gap-3 shadow-lg group">
-                        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-slate-800/60 pb-3">
-                            <div class="flex items-center gap-2.5 overflow-hidden">
-                                <span class="w-2 h-2 rounded-full bg-indigo-500 shrink-0"></span>
-                                <h3 class="text-sm font-semibold text-white truncate" title="${escapeHtml(item.title)}">${escapeHtml(item.title)}</h3>
-                            </div>
-                            <div class="flex items-center gap-3 text-xs text-slate-400 shrink-0">
-                                <span><i class="fa-regular fa-clock mr-1"></i>${item.date}</span>
-                                <span>&bull;</span>
-                                <span>${item.chars} chars (${item.lines} linhas)</span>
-                            </div>
-                        </div>
-
-                        <!-- Prévia colapsável do conteúdo com fonte configurável -->
-                        <div class="relative bg-slate-950 rounded-xl p-3 border border-slate-800/80 ${fontClass} text-xs text-slate-300 max-h-32 overflow-hidden select-all">
-                            <div class="absolute inset-x-0 bottom-0 h-12 bg-gradient-to-t from-slate-950 to-transparent pointer-events-none"></div>
-                            <pre class="whitespace-pre-wrap break-all">${escapeHtml(item.content)}</pre>
-                        </div>
-
-                        <!-- Ações do Card -->
-                        <div class="flex flex-col sm:flex-row items-center justify-between gap-2 pt-1">
-                            <div class="flex items-center gap-2 w-full sm:w-auto">
-                                <button onclick="openModal('${item.id}')" class="text-xs font-medium text-indigo-400 hover:text-indigo-300 flex items-center gap-1.5 transition-all">
-                                    <i class="fa-solid fa-expand"></i> Expandir Tela Cheia
-                                </button>
-                                <span class="text-slate-700">&bull;</span>
-                                <button onclick="toggleItemFont('${item.id}')" class="px-2.5 py-1 text-xs font-medium rounded-lg border transition-all flex items-center gap-1.5 ${codeBadgeClass}">
-                                    <i class="fa-solid fa-code"></i> ${item.isMonospace ? 'Modo Código: Ligado' : 'Modo Código: Desligado'}
-                                </button>
-                            </div>
-                            <div class="flex items-center gap-2 self-end sm:self-center">
-                                <button onclick="copyToClipboard('${escapeHtmlForJs(item.content)}')" class="px-3 py-1.5 bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-medium rounded-lg transition-all flex items-center gap-1.5 active:scale-95">
-                                    <i class="fa-solid fa-copy text-indigo-400"></i> Copiar
-                                </button>
-                                <button onclick="deleteItem('${item.id}')" class="px-3 py-1.5 bg-rose-500/10 hover:bg-rose-500/20 text-rose-400 text-xs font-medium rounded-lg transition-all flex items-center gap-1.5 active:scale-95">
-                                    <i class="fa-solid fa-trash"></i> Excluir
-                                </button>
-                            </div>
-                        </div>
+        return `
+            <tr>
+                <td class="col-num" style="color:var(--texto-fraco)">${i + 1}</td>
+                <td class="col-nome">${escaparHtml(t.name)}</td>
+                <td class="col-dim">${escaparHtml(t.squad)}</td>
+                <td class="col-dim">${escaparHtml(t.workstream)}</td>
+                <td class="col-dim">${escaparHtml(t.disciplina)}</td>
+                <td class="col-dim">${escaparHtml(t.vendor)}</td>
+                <td class="col-num">${fmtData(t.inicio)}</td>
+                <td class="col-num">${fmtData(t.termino)}</td>
+                <td class="col-num">${fmtPct(t.prev, 1)}%</td>
+                <td class="col-num">
+                    <div class="prog">
+                        <span class="prog-barra"><i class="${classeBarra}" style="width:${ePct.toFixed(1)}%"></i></span>
+                        <span class="prog-txt">${ePct.toFixed(0)}%</span>
                     </div>
-                `;
-            }).join('');
-        }
+                </td>
+                <td class="col-num" style="color:${desvio >= 0 ? 'var(--ok)' : 'var(--erro)'};font-weight:600">
+                    ${(desvio >= 0 ? '+' : '') + (desvio * 100).toFixed(1)} pp
+                </td>
+                <td><span class="tag ${classeTag(t.status)}">${t.status}</span></td>
+            </tr>
+        `;
+    }).join('');
 
-        // Filtrar itens na busca
-        function filterItems() {
-            const query = document.getElementById('searchInput').value.toLowerCase();
-            const filtered = items.filter(item => 
-                item.title.toLowerCase().includes(query) || 
-                item.content.toLowerCase().includes(query)
-            );
-            renderItems(filtered);
-        }
+    resumo.textContent = lista.length > limite
+        ? `Exibindo ${limite} de ${lista.length} atividades — refine os filtros para ver as demais.`
+        : `${lista.length} atividade${lista.length === 1 ? '' : 's'}`;
+}
 
-        // Copiar conteúdo para a área de transferência com fallback seguro para iframe
-        function copyToClipboard(text) {
-            if (navigator.clipboard && navigator.clipboard.writeText) {
-                navigator.clipboard.writeText(text).then(() => {
-                    showToast('Copiado!', 'O texto foi copiado para a área de transferência.');
-                }).catch(() => {
-                    fallbackCopyText(text);
-                });
-            } else {
-                fallbackCopyText(text);
-            }
-        }
+/* ------------------------------------------------------------------ */
+/* Eventos                                                             */
+/* ------------------------------------------------------------------ */
 
-        function fallbackCopyText(text) {
-            const textArea = document.createElement("textarea");
-            textArea.value = text;
-            textArea.style.position = "fixed";
-            document.body.appendChild(textArea);
-            textArea.focus();
-            textArea.select();
-            try {
-                const successful = document.execCommand('copy');
-                if (successful) {
-                    showToast('Copiado!', 'O texto foi copiado com sucesso.');
-                } else {
-                    showToast('Erro', 'Não foi possível copiar o texto.', true);
-                }
-            } catch (err) {
-                showToast('Erro', 'Falha ao copiar.', true);
-            }
-            document.body.removeChild(textArea);
-        }
+$('#file-input').addEventListener('change', ev => {
+    const f = ev.target.files && ev.target.files[0];
+    if (f) lerArquivo(f);
+    ev.target.value = '';
+});
 
-        // Excluir item individual
-        function deleteItem(id) {
-            items = items.filter(i => i.id !== id);
-            persistAndRender();
-            showToast('Removido', 'Item excluído do histórico.');
-        }
+const dz = $('#dropzone');
+dz.addEventListener('click', () => $('#file-input').click());
+dz.addEventListener('keydown', ev => {
+    if (ev.key === 'Enter' || ev.key === ' ') { ev.preventDefault(); $('#file-input').click(); }
+});
+['dragenter','dragover'].forEach(evt => {
+    dz.addEventListener(evt, ev => { ev.preventDefault(); dz.classList.add('drag'); });
+});
+['dragleave','drop'].forEach(evt => {
+    dz.addEventListener(evt, ev => { ev.preventDefault(); dz.classList.remove('drag'); });
+});
+dz.addEventListener('drop', ev => {
+    const f = ev.dataTransfer.files && ev.dataTransfer.files[0];
+    if (f) lerArquivo(f);
+});
+document.addEventListener('dragover', e => e.preventDefault());
+document.addEventListener('drop', e => {
+    if (e.target.closest('#dropzone')) return;
+    e.preventDefault();
+    const f = e.dataTransfer.files && e.dataTransfer.files[0];
+    if (f) lerArquivo(f);
+});
 
-        // Apagar todos os itens
-        function clearAllItems() {
-            if (items.length === 0) return;
-            if (confirm('Deseja realmente apagar todo o histórico salvo?')) {
-                items = [];
-                persistAndRender();
-                showToast('Histórico Limpo', 'Todos os textos foram apagados.');
-            }
-        }
+// Filtros
+['squad','workstream','disciplina','vendor'].forEach(dim => {
+    document.getElementById('sel-' + dim).addEventListener('change', ev => {
+        state.filters[dim] = ev.target.value;
+        aplicarFiltros();
+        renderTudo();
+    });
+});
 
-        // Abrir modal de visualização expandida
-        function openModal(id) {
-            const item = items.find(i => i.id === id);
-            if (!item) return;
+$('#in-busca').addEventListener('input', debounce(ev => {
+    state.filters.search = ev.target.value;
+    aplicarFiltros();
+    renderTudo();
+}, 200));
 
-            currentModalText = item.content;
-            modalIsMonospace = true; // Iniciar modal com monospace por padrão para código
-            updateModalFontUI();
+$('#btn-limpar').addEventListener('click', () => {
+    ['squad','workstream','disciplina','vendor'].forEach(dim => {
+        document.getElementById('sel-' + dim).value = 'all';
+        state.filters[dim] = 'all';
+    });
+    $('#in-busca').value = '';
+    state.filters.search = '';
+    aplicarFiltros();
+    renderTudo();
+});
 
-            document.getElementById('modalTitle').textContent = item.title;
-            document.getElementById('modalSubtitle').textContent = `${item.date} • ${item.chars} caracteres • ${item.lines} linhas`;
-            document.getElementById('modalBody').textContent = item.content;
-            document.getElementById('modalOverlay').classList.remove('hidden');
-        }
+// Redimensionamento
+window.addEventListener('resize', debounce(() => {
+    drawCurva();
+}, 150));
 
-        function toggleModalFont() {
-            modalIsMonospace = !modalIsMonospace;
-            updateModalFontUI();
-        }
-
-        function updateModalFontUI() {
-            const body = document.getElementById('modalBody');
-            const label = document.getElementById('modalFontToggleLabel');
-            const btn = document.getElementById('modalFontToggleBtn');
-
-            if (modalIsMonospace) {
-                body.className = "p-6 flex-1 overflow-y-auto bg-slate-950 font-mono text-sm text-slate-300 leading-relaxed whitespace-pre-wrap select-all transition-all";
-                label.textContent = "Fonte Monospace";
-                btn.className = "px-3 py-1.5 bg-indigo-500/20 hover:bg-indigo-500/30 text-indigo-300 border border-indigo-500/30 text-xs font-medium rounded-lg transition-all flex items-center gap-1.5";
-            } else {
-                body.className = "p-6 flex-1 overflow-y-auto bg-slate-950 font-sans text-sm text-slate-300 leading-relaxed whitespace-pre-wrap select-all transition-all";
-                label.textContent = "Fonte Padrão";
-                btn.className = "px-3 py-1.5 bg-slate-800 hover:bg-slate-700 text-slate-300 border border-slate-700 text-xs font-medium rounded-lg transition-all flex items-center gap-1.5";
-            }
-        }
-
-        function closeModal() {
-            document.getElementById('modalOverlay').classList.add('hidden');
-        }
-
-        function copyModalContent() {
-            copyToClipboard(currentModalText);
-        }
-
-        // Fechar modal clicando fora
-        document.getElementById('modalOverlay').addEventListener('click', (e) => {
-            if (e.target === document.getElementById('modalOverlay')) {
-                closeModal();
-            }
-        });
-
-        // Sistema de Toast flutuante
-        let toastTimeout;
-        function showToast(title, message, isError = false) {
-            const toast = document.getElementById('toast');
-            const toastTitle = document.getElementById('toastTitle');
-            const toastMessage = document.getElementById('toastMessage');
-            const toastIcon = document.getElementById('toastIcon');
-
-            toastTitle.textContent = title;
-            toastMessage.textContent = message;
-
-            if (isError) {
-                toastIcon.innerHTML = '<i class="fa-solid fa-circle-exclamation text-rose-400"></i>';
-            } else {
-                toastIcon.innerHTML = '<i class="fa-solid fa-circle-check text-emerald-400"></i>';
-            }
-
-            toast.classList.remove('translate-y-24', 'opacity-0');
-            clearTimeout(toastTimeout);
-            toastTimeout = setTimeout(() => {
-                toast.classList.add('translate-y-24', 'opacity-0');
-            }, 3000);
-        }
-
-        // Funções auxiliares de escape de strings para HTML e JS
-        function escapeHtml(str) {
-            return str
-                .replace(/&/g, "&amp;")
-                .replace(/</g, "&lt;")
-                .replace(/>/g, "&gt;")
-                .replace(/"/g, "&quot;")
-                .replace(/'/g, "&#039;");
-        }
-
-        function escapeHtmlForJs(str) {
-            return str.replace(/\\/g, '\\\\').replace(/'/g, "\\'").replace(/\n/g, '\\n').replace(/\r/g, '');
-        }
-
-        // Renderizar inicialização na carga da página
-        renderItems(items);
-    </script>
+</script>
 </body>
 </html>
-```
-eof
-
-### O que foi adicionado/atualizado:
-1. **Modo Código / Monospace Ajustável:** Cada card agora possui um botão dedicado ("Modo Código: Ligado/Desligado") para alternar instantaneamente entre fonte monoespaçada (ideal para códigos) e fonte padrão, além de um controle similar dentro do modal de visualização em tela cheia.
-2. **Guia Completo para o GitHub Pages:** Adicionado um botão **"Guia GitHub Pages"** no topo que abre um passo a passo detalhado explicando como subir o arquivo para o GitHub e gerar o link público para acessar diretamente do navegador do celular.
