@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Matrioska - Dashboard de Cronograma</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+<style>
+:root {
+    --marinho: #10192E;
+    --marinho-hover: #1B2A4A;
+    --azul-escuro: #011E38;
+    --royal: #264FEC;
+    --royal-claro: #3D4FE8;
+    --salmao: #F0C089;
+    --bege: #F5F1EB;
+    --branco: #FFFFFF;
+    --cinza-claro: #E8E4DE;
+    --verde: #2fbf71;
+    --vermelho: #e05252;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+    background: var(--bege);
+    font-family: "IBM Plex Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
+    color: var(--marinho);
+    min-height: 100vh;
+}
+button { font-family: inherit; cursor: pointer; }
+
+/* ===== TOPO ===== */
+#topo {
+    height: 55px;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 20px; background: var(--branco);
+    border-bottom: 1px solid rgba(16,25,46,.08);
+    position: sticky; top: 0; z-index: 30;
+}
+#topo .topo-esq { display: flex; align-items: center; gap: 14px; }
+#topo .logo { height: 26px; }
+.btn-voltar {
+    display: inline-flex; align-items: center; gap: 7px;
+    padding: 7px 14px; border: 1px solid rgba(16,25,46,.18); border-radius: 9px;
+    background: transparent; color: var(--marinho);
+    font-size: 12px; font-weight: 600; text-decoration: none;
+    transition: all .15s ease;
+}
+.btn-voltar:hover { border-color: var(--salmao); background: var(--salinho, #fff8ef); color: var(--marinho); }
+.titulo-topo { font-size: 13px; font-weight: 800; letter-spacing: .3px; display: flex; align-items: center; gap: 10px; }
+.titulo-topo .acento { width: 4px; height: 18px; background: var(--salmao); border-radius: 3px; }
+
+/* ===== ÁREA DE UPLOAD ===== */
+#upload-area {
+    margin: 20px; padding: 28px;
+    border: 2px dashed rgba(38,79,236,.35); border-radius: 16px;
+    background: var(--branco); text-align: center;
+}
+#upload-area h2 { font-size: 15px; margin-bottom: 6px; }
+#upload-area p { font-size: 12px; opacity: .6; margin-bottom: 16px; }
+.btn-principal {
+    padding: 11px 22px; border: 0; border-radius: 10px;
+    background: var(--royal); color: var(--branco);
+    font-size: 13px; font-weight: 600;
+    transition: background .15s ease;
+}
+.btn-principal:hover { background: var(--royal-claro); }
+#file-input { display: none; }
+#upload-status { margin-top: 12px; font-size: 12px; color: var(--royal); font-weight: 500; }
+
+/* ===== MAPEAMENTO DE COLUNAS ===== */
+#mapping { display: none; margin: 0 20px 20px; padding: 18px 20px; background: var(--branco); border-radius: 14px; border: 1px solid rgba(16,25,46,.08); }
+#mapping h3 { font-size: 13px; margin-bottom: 12px; }
+.mapping-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 12px; }
+.mapping-grid label { display: block; font-size: 11px; font-weight: 600; margin-bottom: 4px; opacity: .75; }
+.mapping-grid select {
+    width: 100%; padding: 8px 10px; border: 1px solid rgba(16,25,46,.18);
+    border-radius: 8px; font-family: inherit; font-size: 12px; background: var(--branco);
+}
+.mapping-acoes { margin-top: 14px; display: flex; gap: 10px; }
+.btn-secundario {
+    padding: 9px 18px; border: 1px solid rgba(16,25,46,.2); border-radius: 9px;
+    background: transparent; color: var(--marinho); font-size: 12px; font-weight: 600;
+}
+.btn-secundario:hover { border-color: var(--salmao); }
+
+/* ===== DASHBOARD ===== */
+#dashboard { display: none; padding: 0 20px 30px; }
+.kpis { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 12px; margin-bottom: 16px; }
+.kpi {
+    background: var(--marinho); color: var(--bege); border-radius: 14px;
+    padding: 16px 18px; position: relative; overflow: hidden;
+}
+.kpi::before { content:""; position:absolute; top:0; left:0; right:0; height:3px; background: var(--salmao); }
+.kpi.royal::before { background: var(--royal-claro); }
+.kpi span { display:block; font-size: 10px; letter-spacing: .8px; text-transform: uppercase; opacity: .6; margin-bottom: 6px; }
+.kpi strong { font-size: 24px; font-weight: 700; font-variant-numeric: tabular-nums; }
+.kpi small { display:block; margin-top: 4px; font-size: 11px; font-weight: 600; }
+.kpi small.pos { color: var(--verde); }
+.kpi small.neg { color: var(--vermelho); }
+
+.painel { background: var(--branco); border-radius: 14px; border: 1px solid rgba(16,25,46,.08); padding: 18px 20px; margin-bottom: 16px; }
+.painel h3 { font-size: 13px; margin-bottom: 14px; display: flex; align-items: center; gap: 8px; }
+.painel h3 .acento { width: 4px; height: 15px; background: var(--salmao); border-radius: 3px; }
+.chart-box { position: relative; height: 340px; }
+
+/* ===== FILTROS + TABELA ===== */
+.filtros { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 14px; align-items: center; }
+.filtros input, .filtros select {
+    padding: 8px 12px; border: 1px solid rgba(16,25,46,.18); border-radius: 8px;
+    font-family: inherit; font-size: 12px; background: var(--branco);
+}
+.filtros input { flex: 1; min-width: 200px; }
+.tabela-wrap { overflow-x: auto; max-height: 420px; overflow-y: auto; border-radius: 10px; border: 1px solid rgba(16,25,46,.08); }
+table { width: 100%; border-collapse: collapse; font-size: 12px; }
+thead th {
+    position: sticky; top: 0; background: var(--azul-escuro); color: var(--bege);
+    padding: 10px 12px; text-align: left; font-size: 10px; letter-spacing: .6px; text-transform: uppercase; white-space: nowrap;
+}
+tbody td { padding: 9px 12px; border-bottom: 1px solid rgba(16,25,46,.06); white-space: nowrap; }
+tbody tr:hover { background: rgba(240,192,137,.12); }
+td.num { text-align: right; font-variant-numeric: tabular-nums; }
+.badge { padding: 3px 9px; border-radius: 20px; font-size: 10px; font-weight: 700; }
+.badge.concluida { background: rgba(47,191,113,.15); color: #1d8a4e; }
+.badge.andamento { background: rgba(38,79,236,.12); color: var(--royal); }
+.badge.atrasada { background: rgba(224,82,82,.14); color: var(--vermelho); }
+.badge.nao-iniciada { background: rgba(16,25,46,.08); color: var(--marinho); opacity:.7; }
+
+.barra-progresso { width: 110px; height: 7px; background: var(--cinza-claro); border-radius: 5px; overflow: hidden; display: inline-block; vertical-align: middle; margin-right: 7px; }
+.barra-progresso i { display: block; height: 100%; background: var(--royal); border-radius: 5px; }
+.barra-progresso.real i { background: var(--salmao); }
+
+@media (max-width: 640px) {
+    .chart-box { height: 260px; }
+    #topo { padding: 0 12px; }
+    #upload-area, #mapping, #dashboard { margin-left: 12px; margin-right: 12px; }
+    #dashboard { padding: 0 0 20px; }
+}
+</style>
+</head>
+<body>
+
+<header id="topo">
+    <div class="topo-esq">
+        <a class="btn-voltar" href="index.html">← Voltar ao Viewer</a>
+        <span class="titulo-topo"><span class="acento"></span>DASHBOARD DE CRONOGRAMA</span>
+    </div>
+    <img class="logo" src="Imagens_Logos/logo_MATRIOSKA.png" alt="MATRIOSKA">
+</header>
+
+<!-- UPLOAD -->
+<section id="upload-area">
+    <h2>Carregar cronograma</h2>
+    <p>Selecione um arquivo <strong>.xls</strong> ou <strong>.xlsx</strong> com as atividades do cronograma. A página detecta as colunas automaticamente.</p>
+    <button class="btn-principal" id="btn-upload" type="button">Escolher arquivo</button>
+    <input type="file" id="file-input" accept=".xls,.xlsx,.csv">
+    <div id="upload-status"></div>
+</section>
+
+<!-- MAPEAMENTO -->
+<section id="mapping">
+    <h3>Mapeamento de colunas</h3>
+    <p style="font-size:12px;opacity:.65;margin-bottom:12px;">Confira se as colunas foram detectadas corretamente. Campos de <em>% Previsto</em> e <em>% Realizado</em> podem ser preenchidos depois pela planilha.</p>
+    <div class="mapping-grid">
+        <div><label>Atividade / Descrição</label><select id="col-atividade"></select></div>
+        <div><label>Data (início ou referência)</label><select id="col-data"></select></div>
+        <div><label>% Previsto (opcional)</label><select id="col-previsto"></select></div>
+        <div><label>% Realizado</label><select id="col-realizado"></select></div>
+        <div><label>Peso / Duração (opcional)</label><select id="col-peso"></select></div>
+        <div><label>Status (opcional)</label><select id="col-status"></select></div>
+    </div>
+    <div class="mapping-acoes">
+        <button class="btn-principal" id="btn-gerar" type="button">Gerar Dashboard</button>
+    </div>
+</section>
+
+<!-- DASHBOARD -->
+<main id="dashboard">
+    <div class="kpis">
+        <div class="kpi royal"><span>% Previsto (acum.)</span><strong id="kpi-prev">—</strong><small id="kpi-prev-sub">—</small></div>
+        <div class="kpi"><span>% Realizado (acum.)</span><strong id="kpi-real">—</strong><small id="kpi-real-sub">—</small></div>
+        <div class="kpi"><span>Desvio</span><strong id="kpi-desvio">—</strong><small id="kpi-desvio-sub">—</small></div>
+        <div class="kpi royal"><span>Atividades</span><strong id="kpi-atividades">—</strong><small id="kpi-atividades-sub">—</small></div>
+        <div class="kpi"><span>Concluídas</span><strong id="kpi-concluidas">—</strong><small id="kpi-concluidas-sub">—</small></div>
+        <div class="kpi royal"><span>Atrasadas</span><strong id="kpi-atrasadas">—</strong><small id="kpi-atrasadas-sub">—</small></div>
+    </div>
+
+    <div class="painel">
+        <h3><span class="acento"></span>CURVA S — AVANÇO FÍSICO ACUMULADO</h3>
+        <div class="chart-box"><canvas id="chart-curva"></canvas></div>
+    </div>
+
+    <div class="painel">
+        <h3><span class="acento"></span>PLANILHA DE ATIVIDADES</h3>
+        <div class="filtros">
+            <input type="text" id="filtro-texto" placeholder="🔎 Filtrar por texto...">
+            <select id="filtro-status">
+                <option value="">Todos os status</option>
+                <option value="concluida">Concluída</option>
+                <option value="andamento">Em andamento</option>
+                <option value="atrasada">Atrasada</option>
+                <option value="nao-iniciada">Não iniciada</option>
+            </select>
+            <button class="btn-secundario" id="btn-exportar" type="button">Exportar filtrado (CSV)</button>
+        </div>
+        <div class="tabela-wrap">
+            <table>
+                <thead><tr>
+                    <th>Atividade</th><th>Data</th><th>Peso</th>
+                    <th>% Prev.</th><th>% Real.</th><th>Barra</th><th>Status</th>
+                </tr></thead>
+                <tbody id="tabela-corpo"></tbody>
+            </table>
+        </div>
+    </div>
+</main>
+
+<script>
+const $ = id => document.getElementById(id);
+const fmtPct = v => (v === null || v === undefined || isNaN(v)) ? "—" : v.toLocaleString("pt-BR", {minimumFractionDigits:1, maximumFractionDigits:1}) + "%";
+const fmtNum = v => (v === null || v === undefined || isNaN(v)) ? "—" : v.toLocaleString("pt-BR", {maximumFractionDigits:2});
+const fmtData = d => d ? new Date(d).toLocaleDateString("pt-BR") : "—";
+
+let workbookData = [];   // linhas (arrays)
+let headers = [];        // nomes das colunas
+let rows = [];           // dados normalizados
+let chart = null;
+
+/* ---------- UPLOAD ---------- */
+$("btn-upload").addEventListener("click", () => $("file-input").click());
+$("file-input").addEventListener("change", e => {
+    const file = e.target.files[0];
+    if (!file) return;
+    $("upload-status").textContent = "Lendo " + file.name + "...";
+    const reader = new FileReader();
+    reader.onload = ev => {
+        try {
+            const wb = XLSX.read(ev.target.result, {type: "array", cellDates: true});
+            const ws = wb.Sheets[wb.SheetNames[0]];
+            const json = XLSX.utils.sheet_to_json(ws, {header: 1, defval: null, raw: true});
+            if (!json.length) throw new Error("Planilha vazia.");
+            headers = json[0].map((h, i) => (h === null || h === "") ? "Coluna " + (i+1) : String(h).trim());
+            workbookData = json.slice(1).filter(r => r.some(c => c !== null && c !== ""));
+            montarMapeamento();
+            $("upload-status").textContent = `${workbookData.length} linhas carregadas de "${file.name}".`;
+            $("mapping").style.display = "block";
+            $("mapping").scrollIntoView({behavior: "smooth"});
+        } catch (err) {
+            $("upload-status").textContent = "Erro: " + err.message;
+        }
+    };
+    reader.readAsArrayBuffer(file);
+});
+
+/* ---------- MAPEAMENTO ---------- */
+function guessColumn(padroes) {
+    const norm = s => String(s).toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+    for (const padrao of padroes) {
+        const idx = headers.findIndex(h => norm(h).includes(padrao));
+        if (idx >= 0) return idx;
+    }
+    return -1;
+}
+function preencherSelect(id, selecionado) {
+    const sel = $(id);
+    sel.innerHTML = '<option value="-1">— ignorar —</option>' +
+        headers.map((h, i) => `<option value="${i}" ${i === selecionado ? "selected" : ""}>${h}</option>`).join("");
+}
+function montarMapeamento() {
+    preencherSelect("col-atividade", guessColumn(["atividade", "descricao", "tarefa", "servico", "item"]));
+    preencherSelect("col-data", guessColumn(["data", "inicio", "início", "date"]));
+    preencherSelect("col-previsto", guessColumn(["previsto", "planejado", "planejad", "orcamento", "orçamento", "baseline"]));
+    preencherSelect("col-realizado", guessColumn(["realizado", "fisico", "físico", "avanco", "avanço", "executado", "% conclu"]));
+    preencherSelect("col-peso", guessColumn(["peso", "duracao", "duração", "hh", "quantidade", "qtd"]));
+    preencherSelect("col-status", guessColumn(["status", "situacao", "situação"]));
+}
+
+/* ---------- NORMALIZAÇÃO ---------- */
+function parsePercent(v) {
+    if (v === null || v === undefined || v === "") return null;
+    if (typeof v === "number") return v > 1.0001 ? v : v * 100;
+    const s = String(v).replace(",", ".").replace(/[%\s]/g, "");
+    const n = parseFloat(s);
+    if (isNaN(n)) return null;
+    return n > 1.0001 ? n : n * 100;
+}
+function parseNumber(v) {
+    if (v === null || v === undefined || v === "") return null;
+    if (v instanceof Date) return null;
+    if (typeof v === "number") return v;
+    const n = parseFloat(String(v).replace(/\./g, "").replace(",", ".").replace(/[^\d.-]/g, ""));
+    return isNaN(n) ? null : n;
+}
+function parseDate(v) {
+    if (v === null || v === undefined || v === "") return null;
+    if (v instanceof Date && !isNaN(v)) return v;
+    const s = String(v).trim();
+    let m = s.match(/^(\d{1,2})[\/\-.](\d{1,2})[\/\-.](\d{4})/);
+    if (m) { const d = new Date(+m[3], +m[2]-1, +m[1]); return isNaN(d) ? null : d; }
+    m = s.match(/^(\d{4})[\/\-.](\d{1,2})[\/\-.](\d{1,2})/);
+    if (m) { const d = new Date(+m[1], +m[2]-1, +m[3]); return isNaN(d) ? null : d; }
+    const t = Date.parse(s);
+    return isNaN(t) ? null : new Date(t);
+}
+
+function normalizarDados() {
+    const cAtv = +$("col-atividade").value;
+    const cData = +$("col-data").value;
+    const cPrev = +$("col-previsto").value;
+    const cReal = +$("col-realizado").value;
+    const cPeso = +$("col-peso").value;
+    const cStatus = +$("col-status").value;
+    if (cAtv < 0) { alert("Selecione a coluna de Atividade."); return false; }
+
+    rows = workbookData.map((r, i) => {
+        const realizado = parsePercent(cReal >= 0 ? r[cReal] : null);
+        const previsto = parsePercent(cPrev >= 0 ? r[cPrev] : null);
+        const peso = parseNumber(cPeso >= 0 ? r[cPeso] : null);
+        const statusTxt = cStatus >= 0 ? String(r[cStatus] ?? "").toLowerCase() : "";
+        let status;
+        if (realizado === null) status = "nao-iniciada";
+        else if (realizado >= 99.99) status = "concluida";
+        else if (statusTxt.includes("atras")) status = "atrasada";
+        else status = "andamento";
+        return {
+            idx: i,
+            atividade: String(r[cAtv] ?? "(sem descrição)"),
+            data: parseDate(cData >= 0 ? r[cData] : null),
+            previsto, realizado, peso,
+            statusTxt, status
+        };
+    }).filter(r => r.atividade.trim() !== "");
+    return true;
+}
+
+/* ---------- KPIs ---------- */
+function calcularKPIs(dados) {
+    const comPeso = dados.filter(r => r.peso !== null);
+    const usarPeso = comPeso.length >= dados.length * 0.5;
+    const media = (campo) => {
+        const vals = dados.filter(r => r[campo] !== null);
+        if (!vals.length) return null;
+        if (usarPeso) {
+            const tp = vals.reduce((s, r) => s + r.peso, 0);
+            if (tp > 0) return vals.reduce((s, r) => s + r[campo] * r.peso, 0) / tp;
+        }
+        return vals.reduce((s, r) => s + r[campo], 0) / vals.length;
+    };
+    const prev = media("previsto");
+    const real = media("realizado");
+    const desvio = (prev !== null && real !== null) ? real - prev : null;
+    const hoje = new Date();
+    const atrasadas = dados.filter(r => r.status === "atrasada" ||
+        (r.status === "andamento" && r.data && r.data < hoje && r.realizado < 100)).length;
+
+    $("kpi-prev").textContent = fmtPct(prev);
+    $("kpi-real").textContent = fmtPct(real);
+    $("kpi-desvio").textContent = desvio === null ? "—" : (desvio > 0 ? "+" : "") + fmtPct(desvio);
+    $("kpi-desvio").style.color = desvio === null ? "" : (desvio >= 0 ? "var(--verde)" : "var(--vermelho)");
+    $("kpi-atividades").textContent = dados.length;
+    $("kpi-concluidas").textContent = dados.filter(r => r.status === "concluida").length;
+    $("kpi-atrasadas").textContent = atrasadas;
+
+    $("kpi-prev-sub").textContent = usarPeso ? "ponderado por peso" : "média simples";
+    $("kpi-real-sub").textContent = usarPeso ? "ponderado por peso" : "média simples";
+    $("kpi-desvio-sub").textContent = desvio === null ? "" : (desvio >= 0 ? "adiantado vs. previsto" : "atrasado vs. previsto");
+    $("kpi-desvio-sub").className = desvio >= 0 ? "pos" : "neg";
+    $("kpi-atividades-sub").textContent = "linhas no cronograma";
+    $("kpi-concluidas-sub").textContent = fmtPct(dados.length ? dados.filter(r=>r.status==="concluida").length/dados.length*100 : null) + " do total";
+    $("kpi-atrasadas-sub").textContent = atrasadas ? "requer atenção" : "nenhuma atrasada";
+}
+
+/* ---------- CURVA S ---------- */
+function gerarCurvaS(dados) {
+    const comData = dados.filter(r => r.data).sort((a, b) => a.data - b.data);
+    if (comData.length < 2) return null;
+    const usarPeso = comData.filter(r => r.peso !== null).length >= comData.length * 0.5;
+    const w = r => (usarPeso && r.peso !== null) ? r.peso : 1;
+    const totalW = comData.reduce((s, r) => s + w(r), 0);
+
+    // datas únicas acumuladas
+    const pontos = [];
+    let accPrev = 0, accReal = 0;
+    for (const r of comData) {
+        if (r.previsto !== null) accPrev += r.previsto * w(r);
+        if (r.realizado !== null) accReal += r.realizado * w(r);
+        pontos.push({
+            data: r.data,
+            prev: accPrev / totalW,
+            real: accReal / totalW
+        });
+    }
+    // previsto final vira referência 100% (projeção)
+    const ultimo = pontos[pontos.length - 1];
+    return { pontos, usarPeso, finalPrev: ultimo.prev, finalReal: ultimo.real };
+}
+
+function desenharCurva(curva) {
+    if (chart) { chart.destroy(); chart = null; }
+    if (!curva) {
+        $("chart-curva").parentElement.innerHTML = '<canvas id="chart-curva"></canvas><p style="font-size:12px;opacity:.6;margin-top:10px">Não há datas suficientes para traçar a curva. Verifique o mapeamento da coluna de datas.</p>';
+        return;
+    }
+    const ctx = $("chart-curva").getContext("2d");
+    const labels = curva.pontos.map(p => p.data.toLocaleDateString("pt-BR", {day:"2-digit", month:"2-digit"}));
+    chart = new Chart(ctx, {
+        type: "line",
+        data: {
+            labels,
+            datasets: [
+                { label: "Previsto (acum.)", data: curva.pontos.map(p => +p.prev.toFixed(2)), borderColor: "#264FEC", backgroundColor: "rgba(38,79,236,.10)", fill: true, tension: .35, pointRadius: 2, borderWidth: 2 },
+                { label: "Realizado (acum.)", data: curva.pontos.map(p => +p.real.toFixed(2)), borderColor: "#F0C089", backgroundColor: "rgba(240,192,137,.18)", fill: true, tension: .35, pointRadius: 2, borderWidth: 2 },
+            ]
+        },
+        options: {
+            responsive: true, maintainAspectRatio: false,
+            interaction: { mode: "index", intersect: false },
+            plugins: {
+                legend: { labels: { font: { family: "IBM Plex Sans", size: 11 }, usePointStyle: true } },
+                tooltip: { callbacks: { label: c => ` ${c.dataset.label}: ${fmtPct(c.parsed.y)}` } }
+            },
+            scales: {
+                y: { min: 0, suggestedMax: 100, ticks: { callback: v => v + "%", font: { family: "IBM Plex Sans", size: 10 } }, grid: { color: "rgba(16,25,46,.07)" } },
+                x: { ticks: { font: { family: "IBM Plex Sans", size: 10 }, maxRotation: 60 }, grid: { display: false } }
+            }
+        }
+    });
+}
+
+/* ---------- TABELA + FILTROS ---------- */
+const STATUS_LABEL = { concluida: "Concluída", andamento: "Em andamento", atrasada: "Atrasada", "nao-iniciada": "Não iniciada" };
+function renderTabela() {
+    const txt = $("filtro-texto").value.toLowerCase();
+    const st = $("filtro-status").value;
+    const filtrados = rows.filter(r =>
+        (!st || r.status === st) &&
+        (!txt || r.atividade.toLowerCase().includes(txt) || r.statusTxt.toLowerCase().includes(txt))
+    );
+    $("tabela-corpo").innerHTML = filtrados.map(r => `
+        <tr>
+            <td title="${r.atividade.replace(/"/g,"&quot;")}">${r.atividade.length > 60 ? r.atividade.slice(0,60)+"…" : r.atividade}</td>
+            <td class="num">${fmtData(r.data)}</td>
+            <td class="num">${fmtNum(r.peso)}</td>
+            <td class="num">${fmtPct(r.previsto)}</td>
+            <td class="num">${fmtPct(r.realizado)}</td>
+            <td>
+                <span class="barra-progresso"><i style="width:${Math.min(r.previsto ?? 0,100)}%"></i></span>
+                <span class="barra-progresso real"><i style="width:${Math.min(r.realizado ?? 0,100)}%"></i></span>
+            </td>
+            <td><span class="badge ${r.status}">${STATUS_LABEL[r.status]}</span></td>
+        </tr>`).join("") || '<tr><td colspan="7" style="text-align:center;opacity:.6;padding:24px">Nenhuma atividade corresponde ao filtro.</td></tr>';
+    calcularKPIs(filtrados);
+    desenharCurva(gerarCurvaS(filtrados));
+}
+$("filtro-texto").addEventListener("input", renderTabela);
+$("filtro-status").addEventListener("change", renderTabela);
+
+$("btn-exportar").addEventListener("click", () => {
+    const txt = $("filtro-texto").value.toLowerCase();
+    const st = $("filtro-status").value;
+    const filtrados = rows.filter(r => (!st || r.status === st) && (!txt || r.atividade.toLowerCase().includes(txt)));
+    const csv = ["Atividade;Data;Peso;% Previsto;% Realizado;Status",
+        ...filtrados.map(r => [r.atividade, fmtData(r.data), r.peso ?? "", r.previsto ?? "", r.realizado ?? "", STATUS_LABEL[r.status]]
+            .map(v => `"${String(v).replace(/"/g,'""')}"`).join(";"))
+    ].join("\n");
+    const blob = new Blob(["\ufeff" + csv], {type: "text/csv;charset=utf-8"});
+    const a = document.createElement("a");
+    a.href = URL.createObjectURL(blob);
+    a.download = "cronograma_filtrado.csv";
+    a.click();
+    URL.revokeObjectURL(a.href);
+});
+
+/* ---------- GERAR ---------- */
+$("btn-gerar").addEventListener("click", () => {
+    if (!normalizarDados()) return;
+    $("dashboard").style.display = "block";
+    renderTabela();
+    $("dashboard").scrollIntoView({behavior: "smooth"});
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,704 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Matrioska - Dashboard de Cronograma</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/hammerjs@2.0.8/hammer.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-zoom@2.0.1/dist/chartjs-plugin-zoom.min.js"></script>
+<style>
+:root {
+    --marinho: #10192E;
+    --marinho-hover: #1B2A4A;
+    --azul-escuro: #011E38;
+    --royal: #264FEC;
+    --royal-claro: #3D4FE8;
+    --salmao: #F0C089;
+    --bege: #F5F1EB;
+    --branco: #FFFFFF;
+    --cinza-claro: #E8E4DE;
+    --verde: #2fbf71;
+    --vermelho: #e05252;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+    background: var(--bege);
+    font-family: "IBM Plex Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
+    color: var(--marinho);
+    min-height: 100vh;
+}
+button { font-family: inherit; cursor: pointer; }
+
+/* ===== TOPO ===== */
+#topo {
+    height: 55px; display: flex; align-items: center; justify-content: space-between;
+    padding: 0 20px; background: var(--branco);
+    border-bottom: 1px solid rgba(16,25,46,.08);
+    position: sticky; top: 0; z-index: 30;
+}
+#topo .topo-esq { display: flex; align-items: center; gap: 14px; }
+#topo .logo { height: 26px; }
+.btn-voltar {
+    display: inline-flex; align-items: center; gap: 7px;
+    padding: 7px 14px; border: 1px solid rgba(16,25,46,.18); border-radius: 9px;
+    background: transparent; color: var(--marinho);
+    font-size: 12px; font-weight: 600; text-decoration: none; transition: all .15s ease;
+}
+.btn-voltar:hover { border-color: var(--salmao); }
+.titulo-topo { font-size: 13px; font-weight: 800; letter-spacing: .3px; display: flex; align-items: center; gap: 10px; }
+.titulo-topo .acento { width: 4px; height: 18px; background: var(--salmao); border-radius: 3px; }
+
+/* ===== STATUS / UPLOAD ===== */
+#status-box {
+    margin: 20px; padding: 18px 22px; border-radius: 14px;
+    background: var(--marinho); color: var(--bege);
+    display: flex; align-items: center; gap: 14px; font-size: 13px;
+}
+#status-box .spinner {
+    width: 22px; height: 22px; flex: 0 0 22px;
+    border: 3px solid rgba(255,255,255,.15); border-top-color: var(--salmao);
+    border-radius: 50%; animation: spin 1s linear infinite;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+#btn-upload-alt {
+    margin-left: auto; padding: 8px 16px; border: 1px solid rgba(240,192,137,.5);
+    border-radius: 9px; background: transparent; color: var(--salmao);
+    font-size: 11px; font-weight: 600;
+}
+#btn-upload-alt:hover { background: rgba(240,192,137,.12); }
+#file-input { display: none; }
+
+/* ===== MAPEAMENTO ===== */
+#mapping { display: none; margin: 0 20px 20px; padding: 18px 20px; background: var(--branco); border-radius: 14px; border: 1px solid rgba(16,25,46,.08); }
+#mapping h3 { font-size: 13px; margin-bottom: 12px; }
+.mapping-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(185px, 1fr)); gap: 12px; }
+.mapping-grid label { display: block; font-size: 11px; font-weight: 600; margin-bottom: 4px; opacity: .75; }
+.mapping-grid select {
+    width: 100%; padding: 8px 10px; border: 1px solid rgba(16,25,46,.18);
+    border-radius: 8px; font-family: inherit; font-size: 12px; background: var(--branco);
+}
+.mapping-acoes { margin-top: 14px; display: flex; gap: 10px; }
+.btn-principal {
+    padding: 10px 22px; border: 0; border-radius: 10px;
+    background: var(--royal); color: var(--branco);
+    font-size: 13px; font-weight: 600; transition: background .15s ease;
+}
+.btn-principal:hover { background: var(--royal-claro); }
+
+/* ===== DASHBOARD ===== */
+#dashboard { display: none; padding: 0 20px 30px; }
+.kpis { display: grid; grid-template-columns: repeat(auto-fit, minmax(165px, 1fr)); gap: 12px; margin-bottom: 16px; }
+.kpi {
+    background: var(--marinho); color: var(--bege); border-radius: 14px;
+    padding: 16px 18px; position: relative; overflow: hidden;
+}
+.kpi::before { content:""; position:absolute; top:0; left:0; right:0; height:3px; background: var(--salmao); }
+.kpi.royal::before { background: var(--royal-claro); }
+.kpi span { display:block; font-size: 10px; letter-spacing: .8px; text-transform: uppercase; opacity: .6; margin-bottom: 6px; }
+.kpi strong { font-size: 24px; font-weight: 700; font-variant-numeric: tabular-nums; }
+.kpi small { display:block; margin-top: 4px; font-size: 11px; font-weight: 600; }
+.kpi small.pos { color: var(--verde); }
+.kpi small.neg { color: var(--vermelho); }
+
+.painel { background: var(--branco); border-radius: 14px; border: 1px solid rgba(16,25,46,.08); padding: 18px 20px; margin-bottom: 16px; }
+.painel h3 { font-size: 13px; margin-bottom: 6px; display: flex; align-items: center; gap: 8px; }
+.painel h3 .acento { width: 4px; height: 15px; background: var(--salmao); border-radius: 3px; }
+.painel .hint { font-size: 11px; opacity: .55; margin-bottom: 12px; }
+.dois-graficos { display: grid; grid-template-columns: 1fr 1.4fr; gap: 16px; }
+@media (max-width: 900px) { .dois-graficos { grid-template-columns: 1fr; } }
+.chart-box { position: relative; height: 340px; }
+.chart-box-menor { position: relative; height: 340px; }
+
+.seletor-grupo { display: flex; align-items: center; gap: 8px; margin-bottom: 12px; }
+.seletor-grupo label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .5px; opacity: .7; }
+.seletor-grupo select {
+    padding: 7px 12px; border: 1px solid rgba(16,25,46,.18); border-radius: 8px;
+    font-family: inherit; font-size: 12px; background: var(--branco);
+}
+#btn-reset-zoom {
+    margin-left: auto; padding: 7px 14px; border: 1px solid rgba(16,25,46,.2);
+    border-radius: 8px; background: transparent; font-size: 11px; font-weight: 600; color: var(--marinho);
+}
+#btn-reset-zoom:hover { border-color: var(--royal); color: var(--royal); }
+
+/* ===== TABELA ===== */
+.filtros { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 14px; align-items: center; }
+.filtros input, .filtros select {
+    padding: 8px 12px; border: 1px solid rgba(16,25,46,.18); border-radius: 8px;
+    font-family: inherit; font-size: 12px; background: var(--branco);
+}
+.filtros input { flex: 1; min-width: 200px; }
+.btn-secundario {
+    padding: 8px 16px; border: 1px solid rgba(16,25,46,.2); border-radius: 9px;
+    background: transparent; color: var(--marinho); font-size: 11px; font-weight: 600;
+}
+.btn-secundario:hover { border-color: var(--salmao); }
+.tabela-wrap { overflow-x: auto; max-height: 440px; overflow-y: auto; border-radius: 10px; border: 1px solid rgba(16,25,46,.08); }
+table { width: 100%; border-collapse: collapse; font-size: 12px; }
+thead th {
+    position: sticky; top: 0; background: var(--azul-escuro); color: var(--bege);
+    padding: 10px 12px; text-align: left; font-size: 10px; letter-spacing: .6px; text-transform: uppercase; white-space: nowrap;
+}
+tbody td { padding: 9px 12px; border-bottom: 1px solid rgba(16,25,46,.06); white-space: nowrap; }
+tbody tr:hover { background: rgba(240,192,137,.12); }
+td.num { text-align: right; font-variant-numeric: tabular-nums; }
+.badge { padding: 3px 9px; border-radius: 20px; font-size: 10px; font-weight: 700; }
+.badge.concluida { background: rgba(47,191,113,.15); color: #1d8a4e; }
+.badge.andamento { background: rgba(38,79,236,.12); color: var(--royal); }
+.badge.atrasada { background: rgba(224,82,82,.14); color: var(--vermelho); }
+.badge.nao-iniciada { background: rgba(16,25,46,.08); color: var(--marinho); opacity:.7; }
+.barra-progresso { width: 100px; height: 7px; background: var(--cinza-claro); border-radius: 5px; overflow: hidden; display: inline-block; vertical-align: middle; margin-right: 6px; }
+.barra-progresso i { display: block; height: 100%; background: var(--royal); border-radius: 5px; }
+.barra-progresso.real i { background: var(--salmao); }
+.impacto-cell { font-weight: 700; color: var(--azul-escuro); }
+.chip-grupo {
+    display: inline-block; padding: 3px 10px; border-radius: 20px;
+    background: rgba(38,79,236,.10); color: var(--royal);
+    font-size: 10px; font-weight: 700;
+}
+
+@media (max-width: 640px) {
+    .chart-box, .chart-box-menor { height: 260px; }
+    #topo { padding: 0 12px; }
+    #status-box, #mapping, #dashboard { margin-left: 12px; margin-right: 12px; }
+    #dashboard { padding: 0 0 20px; }
+    .titulo-topo { display: none; }
+}
+</style>
+</head>
+<body>
+
+<header id="topo">
+    <div class="topo-esq">
+        <a class="btn-voltar" href="index.html">← Voltar ao Viewer</a>
+        <span class="titulo-topo"><span class="acento"></span>DASHBOARD DE CRONOGRAMA</span>
+    </div>
+    <img class="logo" src="Imagens_Logos/logo_MATRIOSKA.png" alt="MATRIOSKA">
+</header>
+
+<!-- STATUS DE CARREGAMENTO DO BACK-END -->
+<div id="status-box">
+    <div class="spinner" id="spinner"></div>
+    <span id="status-msg">Carregando cronograma do servidor...</span>
+    <button id="btn-upload-alt" type="button">Carregar arquivo local</button>
+    <input type="file" id="file-input" accept=".xls,.xlsx,.csv">
+</div>
+
+<!-- MAPEAMENTO (só aparece se necessário) -->
+<section id="mapping">
+    <h3>Mapeamento de colunas</h3>
+    <p style="font-size:12px;opacity:.65;margin-bottom:12px;">Confira se as colunas foram detectadas corretamente e clique em <strong>Gerar Dashboard</strong>.</p>
+    <div class="mapping-grid">
+        <div><label>Atividade / Descrição *</label><select id="col-atividade"></select></div>
+        <div><label>Data</label><select id="col-data"></select></div>
+        <div><label>% Previsto</label><select id="col-previsto"></select></div>
+        <div><label>% Realizado</label><select id="col-realizado"></select></div>
+        <div><label>Peso / Duração / HH</label><select id="col-peso"></select></div>
+        <div><label>Status (opcional)</label><select id="col-status"></select></div>
+        <div><label>Squad / Equipe</label><select id="col-squad"></select></div>
+        <div><label>Workstream / Frente</label><select id="col-workstream"></select></div>
+        <div><label>Vendor / Fornecedor</label><select id="col-vendor"></select></div>
+    </div>
+    <div class="mapping-acoes">
+        <button class="btn-principal" id="btn-gerar" type="button">Gerar Dashboard</button>
+    </div>
+</section>
+
+<!-- DASHBOARD -->
+<main id="dashboard">
+    <div class="kpis">
+        <div class="kpi royal"><span>% Previsto (acum.)</span><strong id="kpi-prev">—</strong><small id="kpi-prev-sub">—</small></div>
+        <div class="kpi"><span>% Realizado (acum.)</span><strong id="kpi-real">—</strong><small id="kpi-real-sub">—</small></div>
+        <div class="kpi"><span>Desvio</span><strong id="kpi-desvio">—</strong><small id="kpi-desvio-sub">—</small></div>
+        <div class="kpi royal"><span>Atividades</span><strong id="kpi-atividades">—</strong><small id="kpi-atividades-sub">—</small></div>
+        <div class="kpi"><span>Concluídas</span><strong id="kpi-concluidas">—</strong><small id="kpi-concluidas-sub">—</small></div>
+        <div class="kpi royal"><span>Atrasadas / Impacto</span><strong id="kpi-atrasadas">—</strong><small id="kpi-atrasadas-sub">—</small></div>
+    </div>
+
+    <div class="painel">
+        <h3><span class="acento"></span>CURVA S — AVANÇO FÍSICO ACUMULADO</h3>
+        <div class="seletor-grupo">
+            <span style="font-size:11px;opacity:.6">🖱️ Role o mouse para zoom nos dois eixos · arraste para mover</span>
+            <button id="btn-reset-zoom" type="button">Resetar zoom</button>
+        </div>
+        <div class="chart-box"><canvas id="chart-curva"></canvas></div>
+    </div>
+
+    <div class="painel">
+        <h3><span class="acento"></span>IMPACTO POR GRUPO</h3>
+        <div class="seletor-grupo">
+            <label>Agrupar por</label>
+            <select id="sel-dimensao">
+                <option value="squad">Squad</option>
+                <option value="workstream">Workstream</option>
+                <option value="vendor">Vendor</option>
+            </select>
+            <span style="font-size:11px;opacity:.55">Clique em um grupo para filtrar as tarefas de impacto abaixo</span>
+        </div>
+        <div class="dois-graficos">
+            <div class="chart-box-menor"><canvas id="chart-share"></canvas></div>
+            <div class="chart-box-menor"><canvas id="chart-grupo"></canvas></div>
+        </div>
+    </div>
+
+    <div class="painel">
+        <h3><span class="acento"></span>TAREFAS DE IMPACTO</h3>
+        <div class="filtros">
+            <input type="text" id="filtro-texto" placeholder="🔎 Filtrar por texto...">
+            <select id="filtro-status">
+                <option value="">Todos os status</option>
+                <option value="atrasada">Atrasada</option>
+                <option value="andamento">Em andamento</option>
+                <option value="concluida">Concluída</option>
+                <option value="nao-iniciada">Não iniciada</option>
+            </select>
+            <select id="filtro-grupo"><option value="">Todos os grupos</option></select>
+            <button class="btn-secundario" id="btn-exportar" type="button">Exportar filtrado (CSV)</button>
+        </div>
+        <div class="tabela-wrap">
+            <table>
+                <thead><tr>
+                    <th>#</th><th>Atividade</th><th>Grupo</th><th>Data</th><th>Peso</th>
+                    <th>% Prev.</th><th>% Real.</th><th>Barra</th><th>Impacto</th><th>Status</th>
+                </tr></thead>
+                <tbody id="tabela-corpo"></tbody>
+            </table>
+        </div>
+    </div>
+</main>
+
+<script>
+/* =========================================================
+   CONFIGURAÇÃO DO BACK-END
+   Aponte para qualquer URL que sirva o .xlsx (GitHub raw,
+   Cloudflare R2, S3, API própria, etc.)
+   ========================================================= */
+const BACKEND_URL = "https://raw.githubusercontent.com/Dimitri-Matrioska/afrodite/main/cronograma.xlsx";
+const AUTO_GERAR = true;   // true = gera o dashboard sem pedir mapeamento, se detectar tudo
+
+const $ = id => document.getElementById(id);
+const fmtPct = v => (v === null || v === undefined || isNaN(v)) ? "—" : v.toLocaleString("pt-BR", {minimumFractionDigits:1, maximumFractionDigits:1}) + "%";
+const fmtNum = v => (v === null || v === undefined || isNaN(v)) ? "—" : v.toLocaleString("pt-BR", {maximumFractionDigits:2});
+const fmtData = d => d ? d.toLocaleDateString("pt-BR") : "—";
+
+let workbookData = [], headers = [], rows = [];
+let chartCurva = null, chartShare = null, chartGrupo = null;
+let grupoSelecionado = null;
+let dimensaoAtual = "squad";
+
+const PALETA = ["#264FEC","#F0C089","#10192E","#3D4FE8","#011E38","#8fb0ff","#c98d4e","#56e3f0","#7ad151","#a52c60","#fdae61","#2a788e"];
+
+/* ================= CARREGAMENTO ================= */
+async function carregarDoBackend() {
+    try {
+        $("status-msg").textContent = "Carregando cronograma do servidor...";
+        const resp = await fetch(BACKEND_URL, {cache: "no-store"});
+        if (!resp.ok) throw new Error("HTTP " + resp.status);
+        const buf = await resp.arrayBuffer();
+        processarBuffer(buf, "cronograma.xlsx (servidor)");
+    } catch (err) {
+        $("spinner").style.display = "none";
+        $("status-msg").textContent = "Não foi possível carregar do servidor (" + err.message + "). Use o arquivo local.";
+    }
+}
+$("btn-upload-alt").addEventListener("click", () => $("file-input").click());
+$("file-input").addEventListener("change", e => {
+    const file = e.target.files[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = ev => processarBuffer(ev.target.result, file.name);
+    reader.readAsArrayBuffer(file);
+});
+
+function processarBuffer(buf, nome) {
+    try {
+        const wb = XLSX.read(buf, {type: "array", cellDates: true});
+        const ws = wb.Sheets[wb.SheetNames[0]];
+        const json = XLSX.utils.sheet_to_json(ws, {header: 1, defval: null, raw: true});
+        if (json.length < 2) throw new Error("Planilha vazia.");
+        headers = json[0].map((h, i) => (h === null || h === "") ? "Coluna " + (i+1) : String(h).trim());
+        workbookData = json.slice(1).filter(r => r.some(c => c !== null && c !== ""));
+        $("status-box").style.display = "none";
+        montarMapeamento();
+        if (AUTO_GERAR && colunasMinimasOk()) {
+            if (normalizarDados()) ativarDashboard();
+        } else {
+            $("mapping").style.display = "block";
+        }
+    } catch (err) {
+        $("spinner").style.display = "none";
+        $("status-msg").textContent = "Erro ao ler " + nome + ": " + err.message;
+    }
+}
+carregarDoBackend();
+
+/* ================= MAPEAMENTO ================= */
+const norm = s => String(s).toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+function guessColumn(padroes) {
+    for (const p of padroes) {
+        const idx = headers.findIndex(h => norm(h).includes(p));
+        if (idx >= 0) return idx;
+    }
+    return -1;
+}
+function preencherSelect(id, selecionado) {
+    $(id).innerHTML = '<option value="-1">— ignorar —</option>' +
+        headers.map((h, i) => `<option value="${i}" ${i === selecionado ? "selected" : ""}>${h}</option>`).join("");
+}
+function montarMapeamento() {
+    preencherSelect("col-atividade", guessColumn(["atividade", "descricao", "tarefa", "servico", "item", "escopo"]));
+    preencherSelect("col-data", guessColumn(["data", "inicio", "início", "date", "baseline start"]));
+    preencherSelect("col-previsto", guessColumn(["previsto", "planejado", "baseline", "orcamento", "orçamento", "peso prev"]));
+    preencherSelect("col-realizado", guessColumn(["realizado", "fisico", "físico", "avanco", "avanço", "executado", "conclu"]));
+    preencherSelect("col-peso", guessColumn(["peso", "duracao", "duração", "hh", "quantidade", "qtd", "horas"]));
+    preencherSelect("col-status", guessColumn(["status", "situacao", "situação"]));
+    preencherSelect("col-squad", guessColumn(["squad", "equipe", "time", "grupo", "responsavel", "responsável"]));
+    preencherSelect("col-workstream", guessColumn(["workstream", "work stream", "frente", "macro", "fase", "etapa"]));
+    preencherSelect("col-vendor", guessColumn(["vendor", "fornecedor", "empresa", "contratada", "parceiro"]));
+}
+function colunasMinimasOk() {
+    return +$("col-atividade").value >= 0 && (+$("col-realizado").value >= 0 || +$("col-peso").value >= 0);
+}
+
+/* ================= NORMALIZAÇÃO ================= */
+function parsePercent(v) {
+    if (v === null || v === undefined || v === "") return null;
+    if (typeof v === "number") return v > 1.0001 ? v : v * 100;
+    const n = parseFloat(String(v).replace(",", ".").replace(/[%\s]/g, ""));
+    if (isNaN(n)) return null;
+    return n > 1.0001 ? n : n * 100;
+}
+function parseNumber(v) {
+    if (v === null || v === undefined || v === "" || v instanceof Date) return null;
+    if (typeof v === "number") return v;
+    const n = parseFloat(String(v).replace(/\./g, "").replace(",", ".").replace(/[^\d.-]/g, ""));
+    return isNaN(n) ? null : n;
+}
+function parseDate(v) {
+    if (v === null || v === undefined || v === "") return null;
+    if (v instanceof Date && !isNaN(v)) return v;
+    const s = String(v).trim();
+    let m = s.match(/^(\d{1,2})[\/\-.](\d{1,2})[\/\-.](\d{4})/);
+    if (m) { const d = new Date(+m[3], +m[2]-1, +m[1]); return isNaN(d) ? null : d; }
+    m = s.match(/^(\d{4})[\/\-.](\d{1,2})[\/\-.](\d{1,2})/);
+    if (m) { const d = new Date(+m[1], +m[2]-1, +m[3]); return isNaN(d) ? null : d; }
+    const t = Date.parse(s);
+    return isNaN(t) ? null : new Date(t);
+}
+
+const COLS = {};
+function normalizarDados() {
+    ["atividade","data","previsto","realizado","peso","status","squad","workstream","vendor"].forEach(k => {
+        COLS[k] = +$("col-" + k).value;
+    });
+    if (COLS.atividade < 0) { alert("Selecione a coluna de Atividade."); return false; }
+
+    const hoje = new Date();
+    rows = workbookData.map((r, i) => {
+        const realizado = parsePercent(COLS.realizado >= 0 ? r[COLS.realizado] : null);
+        const previsto = parsePercent(COLS.previsto >= 0 ? r[COLS.previsto] : null);
+        let peso = parseNumber(COLS.peso >= 0 ? r[COLS.peso] : null);
+        if (peso === null) peso = 1;
+        const data = parseDate(COLS.data >= 0 ? r[COLS.data] : null);
+        const statusTxt = COLS.status >= 0 ? String(r[COLS.status] ?? "").toLowerCase() : "";
+        let status;
+        if (realizado === null) status = "nao-iniciada";
+        else if (realizado >= 99.99) status = "concluida";
+        else if (statusTxt.includes("atras")) status = "atrasada";
+        else if (data && data < hoje) status = "atrasada";
+        else status = "andamento";
+        const desvio = (previsto !== null && realizado !== null) ? realizado - previsto : null;
+        return {
+            idx: i,
+            atividade: String(r[COLS.atividade] ?? "(sem descrição)"),
+            data, previsto, realizado, peso, statusTxt, status, desvio,
+            squad: COLS.squad >= 0 ? String(r[COLS.squad] ?? "—") : "—",
+            workstream: COLS.workstream >= 0 ? String(r[COLS.workstream] ?? "—") : "—",
+            vendor: COLS.vendor >= 0 ? String(r[COLS.vendor] ?? "—") : "—",
+        };
+    }).filter(r => r.atividade.trim() !== "");
+    rows.forEach(r => {
+        // impacto = peso da tarefa × atraso relativo (quanto maior, mais ela puxa o projeto pra baixo)
+        const atraso = r.desvio !== null ? Math.max(0, -r.desvio) / 100 : (r.status === "atrasada" ? 0.5 : 0);
+        r.impacto = r.peso * (0.3 + atraso);   // peso puro + agravante de atraso
+    });
+    return true;
+}
+
+/* ================= KPIs ================= */
+function calcularKPIs(dados) {
+    const media = campo => {
+        const vals = dados.filter(r => r[campo] !== null);
+        if (!vals.length) return null;
+        const tp = vals.reduce((s, r) => s + r.peso, 0);
+        return tp > 0 ? vals.reduce((s, r) => s + r[campo] * r.peso, 0) / tp
+                      : vals.reduce((s, r) => s + r[campo], 0) / vals.length;
+    };
+    const prev = media("previsto"), real = media("realizado");
+    const desvio = (prev !== null && real !== null) ? real - prev : null;
+    const atrasadas = dados.filter(r => r.status === "atrasada").length;
+    const impactoTotal = dados.reduce((s, r) => s + r.impacto, 0);
+
+    $("kpi-prev").textContent = fmtPct(prev);
+    $("kpi-real").textContent = fmtPct(real);
+    $("kpi-desvio").textContent = desvio === null ? "—" : (desvio > 0 ? "+" : "") + fmtPct(desvio);
+    $("kpi-desvio").style.color = desvio === null ? "" : (desvio >= 0 ? "var(--verde)" : "var(--vermelho)");
+    $("kpi-atividades").textContent = dados.length;
+    $("kpi-concluidas").textContent = dados.filter(r => r.status === "concluida").length;
+    $("kpi-atrasadas").textContent = atrasadas;
+
+    $("kpi-prev-sub").textContent = "ponderado por peso";
+    $("kpi-real-sub").textContent = "ponderado por peso";
+    $("kpi-desvio-sub").textContent = desvio === null ? "" : (desvio >= 0 ? "adiantado" : "atrasado");
+    $("kpi-desvio-sub").className = desvio >= 0 ? "pos" : "neg";
+    $("kpi-atividades-sub").textContent = "linhas no cronograma";
+    $("kpi-concluidas-sub").textContent = fmtPct(dados.length ? dados.filter(r=>r.status==="concluida").length/dados.length*100 : null) + " do total";
+    $("kpi-atrasadas-sub").textContent = atrasadas ? impactoTotal.toFixed(1) + " pts de impacto acumulado" : "nenhuma atrasada";
+}
+
+/* ================= CURVA S (com zoom/pan nos 2 eixos) ================= */
+function gerarCurvaS(dados) {
+    const comData = dados.filter(r => r.data).sort((a, b) => a.data - b.data);
+    if (comData.length < 2) return null;
+    const totalW = comData.reduce((s, r) => s + r.peso, 0);
+    const pontos = [];
+    let accPrev = 0, accReal = 0;
+    for (const r of comData) {
+        if (r.previsto !== null) accPrev += r.previsto * r.peso;
+        if (r.realizado !== null) accReal += r.realizado * r.peso;
+        pontos.push({ data: r.data, prev: accPrev / totalW, real: accReal / totalW });
+    }
+    return pontos;
+}
+function desenharCurva(pontos) {
+    if (chartCurva) { chartCurva.destroy(); chartCurva = null; }
+    if (!pontos) {
+        $("chart-curva").parentElement.innerHTML = '<canvas id="chart-curva"></canvas><p style="font-size:12px;opacity:.6;margin-top:10px">Não há datas suficientes para a curva. Verifique o mapeamento da coluna de datas.</p>';
+        return;
+    }
+    chartCurva = new Chart($("chart-curva"), {
+        type: "line",
+        data: {
+            labels: pontos.map(p => p.data.toLocaleDateString("pt-BR", {day:"2-digit", month:"2-digit", year:"2-digit"})),
+            datasets: [
+                { label: "Previsto (acum.)", data: pontos.map(p => +p.prev.toFixed(2)), borderColor: "#264FEC", backgroundColor: "rgba(38,79,236,.10)", fill: true, tension: .35, pointRadius: 2, borderWidth: 2 },
+                { label: "Realizado (acum.)", data: pontos.map(p => +p.real.toFixed(2)), borderColor: "#F0C089", backgroundColor: "rgba(240,192,137,.18)", fill: true, tension: .35, pointRadius: 2, borderWidth: 2 },
+            ]
+        },
+        options: {
+            responsive: true, maintainAspectRatio: false,
+            interaction: { mode: "index", intersect: false },
+            plugins: {
+                legend: { labels: { font: { family: "IBM Plex Sans", size: 11 }, usePointStyle: true } },
+                tooltip: { callbacks: { label: c => ` ${c.dataset.label}: ${fmtPct(c.parsed.y)}` } },
+                zoom: {
+                    pan: { enabled: true, mode: "xy", modifierKey: null },
+                    zoom: {
+                        wheel: { enabled: true, speed: 0.08 },
+                        pinch: { enabled: true },
+                        mode: "xy"
+                    }
+                }
+            },
+            scales: {
+                y: { min: 0, suggestedMax: 100, ticks: { callback: v => v + "%", font: { family: "IBM Plex Sans", size: 10 } }, grid: { color: "rgba(16,25,46,.07)" } },
+                x: { ticks: { font: { family: "IBM Plex Sans", size: 10 }, maxRotation: 60, autoSkip: true }, grid: { display: false } }
+            }
+        }
+    });
+}
+$("btn-reset-zoom").addEventListener("click", () => {
+    if (chartCurva) chartCurva.resetZoom();
+});
+
+/* ================= IMPACTO POR GRUPO ================= */
+function agregarPorGrupo(dados, dimensao) {
+    const mapa = {};
+    for (const r of dados) {
+        const g = r[dimensao] || "—";
+        if (!mapa[g]) mapa[g] = { nome: g, pesoTotal: 0, realPond: 0, prevPond: 0, impacto: 0, tarefas: 0, atrasadas: 0 };
+        mapa[g].pesoTotal += r.peso;
+        mapa[g].impacto += r.impacto;
+        mapa[g].tarefas++;
+        if (r.realizado !== null) mapa[g].realPond += r.realizado * r.peso;
+        if (r.previsto !== null) mapa[g].prevPond += r.previsto * r.peso;
+        if (r.status === "atrasada") mapa[g].atrasadas++;
+    }
+    const totalPeso = Object.values(mapa).reduce((s, g) => s + g.pesoTotal, 0) || 1;
+    const totalImpacto = Object.values(mapa).reduce((s, g) => s + g.impacto, 0) || 1;
+    return Object.values(mapa)
+        .map(g => ({
+            ...g,
+            sharePeso: g.pesoTotal / totalPeso * 100,
+            shareImpacto: g.impacto / totalImpacto * 100,
+            real: g.realPond / (g.pesoTotal || 1),
+            prev: g.prevPond / (g.pesoTotal || 1),
+        }))
+        .sort((a, b) => b.shareImpacto - a.shareImpacto);
+}
+
+function desenharImpacto(dados, dimensao) {
+    const grupos = agregarPorGrupo(dados, dimensao);
+    const nomes = grupos.map(g => g.nome);
+
+    // preencher filtro de grupo
+    const selG = $("filtro-grupo");
+    const atual = selG.value;
+    selG.innerHTML = '<option value="">Todos os grupos</option>' +
+        nomes.map(n => `<option value="${n.replace(/"/g,"&quot;")}" ${n === atual ? "selected" : ""}>${n}</option>`).join("");
+
+    // gráfico 1: share de impacto no projeto (doughnut)
+    if (chartShare) chartShare.destroy();
+    chartShare = new Chart($("chart-share"), {
+        type: "doughnut",
+        data: {
+            labels: nomes,
+            datasets: [{
+                data: grupos.map(g => +g.shareImpacto.toFixed(2)),
+                backgroundColor: PALETA,
+                borderColor: "#fff", borderWidth: 2
+            }]
+        },
+        options: {
+            responsive: true, maintainAspectRatio: false,
+            cutout: "58%",
+            plugins: {
+                legend: { position: "right", labels: { font: { family: "IBM Plex Sans", size: 10 }, boxWidth: 12, padding: 10 } },
+                tooltip: { callbacks: {
+                    label: c => {
+                        const g = grupos[c.dataIndex];
+                        return ` ${g.nome}: ${fmtPct(g.shareImpacto)} do impacto total · ${g.tarefas} tarefas (${g.atrasadas} atrasadas)`;
+                    }
+                } }
+            },
+            onClick: (evt, elements) => {
+                if (elements.length) {
+                    const g = grupos[elements[0].index];
+                    grupoSelecionado = (grupoSelecionado === g.nome) ? null : g.nome;
+                    $("filtro-grupo").value = grupoSelecionado || "";
+                    renderTabela();
+                }
+            }
+        }
+    });
+
+    // gráfico 2: barras horizontais — participação no projeto × avanço
+    if (chartGrupo) chartGrupo.destroy();
+    chartGrupo = new Chart($("chart-grupo"), {
+        type: "bar",
+        data: {
+            labels: nomes,
+            datasets: [
+                { label: "% do projeto (peso)", data: grupos.map(g => +g.sharePeso.toFixed(2)), backgroundColor: "rgba(38,79,236,.75)", borderRadius: 6 },
+                { label: "% realizado (pond.)", data: grupos.map(g => +g.real.toFixed(2)), backgroundColor: "rgba(240,192,137,.9)", borderRadius: 6 },
+                { label: "% previsto (pond.)", data: grupos.map(g => +g.prev.toFixed(2)), backgroundColor: "rgba(16,25,46,.55)", borderRadius: 6 },
+            ]
+        },
+        options: {
+            indexAxis: "y",
+            responsive: true, maintainAspectRatio: false,
+            plugins: {
+                legend: { labels: { font: { family: "IBM Plex Sans", size: 11 }, usePointStyle: true } },
+                tooltip: { callbacks: {
+                    label: c => ` ${c.dataset.label}: ${fmtPct(c.parsed.x)}`,
+                    afterBody: items => {
+                        const g = grupos[items[0].dataIndex];
+                        return [`Impacto: ${fmtPct(g.shareImpacto)} · ${g.atrasadas} atrasada(s)`];
+                    }
+                } }
+            },
+            scales: {
+                x: { ticks: { callback: v => v + "%", font: { family: "IBM Plex Sans", size: 10 } }, grid: { color: "rgba(16,25,46,.07)" } },
+                y: { ticks: { font: { family: "IBM Plex Sans", size: 11 } }, grid: { display: false } }
+            }
+        }
+    });
+}
+$("sel-dimensao").addEventListener("change", e => {
+    dimensaoAtual = e.target.value;
+    renderImpacto();
+});
+function renderImpacto() {
+    desenharImpacto(filtrarSemGrupo(), dimensaoAtual);
+}
+function filtrarSemGrupo() {
+    const txt = $("filtro-texto").value.toLowerCase();
+    const st = $("filtro-status").value;
+    return rows.filter(r =>
+        (!st || r.status === st) &&
+        (!txt || r.atividade.toLowerCase().includes(txt) || r.statusTxt.includes(txt))
+    );
+}
+
+/* ================= TABELA ================= */
+const STATUS_LABEL = { concluida: "Concluída", andamento: "Em andamento", atrasada: "Atrasada", "nao-iniciada": "Não iniciada" };
+function renderTabela() {
+    const txt = $("filtro-texto").value.toLowerCase();
+    const st = $("filtro-status").value;
+    const gp = $("filtro-grupo").value;
+    const filtrados = rows.filter(r =>
+        (!st || r.status === st) &&
+        (!gp || r[dimensaoAtual] === gp) &&
+        (!txt || r.atividade.toLowerCase().includes(txt) || r.statusTxt.includes(txt))
+    );
+    // ordena por impacto (mais impactantes primeiro)
+    const sorted = [...filtrados].sort((a, b) => b.impacto - a.impacto);
+    $("tabela-corpo").innerHTML = sorted.map(r => `
+        <tr>
+            <td class="num">${r.idx + 1}</td>
+            <td title="${r.atividade.replace(/"/g,"&quot;")}">${r.atividade.length > 55 ? r.atividade.slice(0,55)+"…" : r.atividade}</td>
+            <td><span class="chip-grupo">${r[dimensaoAtual]}</span></td>
+            <td class="num">${fmtData(r.data)}</td>
+            <td class="num">${fmtNum(r.peso)}</td>
+            <td class="num">${fmtPct(r.previsto)}</td>
+            <td class="num">${fmtPct(r.realizado)}</td>
+            <td>
+                <span class="barra-progresso"><i style="width:${Math.min(r.previsto ?? 0,100)}%"></i></span>
+                <span class="barra-progresso real"><i style="width:${Math.min(r.realizado ?? 0,100)}%"></i></span>
+            </td>
+            <td class="num impacto-cell">${r.impacto.toFixed(1)}</td>
+            <td><span class="badge ${r.status}">${STATUS_LABEL[r.status]}</span></td>
+        </tr>`).join("") || '<tr><td colspan="10" style="text-align:center;opacity:.6;padding:24px">Nenhuma atividade corresponde ao filtro.</td></tr>';
+
+    calcularKPIs(filtrados);
+    desenharCurva(gerarCurvaS(filtrados));
+    renderImpacto();
+}
+$("filtro-texto").addEventListener("input", renderTabela);
+$("filtro-status").addEventListener("change", renderTabela);
+$("filtro-grupo").addEventListener("change", e => { grupoSelecionado = e.target.value || null; renderTabela(); });
+
+$("btn-exportar").addEventListener("click", () => {
+    const txt = $("filtro-texto").value.toLowerCase();
+    const st = $("filtro-status").value;
+    const gp = $("filtro-grupo").value;
+    const filtrados = rows.filter(r => (!st || r.status === st) && (!gp || r[dimensaoAtual] === gp) && (!txt || r.atividade.toLowerCase().includes(txt)));
+    const csv = ["Atividade;Grupo;Data;Peso;% Previsto;% Realizado;Impacto;Status",
+        ...filtrados.map(r => [r.atividade, r[dimensaoAtual], fmtData(r.data), r.peso, r.previsto ?? "", r.realizado ?? "", r.impacto.toFixed(2), STATUS_LABEL[r.status]]
+            .map(v => `"${String(v).replace(/"/g,'""')}"`).join(";"))
+    ].join("\n");
+    const blob = new Blob(["\ufeff" + csv], {type: "text/csv;charset=utf-8"});
+    const a = document.createElement("a");
+    a.href = URL.createObjectURL(blob);
+    a.download = "cronograma_filtrado.csv";
+    a.click();
+    URL.revokeObjectURL(a.href);
+});
+
+/* ================= ATIVAÇÃO ================= */
+function ativarDashboard() {
+    $("mapping").style.display = "none";
+    $("dashboard").style.display = "block";
+    renderTabela();
+}
+$("btn-gerar").addEventListener("click", () => {
+    if (normalizarDados()) ativarDashboard();
+});
+</script>
+</body>
+</html>

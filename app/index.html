@@ -167,6 +167,8 @@
 
 	<script type="module">
 	import * as THREE from "./libs/three.js/build/three.module.js";
+	// nova inserção de testes
+	import { GLTFLoader } from "./libs/GLTFLoader.js";
 
 	if (new URLSearchParams(window.location.search).get("embed") === "1") {
 		document.body.classList.add("embedded");
@@ -209,6 +211,26 @@
 	/* ------------------- inicialização do viewer ------------------- */
 	const renderArea = document.getElementById("potree_render_area");
 	window.viewer = new Potree.Viewer(renderArea);
+
+	// ===== TESTE: CARREGAR CUBO 3D =====
+	const gltfLoader = new GLTFLoader();
+	gltfLoader.load(
+    'https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/main/Models/Box/glTF-Binary/Box.glb',
+    function (gltf) {
+        const model = gltf.scene;
+        model.position.set(0, 0, 0);
+        model.rotation.set(0, 0, 0);
+        model.scale.setScalar(1);
+        viewer.scene.scene.add(model);
+        window.testModel = model;
+        console.log("✅ Cubo carregado com sucesso!");
+    },
+    undefined,
+    function (error) {
+        console.error("❌ Erro ao carregar o cubo:", error);
+    }
+		);
+// ====================================
 	const elevationSampleResult = document.getElementById("elevation-sample-result");
 	let elevationSamplingActive = false;
 	let elevationSamplePreview = null;

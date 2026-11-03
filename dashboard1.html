@@ -1,0 +1,2238 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dashboard de Cronograma · Projeto Afrodite</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+<style>
+    :root {
+        /* Paleta MATRIOSKA */
+        --azul-escuro: #011E38;   /* títulos */
+        --azul: #264FEC;          /* real / destaque */
+        --azul-rgb: 38, 79, 236;
+        --salmao: #F0C089;        /* tendência / destaque */
+        --salmao-forte: #FFBC82;
+        --off-white: #F5F1EB;     /* background */
+        --branco: #FFFFFF;
+        --marinho: #10192E;       /* linha de base */
+        --cinza: #E8E4DE;
+
+        --texto: #011E38;
+        --texto-suave: rgba(1, 30, 56, 0.60);
+        --texto-fraco: rgba(1, 30, 56, 0.42);
+        --linha: rgba(1, 30, 56, 0.10);
+        --linha-forte: rgba(1, 30, 56, 0.18);
+
+        --ok: #1B8A63;
+        --alerta: #C98B3E;
+        --erro: #C0453B;
+        --neutro: #8A93A6;
+
+        --altura-topo: 56px;
+        --altura-titulo: 48px;
+        --raio: 14px;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+        background: var(--off-white);
+        color: var(--texto);
+        font-family: "IBM Plex Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
+        -webkit-font-smoothing: antialiased;
+        min-height: 100vh;
+        padding-bottom: 40px;
+    }
+
+    button, input, select { font-family: inherit; }
+
+    /* =========================
+       CABEÇALHO (fundo claro p/ logos)
+       ========================= */
+
+    #topo {
+        position: sticky;
+        top: 0;
+        z-index: 40;
+        height: var(--altura-topo);
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 16px;
+        padding: 0 20px;
+        background: var(--branco);
+        border-bottom: 1px solid var(--cinza);
+    }
+
+    #topo .marca { display: flex; align-items: center; gap: 16px; }
+    #topo img { height: 25px; width: auto; display: block; }
+
+    .topo-acoes { display: flex; align-items: center; gap: 9px; }
+
+    .chip {
+        display: inline-flex;
+        align-items: center;
+        gap: 7px;
+        max-width: 260px;
+        height: 30px;
+        padding: 0 11px;
+        border-radius: 20px;
+        background: var(--off-white);
+        border: 1px solid var(--linha);
+        color: var(--texto-suave);
+        font-size: 11.5px;
+        font-weight: 500;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+    .chip::before {
+        content: "";
+        width: 7px; height: 7px;
+        border-radius: 50%;
+        background: var(--ok);
+        flex: 0 0 7px;
+    }
+
+    .btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 7px;
+        height: 34px;
+        padding: 0 14px;
+        border-radius: 9px;
+        border: 1px solid var(--linha-forte);
+        background: var(--branco);
+        color: var(--texto);
+        font-size: 12.5px;
+        font-weight: 600;
+        text-decoration: none;
+        cursor: pointer;
+        transition: background .18s ease, border-color .18s ease, color .18s ease, transform .18s ease;
+    }
+    .btn:hover { background: var(--off-white); border-color: rgba(1,30,56,.3); }
+    .btn:active { transform: translateY(1px); }
+    .btn svg { width: 16px; height: 16px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+
+    .btn-salmao { background: var(--salmao); border-color: var(--salmao); color: var(--azul-escuro); }
+    .btn-salmao:hover { background: var(--salmao-forte); border-color: var(--salmao-forte); }
+
+    .btn-azul { background: var(--azul); border-color: var(--azul); color: #fff; }
+    .btn-azul:hover { background: #1c41cc; border-color: #1c41cc; }
+
+    /* =========================
+       BARRA DE TÍTULO
+       ========================= */
+
+    #titulo-bar {
+        position: sticky;
+        top: var(--altura-topo);
+        z-index: 39;
+        height: var(--altura-titulo);
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: 0 20px;
+        background: var(--azul-escuro);
+        color: var(--off-white);
+    }
+    #titulo-bar .acento {
+        width: 4px; height: 18px;
+        border-radius: 3px;
+        background: var(--salmao);
+        flex: 0 0 4px;
+    }
+    #titulo-bar h1 { font-size: 14px; font-weight: 800; letter-spacing: .2px; white-space: nowrap; }
+    #titulo-bar .sub { font-size: 12px; color: rgba(245,241,235,.6); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+    /* =========================
+       LAYOUT
+       ========================= */
+
+    main {
+        max-width: 1560px;
+        margin: 0 auto;
+        padding: 18px 20px 0;
+        display: flex;
+        flex-direction: column;
+        gap: 14px;
+    }
+
+    .card {
+        background: var(--branco);
+        border: 1px solid var(--linha);
+        border-radius: var(--raio);
+        box-shadow: 0 1px 2px rgba(1,30,56,.04), 0 8px 24px rgba(1,30,56,.045);
+        padding: 16px 18px;
+        position: relative;
+    }
+
+    .card-head {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+        flex-wrap: wrap;
+        margin-bottom: 12px;
+    }
+
+    .card-title {
+        display: flex;
+        align-items: center;
+        gap: 9px;
+        font-size: 11px;
+        font-weight: 800;
+        letter-spacing: 1.1px;
+        text-transform: uppercase;
+        color: var(--azul-escuro);
+    }
+    .card-title::before {
+        content: "";
+        width: 8px; height: 8px;
+        border-radius: 50%;
+        background: var(--salmao);
+        box-shadow: 0 0 0 3px rgba(240,192,137,.25);
+    }
+    .card-sub { font-size: 11.5px; color: var(--texto-suave); }
+
+    /* =========================
+       DROPZONE
+       ========================= */
+
+    #dropzone {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        padding: 44px 20px;
+        border: 2px dashed rgba(1,30,56,.18);
+        border-radius: 12px;
+        background: linear-gradient(180deg, rgba(240,192,137,.08), rgba(245,241,235,.4));
+        cursor: pointer;
+        text-align: center;
+        transition: border-color .2s ease, background .2s ease, transform .2s ease;
+    }
+    #dropzone:hover, #dropzone.drag {
+        border-color: var(--salmao);
+        background: linear-gradient(180deg, rgba(240,192,137,.22), rgba(245,241,235,.5));
+    }
+    #dropzone.drag { transform: scale(1.005); }
+    #dropzone svg { width: 42px; height: 42px; fill: none; stroke: var(--azul); stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
+    #dropzone strong { font-size: 15px; font-weight: 700; color: var(--azul-escuro); }
+    #dropzone span { font-size: 12px; color: var(--texto-suave); }
+
+    .aviso {
+        display: flex;
+        gap: 10px;
+        align-items: flex-start;
+        margin-top: 12px;
+        padding: 10px 12px;
+        border-radius: 10px;
+        background: rgba(240,192,137,.16);
+        border: 1px solid rgba(240,192,137,.5);
+        color: #6b4a1c;
+        font-size: 12px;
+        line-height: 1.5;
+    }
+    .aviso.erro { background: rgba(192,69,59,.08); border-color: rgba(192,69,59,.35); color: #8d3229; }
+
+    /* =========================
+       CONFIGURAÇÃO
+       ========================= */
+
+    .config-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 12px;
+    }
+
+    .campo { display: flex; flex-direction: column; gap: 5px; min-width: 0; }
+    .campo label {
+        font-size: 10px;
+        font-weight: 700;
+        letter-spacing: .7px;
+        text-transform: uppercase;
+        color: var(--texto-suave);
+    }
+    .campo select, .campo input[type="date"], .campo input[type="search"] {
+        height: 36px;
+        padding: 0 10px;
+        border: 1px solid var(--linha-forte);
+        border-radius: 9px;
+        background: var(--branco);
+        color: var(--texto);
+        font-size: 12.5px;
+        outline: none;
+        width: 100%;
+        transition: border-color .18s ease, box-shadow .18s ease;
+    }
+    .campo select:focus, .campo input:focus {
+        border-color: var(--azul);
+        box-shadow: 0 0 0 3px rgba(var(--azul-rgb), .13);
+    }
+
+    details.mapeamento { margin-top: 14px; }
+    details.mapeamento > summary {
+        cursor: pointer;
+        font-size: 11.5px;
+        font-weight: 700;
+        letter-spacing: .5px;
+        text-transform: uppercase;
+        color: var(--azul);
+        list-style: none;
+        padding: 6px 0;
+        user-select: none;
+    }
+    details.mapeamento > summary::-webkit-details-marker { display: none; }
+    details.mapeamento > summary::before { content: "▸ "; }
+    details.mapeamento[open] > summary::before { content: "▾ "; }
+
+    /* =========================
+       KPIs
+       ========================= */
+
+    #kpi-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(178px, 1fr));
+        gap: 12px;
+    }
+
+    .kpi {
+        position: relative;
+        overflow: hidden;
+        padding: 13px 15px 14px;
+        border: 1px solid var(--linha);
+        border-radius: var(--raio);
+        background: var(--branco);
+        box-shadow: 0 1px 2px rgba(1,30,56,.04), 0 8px 22px rgba(1,30,56,.04);
+    }
+    .kpi::after {
+        content: "";
+        position: absolute;
+        left: 0; top: 0; bottom: 0;
+        width: 3px;
+        background: var(--salmao);
+        opacity: .85;
+    }
+    .kpi.is-azul::after { background: var(--azul); }
+    .kpi.is-marinho::after { background: var(--marinho); }
+    .kpi.is-ok::after { background: var(--ok); }
+    .kpi.is-erro::after { background: var(--erro); }
+
+    .kpi-label {
+        display: block;
+        font-size: 9.5px;
+        font-weight: 700;
+        letter-spacing: .8px;
+        text-transform: uppercase;
+        color: var(--texto-suave);
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+    .kpi-value {
+        display: block;
+        margin-top: 5px;
+        font-size: 25px;
+        font-weight: 700;
+        line-height: 1.1;
+        letter-spacing: -.5px;
+        color: var(--azul-escuro);
+        font-variant-numeric: tabular-nums;
+    }
+    .kpi-value small { font-size: 13px; font-weight: 600; opacity: .7; margin-left: 2px; }
+    .kpi-sub {
+        display: block;
+        margin-top: 4px;
+        font-size: 11px;
+        color: var(--texto-fraco);
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+    .kpi-value.pos { color: var(--ok); }
+    .kpi-value.neg { color: var(--erro); }
+    .kpi-value.warn { color: var(--alerta); }
+
+    /* =========================
+       GRÁFICOS
+       ========================= */
+
+    .charts-row {
+        display: grid;
+        grid-template-columns: minmax(0, 1.55fr) minmax(0, 1fr);
+        gap: 14px;
+    }
+
+    .chart-box { position: relative; width: 100%; }
+    .chart-box canvas { display: block; width: 100%; }
+
+    #s-curve-box { height: 390px; }
+    #bars-box { height: 262px; }
+
+    .legenda {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 14px;
+        align-items: center;
+        font-size: 11.5px;
+        color: var(--texto-suave);
+    }
+    .legenda i {
+        display: inline-block;
+        width: 22px;
+        height: 0;
+        margin-right: 6px;
+        vertical-align: middle;
+        border-top-width: 3px;
+        border-top-style: solid;
+    }
+    .legenda .lg-base i { border-top-color: var(--marinho); border-top-style: dashed; }
+    .legenda .lg-real i { border-top-color: var(--azul); }
+    .legenda .lg-tend i { border-top-color: var(--salmao); border-top-style: dashed; }
+    .legenda .lg-corte i { border-top-color: var(--erro); border-top-style: dotted; }
+    .legenda span { display: inline-flex; align-items: center; }
+
+    .chart-tip {
+        position: absolute;
+        z-index: 6;
+        min-width: 168px;
+        padding: 9px 11px;
+        border-radius: 10px;
+        background: rgba(1, 30, 56, .95);
+        color: var(--off-white);
+        font-size: 11px;
+        line-height: 1.65;
+        pointer-events: none;
+        box-shadow: 0 10px 26px rgba(1,30,56,.28);
+        opacity: 0;
+        transition: opacity .12s ease;
+    }
+    .chart-tip.on { opacity: 1; }
+    .chart-tip b { display: block; font-size: 11.5px; margin-bottom: 4px; color: var(--salmao); }
+    .chart-tip .row { display: flex; justify-content: space-between; gap: 16px; }
+    .chart-tip .row span:last-child { font-variant-numeric: tabular-nums; font-weight: 600; }
+
+    /* Distribuição por status (DOM) */
+    .status-list { display: flex; flex-direction: column; gap: 11px; }
+    .status-row {
+        display: grid;
+        grid-template-columns: 12px minmax(84px, auto) minmax(0, 1fr) 58px;
+        align-items: center;
+        gap: 10px;
+        font-size: 12px;
+    }
+    .status-dot { width: 10px; height: 10px; border-radius: 50%; }
+    .status-nome { color: var(--texto); font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .status-barra { height: 8px; border-radius: 6px; background: rgba(1,30,56,.07); overflow: hidden; }
+    .status-barra i { display: block; height: 100%; border-radius: 6px; transition: width .5s ease; }
+    .status-num { text-align: right; font-variant-numeric: tabular-nums; color: var(--texto-suave); }
+    .status-num b { color: var(--azul-escuro); }
+
+    /* =========================
+       TABELA
+       ========================= */
+
+    .tabela-wrap {
+        max-height: 460px;
+        overflow: auto;
+        border: 1px solid var(--linha);
+        border-radius: 11px;
+    }
+    table { width: 100%; border-collapse: collapse; font-size: 12.5px; }
+    thead th {
+        position: sticky;
+        top: 0;
+        z-index: 2;
+        background: var(--off-white);
+        color: var(--texto-suave);
+        font-size: 10px;
+        font-weight: 700;
+        letter-spacing: .8px;
+        text-transform: uppercase;
+        text-align: left;
+        padding: 10px 12px;
+        border-bottom: 1px solid var(--linha-forte);
+        white-space: nowrap;
+    }
+    tbody td {
+        padding: 9px 12px;
+        border-bottom: 1px solid rgba(1,30,56,.06);
+        vertical-align: middle;
+    }
+    tbody tr:hover { background: rgba(240,192,137,.09); }
+    tbody tr:last-child td { border-bottom: 0; }
+
+    .col-num { text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; }
+    .col-nome { min-width: 260px; font-weight: 500; }
+
+    .tag {
+        display: inline-block;
+        padding: 3px 9px;
+        border-radius: 20px;
+        font-size: 10.5px;
+        font-weight: 700;
+        white-space: nowrap;
+    }
+    .tag.concluida { background: rgba(27,138,99,.12); color: var(--ok); }
+    .tag.andamento { background: rgba(var(--azul-rgb),.11); color: var(--azul); }
+    .tag.atrasada  { background: rgba(192,69,59,.12); color: var(--erro); }
+    .tag.naoiniciada { background: rgba(138,147,166,.16); color: #5d6678; }
+
+    .prog {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        min-width: 108px;
+    }
+    .prog-barra {
+        flex: 1;
+        height: 7px;
+        border-radius: 5px;
+        background: rgba(1,30,56,.08);
+        overflow: hidden;
+    }
+    .prog-barra i { display: block; height: 100%; border-radius: 5px; background: var(--azul); }
+    .prog-barra i.completo { background: var(--ok); }
+    .prog-barra i.atraso { background: var(--erro); }
+    .prog-txt { font-size: 11px; font-variant-numeric: tabular-nums; color: var(--texto-suave); min-width: 34px; text-align: right; }
+
+    .tabela-vazia { padding: 26px; text-align: center; color: var(--texto-fraco); font-size: 13px; }
+
+    /* =========================
+       RESPONSIVO
+       ========================= */
+
+    @media (max-width: 1080px) {
+        .charts-row { grid-template-columns: minmax(0, 1fr); }
+        #s-curve-box { height: 330px; }
+    }
+
+    @media (max-width: 700px) {
+        :root { --altura-topo: 50px; --altura-titulo: 42px; }
+        main { padding: 12px 12px 0; }
+        #topo { padding: 0 12px; }
+        #topo img { height: 20px; }
+        #topo .marca { gap: 10px; }
+        .btn span { display: none; }
+        .btn { padding: 0 10px; }
+        .chip { max-width: 120px; }
+        #titulo-bar { padding: 0 12px; }
+        #titulo-bar .sub { display: none; }
+        .card { padding: 13px 13px; }
+        .kpi-value { font-size: 21px; }
+        #s-curve-box { height: 280px; }
+        #bars-box { height: 220px; }
+        .col-nome { min-width: 180px; }
+    }
+</style>
+</head>
+
+<body>
+
+    <!-- CABEÇALHO -->
+    <header id="topo">
+        <div class="marca">
+            <img src="Imagens_Logos/logo_GB2.png" alt="GB">
+            <img src="Imagens_Logos/logo_AFRY.png" alt="AFRY">
+        </div>
+        <div class="topo-acoes">
+            <span class="chip" id="file-chip" hidden></span>
+            <button class="btn" type="button" id="btn-exemplo">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 19h16M7 16V9M12 16V5M17 16v-4"/></svg>
+                <span>Exemplo</span>
+            </button>
+            <label class="btn btn-salmao" for="file-input">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 16V4m0 0L8 8m4-4 4 4"/><path d="M4 16v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-2"/></svg>
+                <span>Abrir planilha</span>
+            </label>
+            <input id="file-input" type="file" accept=".xlsx,.xls,.csv" hidden>
+            <a class="btn" href="index.html" title="Voltar ao visualizador 3D">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m3 12 9-8 9 8"/><path d="M5 10v10h14V10"/></svg>
+                <span>Visualizador 3D</span>
+            </a>
+        </div>
+    </header>
+
+    <!-- BARRA DE TÍTULO -->
+    <div id="titulo-bar">
+        <span class="acento"></span>
+        <h1>PROJETO AFRODITE</h1>
+        <span class="sub">dashboard de cronograma · curva S · indicadores de prazo</span>
+    </div>
+
+    <main>
+
+        <!-- CARREGAMENTO -->
+        <section class="card" id="load-card">
+            <div class="card-head">
+                <div class="card-title">Base do cronograma</div>
+                <div class="card-sub">A curva S é calculada pelo peso de cada atividade (coluna Peso/Valor ou, na ausência, a duração).</div>
+            </div>
+            <div id="dropzone" tabindex="0" role="button" aria-label="Selecionar planilha de cronograma">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 3v5h5"/><path d="M19 8v11a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h7z"/><path d="M9 13h6M9 17h4"/></svg>
+                <strong>Arraste sua planilha de cronograma aqui</strong>
+                <span>ou clique para selecionar · formatos .xlsx, .xls e .csv</span>
+            </div>
+            <div id="load-msg"></div>
+        </section>
+
+        <!-- CONFIGURAÇÃO -->
+        <section class="card" id="config-card" hidden>
+            <div class="card-head">
+                <div class="card-title">Parâmetros do dashboard</div>
+                <button class="btn" type="button" id="btn-trocar">
+                    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h11l-3-3M20 17H9l3 3"/></svg>
+                    <span>Trocar planilha</span>
+                </button>
+            </div>
+
+            <div class="config-grid">
+                <div class="campo">
+                    <label for="sel-sheet">Aba da planilha</label>
+                    <select id="sel-sheet"></select>
+                </div>
+                <div class="campo">
+                    <label for="in-data-corte">Data de corte</label>
+                    <input type="date" id="in-data-corte">
+                </div>
+                <div class="campo">
+                    <label for="sel-gran">Granularidade da curva</label>
+                    <select id="sel-gran">
+                        <option value="month">Mensal</option>
+                        <option value="week">Semanal</option>
+                        <option value="day">Diária</option>
+                    </select>
+                </div>
+                <div class="campo">
+                    <label for="sel-grupo">Filtrar agrupamento</label>
+                    <select id="sel-grupo"><option value="all">Todos</option></select>
+                </div>
+                <div class="campo">
+                    <label for="sel-status">Filtrar situação</label>
+                    <select id="sel-status">
+                        <option value="all">Todas</option>
+                        <option value="Não iniciada">Não iniciada</option>
+                        <option value="Em andamento">Em andamento</option>
+                        <option value="Atrasada">Atrasada</option>
+                        <option value="Concluída">Concluída</option>
+                    </select>
+                </div>
+                <div class="campo">
+                    <label for="in-busca">Buscar atividade</label>
+                    <input type="search" id="in-busca" placeholder="Digite parte do nome...">
+                </div>
+            </div>
+
+            <details class="mapeamento" id="detalhes-map">
+                <summary>Mapeamento das colunas</summary>
+                <div class="config-grid" id="map-grid" style="margin-top:10px"></div>
+            </details>
+        </section>
+
+        <!-- KPIs -->
+        <section id="kpi-grid" hidden></section>
+
+        <!-- CURVA S -->
+        <section class="card" id="scurve-card" hidden>
+            <div class="card-head">
+                <div class="card-title">Curva S · avanço acumulado</div>
+                <div style="display:flex;align-items:center;gap:16px;flex-wrap:wrap">
+                    <div class="legenda">
+                        <span class="lg-base"><i></i>Linha de base</span>
+                        <span class="lg-real"><i></i>Realizado</span>
+                        <span class="lg-tend"><i></i>Tendência</span>
+                        <span class="lg-corte"><i></i>Data de corte</span>
+                    </div>
+                    <button class="btn" type="button" id="btn-csv">
+                        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v12m0 0 4-4m-4 4-4-4"/><path d="M4 18v1a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-1"/></svg>
+                        <span>CSV da curva</span>
+                    </button>
+                </div>
+            </div>
+            <div class="chart-box" id="s-curve-box">
+                <canvas id="s-curve"></canvas>
+                <div class="chart-tip" id="s-curve-tip"></div>
+            </div>
+        </section>
+
+        <!-- GRÁFICOS SECUNDÁRIOS -->
+        <div class="charts-row">
+            <section class="card" id="bars-card" hidden>
+                <div class="card-head">
+                    <div class="card-title">Avanço por período</div>
+                    <div class="legenda">
+                        <span class="lg-base"><i></i>Previsto</span>
+                        <span class="lg-real"><i></i>Realizado</span>
+                    </div>
+                </div>
+                <div class="chart-box" id="bars-box">
+                    <canvas id="bars"></canvas>
+                </div>
+            </section>
+
+            <section class="card" id="status-card" hidden>
+                <div class="card-head">
+                    <div class="card-title">Situação das atividades</div>
+                    <div class="card-sub" id="status-resumo"></div>
+                </div>
+                <div class="status-list" id="status-list"></div>
+            </section>
+        </div>
+
+        <!-- TABELA -->
+        <section class="card" id="tabela-card" hidden>
+            <div class="card-head">
+                <div class="card-title">Detalhamento das atividades</div>
+                <div class="card-sub" id="tabela-resumo"></div>
+            </div>
+            <div class="tabela-wrap">
+                <table>
+                    <thead>
+                        <tr>
+                            <th style="width:38px">#</th>
+                            <th>Atividade</th>
+                            <th>Agrupamento</th>
+                            <th>Início</th>
+                            <th>Término</th>
+                            <th class="col-num">Dur. (d)</th>
+                            <th class="col-num">Peso</th>
+                            <th style="min-width:140px">Avanço</th>
+                            <th>Situação</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tabela-body"></tbody>
+                </table>
+            </div>
+        </section>
+
+    </main>
+
+<script>
+/* =========================================================================
+   Projeto Afrodite — Dashboard de Cronograma
+   Leitura de XLSX / XLS / CSV, curva S (linha de base × realizado × tendência)
+   ========================================================================= */
+
+const DIAS = 86400000;
+const MESES = ['jan','fev','mar','abr','mai','jun','jul','ago','set','out','nov','dez'];
+
+const $  = (sel, el = document) => el.querySelector(sel);
+const $$ = (sel, el = document) => [...el.querySelectorAll(sel)];
+
+/* ------------------------------------------------------------------ */
+/* Utilidades                                                          */
+/* ------------------------------------------------------------------ */
+
+function addDays(date, n) {
+    const d = new Date(date.getTime());
+    d.setDate(d.getDate() + n);
+    return d;
+}
+
+function startOfDay(date) {
+    return new Date(date.getFullYear(), date.getMonth(), date.getDate());
+}
+
+function startOfWeek(date) {
+    const d = startOfDay(date);
+    const dia = (d.getDay() + 6) % 7; // segunda = 0
+    return addDays(d, -dia);
+}
+
+function fmtData(d) {
+    if (!d) return '—';
+    return `${String(d.getDate()).padStart(2,'0')}/${String(d.getMonth()+1).padStart(2,'0')}/${d.getFullYear()}`;
+}
+
+function fmtCurta(d) {
+    if (!d) return '—';
+    return `${MESES[d.getMonth()]}/${String(d.getFullYear()).slice(2)}`;
+}
+
+function fmtPct(v, digitos = 1) {
+    if (v === null || v === undefined || !isFinite(v)) return '—';
+    return new Intl.NumberFormat('pt-BR', {
+        minimumFractionDigits: digitos,
+        maximumFractionDigits: digitos
+    }).format(v);
+}
+
+function fmtNum(v, digitos = 2) {
+    if (v === null || v === undefined || !isFinite(v)) return '—';
+    return new Intl.NumberFormat('pt-BR', {
+        minimumFractionDigits: 0,
+        maximumFractionDigits: digitos
+    }).format(v);
+}
+
+function clamp(v, min, max) { return Math.min(max, Math.max(min, v)); }
+
+function debounce(fn, ms) {
+    let t;
+    return (...args) => { clearTimeout(t); t = setTimeout(() => fn(...args), ms); };
+}
+
+/** Converte a data para o dia local, tolerando datas vindas em UTC (Excel). */
+function toLocalDay(d) {
+    const t = new Date(d.getTime() + 12 * 3600 * 1000);
+    return new Date(t.getFullYear(), t.getMonth(), t.getDate());
+}
+
+function parseData(valor) {
+    if (valor === null || valor === undefined || valor === '') return null;
+
+    if (valor instanceof Date) return isNaN(valor) ? null : toLocalDay(valor);
+
+    if (typeof valor === 'number') {
+        // Serial do Excel (base 1900)
+        const ms = Math.round((valor - 25569) * 86400 * 1000);
+        const d = new Date(ms);
+        if (isNaN(d)) return null;
+        return new Date(d.getUTCFullYear(), d.getUTCMonth(), d.getUTCDate());
+    }
+
+    const s = String(valor).trim();
+    if (!s) return null;
+
+    let m = s.match(/^(\d{1,2})[\/\-.](\d{1,2})[\/\-.](\d{2,4})/);
+    if (m) {
+        let [, d, mo, y] = m;
+        let ano = Number(y);
+        if (ano < 100) ano += ano < 70 ? 2000 : 1900;
+        const dt = new Date(ano, Number(mo) - 1, Number(d));
+        return isNaN(dt) ? null : dt;
+    }
+
+    m = s.match(/^(\d{4})[\/\-.](\d{1,2})[\/\-.](\d{1,2})/);
+    if (m) {
+        const dt = new Date(Number(m[1]), Number(m[2]) - 1, Number(m[3]));
+        return isNaN(dt) ? null : dt;
+    }
+
+    const t = Date.parse(s);
+    return isNaN(t) ? null : toLocalDay(new Date(t));
+}
+
+function parseNum(valor) {
+    if (valor === null || valor === undefined || valor === '') return null;
+    if (typeof valor === 'number') return isFinite(valor) ? valor : null;
+
+    let s = String(valor).trim().replace(/%/g, '').replace(/[^\d,.\-]/g, '');
+    if (!s) return null;
+
+    const temVirgula = s.includes(',');
+    const temPonto = s.includes('.');
+    if (temVirgula && temPonto) {
+        s = s.lastIndexOf(',') > s.lastIndexOf('.')
+            ? s.replace(/\./g, '').replace(',', '.')
+            : s.replace(/,/g, '');
+    } else if (temVirgula) {
+        s = s.replace(',', '.');
+    }
+
+    const n = parseFloat(s);
+    return isFinite(n) ? n : null;
+}
+
+function parseProgresso(valor) {
+    if (valor === null || valor === undefined || valor === '') return null;
+    if (typeof valor === 'string' && valor.includes('%')) {
+        const n = parseNum(valor);
+        return n === null ? null : n / 100;
+    }
+    return parseNum(valor);
+}
+
+function normalizar(txt) {
+    return String(txt ?? '')
+        .normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+        .toLowerCase().replace(/\s+/g, ' ').trim();
+}
+
+/* ------------------------------------------------------------------ */
+/* Carregamento da biblioteca SheetJS (sob demanda)                    */
+/* ------------------------------------------------------------------ */
+
+let xlsxPromise = null;
+
+function garantirXLSX() {
+    if (window.XLSX) return Promise.resolve(window.XLSX);
+    if (xlsxPromise) return xlsxPromise;
+
+    xlsxPromise = new Promise((resolve, reject) => {
+        const s = document.createElement('script');
+        s.src = 'https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js';
+        s.onload = () => window.XLSX ? resolve(window.XLSX) : reject(new Error('Biblioteca carregada, mas indisponível.'));
+        s.onerror = () => reject(new Error('Não foi possível carregar a biblioteca de leitura de planilhas. Verifique a conexão.'));
+        document.head.appendChild(s);
+    });
+
+    return xlsxPromise;
+}
+
+/* ------------------------------------------------------------------ */
+/* Definição dos campos e detecção automática de colunas               */
+/* ------------------------------------------------------------------ */
+
+const CAMPOS = [
+    { key:'name', label:'Atividade', obrigatorio:true,
+      chaves:['atividade','atividades','tarefa','tarefas','task','nome','descricao','descri','servico','item','etapa','activity'] },
+    { key:'start', label:'Início', obrigatorio:true,
+      chaves:['data de inicio','data inicio','dt inicio','inicio','start','início'] },
+    { key:'finish', label:'Término', obrigatorio:true,
+      chaves:['data de termino','data termino','data fim','termino','fim','finish','end','conclusao','entrega','data final'] },
+    { key:'progress', label:'% Concluído',
+      chaves:['% conclu','concluido','conclu','progresso','progress','realizado','avanco','avanço','percentual','executado','completo','complete','porcentagem','%'] },
+    { key:'weight', label:'Peso / Valor',
+      chaves:['peso','weight','valor','custo','quantidade','qtd','horas','hh','montante','preco','valor total'] },
+    { key:'group', label:'Agrupamento',
+      chaves:['agrupamento','grupo','disciplina','fase','pacote','categoria','area','setor','frente','macro'] },
+    { key:'responsible', label:'Responsável',
+      chaves:['responsavel','respons','equipe','fornecedor','encarregado','executor'] },
+    { key:'baselineStart', label:'Início (linha de base)',
+      chaves:['inicio linha de base','inicio baseline','baseline start','inicio previsto','inicio planejado','inicio plan'] },
+    { key:'baselineFinish', label:'Término (linha de base)',
+      chaves:['termino linha de base','termino baseline','baseline finish','termino previsto','fim previsto','termino planejado'] },
+    { key:'actualStart', label:'Início real',
+      chaves:['inicio real','actual start','real start','inicio efetivo','data inicio real'] },
+    { key:'actualFinish', label:'Término real',
+      chaves:['termino real','actual finish','real finish','termino efetivo','fim real','data termino real'] }
+];
+
+const ORDEM_DETECCAO = [
+    'progress','baselineStart','baselineFinish','actualStart','actualFinish',
+    'start','finish','weight','group','responsible','name'
+];
+
+function detectarMapeamento(headers) {
+    const normalizados = headers.map(h => normalizar(h));
+    const usados = new Set();
+    const mapa = {};
+
+    for (const key of ORDEM_DETECCAO) {
+        const campo = CAMPOS.find(c => c.key === key);
+        if (!campo) continue;
+
+        let melhorIdx = -1;
+        let melhorScore = 0;
+
+        normalizados.forEach((h, idx) => {
+            if (!h || usados.has(idx)) return;
+            let score = 0;
+            for (const chave of campo.chaves) {
+                const c = normalizar(chave);
+                if (!c) continue;
+                if (h === c) score += c.length * 3;
+                else if (h.startsWith(c)) score += c.length * 2;
+                else if (h.includes(c)) score += c.length;
+            }
+            if (score > melhorScore) { melhorScore = score; melhorIdx = idx; }
+        });
+
+        if (melhorIdx >= 0 && melhorScore >= 3) {
+            mapa[key] = melhorIdx;
+            usados.add(melhorIdx);
+        } else {
+            mapa[key] = null;
+        }
+    }
+
+    return mapa;
+}
+
+/* ------------------------------------------------------------------ */
+/* Estado                                                              */
+/* ------------------------------------------------------------------ */
+
+const state = {
+    fileName: '',
+    headers: [],
+    rows: [],          // matriz de linhas (array de arrays)
+    sheetNames: [],
+    workbook: null,
+    mapping: {},
+    activities: [],
+    filtered: [],
+    series: null,
+    dataDate: startOfDay(new Date()),
+    granularity: 'month',
+    filters: { search: '', status: 'all', grupo: 'all' }
+};
+
+/* ------------------------------------------------------------------ */
+/* Leitura do arquivo                                                  */
+/* ------------------------------------------------------------------ */
+
+async function lerArquivo(file) {
+    const msg = $('#load-msg');
+    msg.innerHTML = '';
+    try {
+        const XLSX = await garantirXLSX();
+        const buffer = await file.arrayBuffer();
+        const wb = XLSX.read(buffer, { type: 'array', cellDates: true });
+
+        state.fileName = file.name;
+        state.workbook = wb;
+        state.sheetNames = wb.SheetNames;
+
+        const chip = $('#file-chip');
+        chip.textContent = file.name;
+        chip.hidden = false;
+
+        popularAbas();
+        carregarAba(wb.SheetNames[0]);
+
+        $('#load-card').hidden = true;
+        $('#config-card').hidden = false;
+        $('#kpi-grid').hidden = false;
+        $('#scurve-card').hidden = false;
+        $('#bars-card').hidden = false;
+        $('#status-card').hidden = false;
+        $('#tabela-card').hidden = false;
+
+    } catch (err) {
+        console.error(err);
+        msg.innerHTML = `<div class="aviso erro"><strong>Erro:</strong>&nbsp;${err.message}</div>`;
+    }
+}
+
+function popularAbas() {
+    const sel = $('#sel-sheet');
+    sel.innerHTML = '';
+    state.sheetNames.forEach(nome => {
+        const opt = document.createElement('option');
+        opt.value = nome;
+        opt.textContent = nome;
+        sel.appendChild(opt);
+    });
+}
+
+function carregarAba(nomeAba) {
+    const XLSX = window.XLSX;
+    const ws = state.workbook.Sheets[nomeAba];
+    const matriz = XLSX.utils.sheet_to_json(ws, { header: 1, raw: true, defval: null, blankrows: false });
+
+    if (!matriz.length) throw new Error('A aba selecionada está vazia.');
+
+    // Localiza a linha de cabeçalho (a mais "cheia" entre as 15 primeiras)
+    let headerIdx = 0;
+    let melhor = -1;
+    for (let i = 0; i < Math.min(15, matriz.length); i++) {
+        const celulas = matriz[i].filter(c => c !== null && String(c).trim() !== '');
+        const textos = celulas.filter(c => typeof c === 'string' && c.trim().length > 1);
+        const score = celulas.length + textos.length * 1.5;
+        if (celulas.length >= 3 && score > melhor) { melhor = score; headerIdx = i; }
+    }
+
+    const cabecalhoBruto = matriz[headerIdx] || [];
+    const headers = [];
+    const vistos = {};
+    cabecalhoBruto.forEach((c, i) => {
+        let nome = (c === null || c === undefined || String(c).trim() === '')
+            ? `Coluna ${i + 1}`
+            : String(c).trim();
+        if (vistos[nome] !== undefined) { vistos[nome]++; nome = `${nome} (${vistos[nome]})`; }
+        else vistos[nome] = 0;
+        headers.push(nome);
+    });
+
+    // Normaliza todas as linhas para a largura do cabeçalho
+    const largura = headers.length;
+    const linhas = matriz.slice(headerIdx + 1).map(linha => {
+        const out = new Array(largura).fill(null);
+        for (let i = 0; i < largura; i++) out[i] = linha[i] ?? null;
+        return out;
+    }).filter(linha => linha.some(c => c !== null && String(c).trim() !== ''));
+
+    state.headers = headers;
+    state.rows = linhas;
+    state.mapping = detectarMapeamento(headers);
+
+    montarSelectsMapeamento();
+    aplicarDados();
+}
+
+/* ------------------------------------------------------------------ */
+/* UI de mapeamento                                                    */
+/* ------------------------------------------------------------------ */
+
+function montarSelectsMapeamento() {
+    const grid = $('#map-grid');
+    grid.innerHTML = '';
+
+    CAMPOS.forEach(campo => {
+        const div = document.createElement('div');
+        div.className = 'campo';
+
+        const label = document.createElement('label');
+        label.textContent = campo.label + (campo.obrigatorio ? ' *' : '');
+        label.setAttribute('for', `map-${campo.key}`);
+
+        const sel = document.createElement('select');
+        sel.id = `map-${campo.key}`;
+        sel.dataset.campo = campo.key;
+
+        const optVazia = document.createElement('option');
+        optVazia.value = '';
+        optVazia.textContent = '— não usar —';
+        sel.appendChild(optVazia);
+
+        state.headers.forEach((h, i) => {
+            const opt = document.createElement('option');
+            opt.value = String(i);
+            opt.textContent = h;
+            sel.appendChild(opt);
+        });
+
+        const atual = state.mapping[campo.key];
+        sel.value = (atual === null || atual === undefined) ? '' : String(atual);
+
+        sel.addEventListener('change', () => {
+            state.mapping[campo.key] = sel.value === '' ? null : Number(sel.value);
+            aplicarDados();
+        });
+
+        div.append(label, sel);
+        grid.appendChild(div);
+    });
+}
+
+/* ------------------------------------------------------------------ */
+/* Normalização das atividades                                         */
+/* ------------------------------------------------------------------ */
+
+function normalizarAtividades() {
+    const m = state.mapping;
+    const rows = state.rows;
+
+    if (m.name === null || m.name === undefined) {
+        state.activities = [];
+        return 'A coluna de <strong>Atividade</strong> não foi identificada. Selecione-a em "Mapeamento das colunas".';
+    }
+    if (m.start === null && m.baselineStart === null) {
+        state.activities = [];
+        return 'A coluna de <strong>Início</strong> não foi identificada. Selecione-a em "Mapeamento das colunas".';
+    }
+
+    // Escala global do % concluído (0–1 ou 0–100)
+    const brutos = rows
+        .map(r => m.progress !== null && m.progress !== undefined ? parseProgresso(r[m.progress]) : null)
+        .filter(v => v !== null);
+    const escala = brutos.length && Math.max(...brutos) > 1.5 ? 100 : 1;
+
+    const atividades = [];
+
+    rows.forEach((row, idx) => {
+        const nome = m.name !== null ? String(row[m.name] ?? '').trim() : '';
+        if (!nome || nome.length < 2) return;
+
+        const inicioPlan = m.start !== null ? parseData(row[m.start]) : null;
+        const fimPlan    = m.finish !== null ? parseData(row[m.finish]) : null;
+        const inicioBase = (m.baselineStart !== null && m.baselineStart !== undefined) ? parseData(row[m.baselineStart]) : null;
+        const fimBase    = (m.baselineFinish !== null && m.baselineFinish !== undefined) ? parseData(row[m.baselineFinish]) : null;
+        const inicioReal = (m.actualStart !== null && m.actualStart !== undefined) ? parseData(row[m.actualStart]) : null;
+        const fimReal    = (m.actualFinish !== null && m.actualFinish !== undefined) ? parseData(row[m.actualFinish]) : null;
+
+        let pStart = inicioBase || inicioPlan || fimBase || fimPlan;
+        let pFinish = fimBase || fimPlan || pStart;
+        if (!pStart && !pFinish) return;
+        if (!pStart) pStart = pFinish;
+        if (!pFinish) pFinish = pStart;
+        if (pFinish < pStart) pFinish = pStart;
+
+        // % concluído
+        let progresso = 0;
+        if (m.progress !== null && m.progress !== undefined) {
+            const v = parseProgresso(row[m.progress]);
+            if (v !== null) progresso = clamp(v / escala, 0, 1);
+        }
+
+        // Peso
+        let peso = null;
+        if (m.weight !== null && m.weight !== undefined) {
+            const v = parseNum(row[m.weight]);
+            if (v !== null && v > 0) peso = v;
+        }
+        if (peso === null) {
+            const dur = Math.max(1, Math.round((pFinish - pStart) / DIAS) + 1);
+            peso = dur;
+        }
+
+        const duracao = Math.max(1, Math.round((pFinish - pStart) / DIAS) + 1);
+
+        atividades.push({
+            index: idx + 1,
+            name: nome,
+            group: (m.group !== null && m.group !== undefined)
+                ? (String(row[m.group] ?? '').trim() || 'Sem agrupamento')
+                : 'Sem agrupamento',
+            responsible: (m.responsible !== null && m.responsible !== undefined)
+                ? String(row[m.responsible] ?? '').trim()
+                : '',
+            pStart,
+            pFinish,
+            progress: progresso,
+            weight: peso,
+            duration: duracao,
+            actualStart: inicioReal || pStart,
+            actualFinish: fimReal || null,
+            status: 'Não iniciada',
+            aStart: pStart,
+            aEnd: pFinish
+        });
+    });
+
+    state.activities = atividades;
+    return atividades.length ? null : 'Nenhuma atividade válida foi encontrada com o mapeamento atual.';
+}
+
+/* ------------------------------------------------------------------ */
+/* Situação das atividades                                             */
+/* ------------------------------------------------------------------ */
+
+function definirSituacao(atividades, dataCorte) {
+    for (const a of atividades) {
+        const t = dataCorte.getTime();
+
+        if (a.progress >= 0.999) {
+            a.status = 'Concluída';
+        } else if (a.progress > 0) {
+            a.status = (a.pFinish.getTime() < t) ? 'Atrasada' : 'Em andamento';
+        } else {
+            if (a.pStart.getTime() > t) a.status = 'Não iniciada';
+            else if (a.pFinish.getTime() < t) a.status = 'Atrasada';
+            else a.status = 'Não iniciada';
+        }
+
+        // Intervalo efetivo para distribuir o avanço realizado
+        const inicio = a.actualStart || a.pStart;
+        let fim;
+        if (a.actualFinish) fim = a.actualFinish;
+        else if (a.progress >= 0.999) fim = a.pFinish;
+        else fim = new Date(Math.min(t, a.pFinish.getTime()));
+
+        a.aStart = inicio;
+        a.aEnd = (fim.getTime() <= inicio.getTime()) ? addDays(inicio, 1) : fim;
+    }
+    return atividades;
+}
+
+/* ------------------------------------------------------------------ */
+/* Períodos                                                            */
+/* ------------------------------------------------------------------ */
+
+function construirPeriodos(min, max, gran) {
+    const out = [];
+    let guarda = 0;
+
+    if (gran === 'day') {
+        let d = startOfDay(min);
+        while (d <= max && guarda++ < 2400) {
+            out.push({ start: new Date(d), end: new Date(d) });
+            d = addDays(d, 1);
+        }
+    } else if (gran === 'week') {
+        let d = startOfWeek(min);
+        while (d <= max && guarda++ < 700) {
+            out.push({ start: new Date(d), end: addDays(d, 6) });
+            d = addDays(d, 7);
+        }
+    } else {
+        let d = new Date(min.getFullYear(), min.getMonth(), 1);
+        while (d <= max && guarda++ < 480) {
+            const fim = new Date(d.getFullYear(), d.getMonth() + 1, 0);
+            out.push({ start: new Date(d), end: fim });
+            d = new Date(d.getFullYear(), d.getMonth() + 1, 1);
+        }
+    }
+
+    return out;
+}
+
+function proximoFimPeriodo(data, gran) {
+    if (gran === 'day') return addDays(data, 1);
+    if (gran === 'week') return addDays(data, 7);
+    return new Date(data.getFullYear(), data.getMonth() + 2, 0);
+}
+
+/* ------------------------------------------------------------------ */
+/* Cálculo da curva S                                                  */
+/* ------------------------------------------------------------------ */
+
+function calcularSerie(atividades, gran, dataCorte) {
+    const validas = atividades.filter(a => a.pStart && a.pFinish && a.weight > 0);
+    if (!validas.length) return null;
+
+    const pesoTotal = validas.reduce((s, a) => s + a.weight, 0);
+    if (pesoTotal <= 0) return null;
+
+    const minDate = new Date(Math.min(...validas.map(a => a.pStart.getTime())));
+    const maxDate = new Date(Math.max(...validas.map(a => a.pFinish.getTime())));
+    const tCorte = dataCorte.getTime();
+
+    const planejadoEm = (data) => {
+        let soma = 0;
+        const t = data.getTime();
+        for (const a of validas) {
+            const s = a.pStart.getTime();
+            const f = a.pFinish.getTime();
+            let v;
+            if (t <= s) v = 0;
+            else if (t >= f) v = 1;
+            else v = (t - s) / (f - s);
+            soma += a.weight * v;
+        }
+        return soma / pesoTotal;
+    };
+
+    const realizadoEm = (data) => {
+        if (data.getTime() > tCorte) return null;
+        let soma = 0;
+        const t = data.getTime();
+        for (const a of validas) {
+            if (a.progress <= 0) continue;
+            const s = a.aStart.getTime();
+            const e = a.aEnd.getTime();
+            let v;
+            if (t <= s) v = 0;
+            else if (t >= e) v = 1;
+            else v = (t - s) / Math.max(e - s, 1);
+            soma += a.weight * a.progress * v;
+        }
+        return soma / pesoTotal;
+    };
+
+    const periodos = construirPeriodos(minDate, maxDate, gran);
+
+    const pontosPeriodo = periodos.map(p => ({
+        date: p.end,
+        label: fmtCurta(p.start),
+        planned: planejadoEm(p.end),
+        actual: p.end.getTime() <= tCorte ? realizadoEm(p.end) : null
+    }));
+
+    // Incrementos por período
+    const incrementos = pontosPeriodo.map((p, i) => {
+        const prev = i ? pontosPeriodo[i - 1] : null;
+        const planInc = p.planned - (prev ? prev.planned : 0);
+        const realInc = (p.actual === null) ? null : p.actual - (prev && prev.actual !== null ? prev.actual : 0);
+        return {
+            label: p.label,
+            date: p.date,
+            planned: Math.max(0, planInc),
+            actual: realInc === null ? null : Math.max(0, realInc)
+        };
+    });
+
+    // Pontos exibidos (com a data de corte exata)
+    const pontos = pontosPeriodo.map(p => ({ ...p }));
+    let idxCorte = pontos.findIndex(p => p.date.getTime() > tCorte);
+    if (idxCorte === -1) idxCorte = pontos.length;
+    for (let i = idxCorte; i < pontos.length; i++) pontos[i].actual = null;
+
+    const jaExiste = idxCorte > 0 && Math.abs(pontos[idxCorte - 1].date.getTime() - tCorte) < DIAS / 2;
+    if (jaExiste) {
+        pontos[idxCorte - 1].isDataDate = true;
+    } else {
+        pontos.splice(idxCorte, 0, {
+            date: new Date(dataCorte),
+            label: 'corte',
+            planned: planejadoEm(dataCorte),
+            actual: realizadoEm(dataCorte),
+            isDataDate: true
+        });
+    }
+
+    const planejadoCorte = planejadoEm(dataCorte);
+    const realizadoCorte = realizadoEm(dataCorte) ?? 0;
+
+    // Tendência (projeção pelo ritmo recente)
+    const pontosReais = pontos.filter(p => p.actual !== null);
+    const ultimoReal = pontosReais[pontosReais.length - 1] || null;
+    const tendencia = [];
+    let fimProjetado = null;
+
+    if (ultimoReal && ultimoReal.actual < 0.999) {
+        const incs = [];
+        for (let i = 1; i < pontosReais.length; i++) {
+            incs.push(pontosReais[i].actual - pontosReais[i - 1].actual);
+        }
+        const recentes = incs.slice(-3).filter(v => v > 0);
+        const media = recentes.length ? recentes.reduce((a, b) => a + b, 0) / recentes.length : 0;
+
+        if (media > 0.0008) {
+            let valor = ultimoReal.actual;
+            let cursor = new Date(ultimoReal.date);
+            tendencia.push({ date: new Date(cursor), value: valor });
+
+            for (let i = 0; i < 60 && valor < 0.999; i++) {
+                const anteriorData = new Date(cursor);
+                const anteriorValor = valor;
+                cursor = proximoFimPeriodo(cursor, gran);
+                valor = Math.min(1, valor + media);
+                tendencia.push({ date: new Date(cursor), value: valor });
+                if (valor >= 0.999) {
+                    const falta = 1 - anteriorValor;
+                    const passo = valor - anteriorValor || 1;
+                    const frac = clamp(falta / passo, 0, 1);
+                    fimProjetado = new Date(anteriorData.getTime() + (cursor.getTime() - anteriorData.getTime()) * frac);
+                }
+            }
+        }
+    }
+
+    // Domínio do eixo X
+    const t0 = Math.min(minDate.getTime(), tCorte);
+    const t1 = Math.max(
+        maxDate.getTime(),
+        tCorte,
+        fimProjetado ? fimProjetado.getTime() : maxDate.getTime()
+    );
+
+    return {
+        points: pontos,
+        increments: incrementos,
+        forecast: tendencia,
+        domain: [new Date(t0), new Date(t1)],
+        plannedAtDataDate: planejadoCorte,
+        actualAtDataDate: realizadoCorte,
+        baselineFinish: maxDate,
+        forecastFinish: fimProjetado,
+        dataDate: new Date(dataCorte),
+        totalWeight: pesoTotal
+    };
+}
+
+/* ------------------------------------------------------------------ */
+/* Filtros e renderização                                              */
+/* ------------------------------------------------------------------ */
+
+function aplicarFiltros() {
+    const busca = normalizar(state.filters.search);
+    const fStatus = state.filters.status;
+    const fGrupo = state.filters.grupo;
+
+    state.filtered = state.activities.filter(a => {
+        if (fStatus !== 'all' && a.status !== fStatus) return false;
+        if (fGrupo !== 'all' && a.group !== fGrupo) return false;
+        if (busca && !normalizar(a.name).includes(busca) && !normalizar(a.group).includes(busca)) return false;
+        return true;
+    });
+}
+
+function aplicarDados() {
+    const erro = normalizarAtividades();
+    if (erro) {
+        $('#load-msg').innerHTML = `<div class="aviso erro">${erro}</div>`;
+        state.filtered = [];
+        state.series = null;
+    } else {
+        $('#load-msg').innerHTML = '';
+    }
+
+    // Popula o filtro de agrupamento
+    const grupos = [...new Set(state.activities.map(a => a.group))].sort((a, b) => a.localeCompare(b, 'pt-BR'));
+    const selGrupo = $('#sel-grupo');
+    const atual = selGrupo.value || 'all';
+    selGrupo.innerHTML = '<option value="all">Todos</option>';
+    grupos.forEach(g => {
+        const o = document.createElement('option');
+        o.value = g;
+        o.textContent = g;
+        selGrupo.appendChild(o);
+    });
+    selGrupo.value = grupos.includes(atual) ? atual : 'all';
+    state.filters.grupo = selGrupo.value;
+
+    // Data de corte padrão
+    if (!state.dataDate || isNaN(state.dataDate)) state.dataDate = startOfDay(new Date());
+    $('#in-data-corte').value = toISODate(state.dataDate);
+
+    atualizar();
+}
+
+function toISODate(d) {
+    return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
+}
+
+function atualizar() {
+    definirSituacao(state.activities, state.dataDate);
+    aplicarFiltros();
+    state.series = calcularSerie(state.filtered, state.granularity, state.dataDate);
+
+    renderKPIs();
+    drawSCurve();
+    drawBars();
+    renderStatus();
+    renderTabela();
+}
+
+/* ------------------------------------------------------------------ */
+/* KPIs                                                                */
+/* ------------------------------------------------------------------ */
+
+function renderKPIs() {
+    const grid = $('#kpi-grid');
+    const s = state.series;
+    const acts = state.filtered;
+
+    const total = acts.length;
+    const concluidas = acts.filter(a => a.status === 'Concluída').length;
+    const atrasadas = acts.filter(a => a.status === 'Atrasada').length;
+    const andamento = acts.filter(a => a.status === 'Em andamento').length;
+
+    const plan = s ? s.plannedAtDataDate * 100 : 0;
+    const real = s ? s.actualAtDataDate * 100 : 0;
+    const desvio = real - plan;
+    const spi = plan > 0.5 ? real / plan : null;
+
+    const pesos = acts.reduce((acc, a) => acc + a.weight, 0);
+    const pesoConcluido = acts.filter(a => a.status === 'Concluída').reduce((acc, a) => acc + a.weight, 0);
+
+    let inicio = null, fimBase = null, fimProj = null;
+    if (acts.length) {
+        inicio = new Date(Math.min(...acts.map(a => a.pStart.getTime())));
+        fimBase = new Date(Math.max(...acts.map(a => a.pFinish.getTime())));
+    }
+    if (s && s.forecastFinish) fimProj = s.forecastFinish;
+
+    let atrasoDias = null;
+    if (fimProj && fimBase) atrasoDias = Math.round((fimProj - fimBase) / DIAS);
+
+    const duracaoTotal = (inicio && fimBase) ? Math.round((fimBase - inicio) / DIAS) + 1 : null;
+
+    const cards = [];
+
+    cards.push({
+        label: 'Avanço planejado',
+        valor: fmtPct(plan) + '<small>%</small>',
+        sub: `na data de corte`,
+        classe: ''
+    });
+
+    cards.push({
+        label: 'Avanço realizado',
+        valor: fmtPct(real) + '<small>%</small>',
+        sub: `${fmtNum(pesos ? (pesoConcluido / pesos) * 100 : 0)}% do peso concluído`,
+        classe: 'is-azul'
+    });
+
+    cards.push({
+        label: 'Desvio (real − previsto)',
+        valor: (desvio >= 0 ? '+' : '') + fmtPct(desvio) + '<small>pp</small>',
+        sub: desvio >= 0 ? 'adiantado em relação à base' : 'atrasado em relação à base',
+        classe: desvio >= -0.5 ? 'is-ok' : 'is-erro',
+        cor: desvio >= 0 ? 'pos' : 'neg'
+    });
+
+    cards.push({
+        label: 'SPI · índice de prazo',
+        valor: spi === null ? '—' : fmtNum(spi, 2),
+        sub: spi === null ? 'sem base suficiente'
+            : spi >= 1 ? 'desempenho dentro do previsto'
+            : spi >= 0.95 ? 'leve atraso' : 'atraso relevante',
+        classe: spi === null ? '' : (spi >= 1 ? 'is-ok' : spi >= 0.95 ? '' : 'is-erro'),
+        cor: spi === null ? '' : (spi >= 1 ? 'pos' : spi >= 0.95 ? 'warn' : 'neg')
+    });
+
+    cards.push({
+        label: 'Atividades',
+        valor: fmtNum(total, 0),
+        sub: `${concluidas} concluídas · ${andamento} em andamento`,
+        classe: 'is-marinho'
+    });
+
+    cards.push({
+        label: 'Atividades atrasadas',
+        valor: fmtNum(atrasadas, 0),
+        sub: total ? `${fmtPct((atrasadas / total) * 100)} da carteira` : '—',
+        classe: atrasadas ? 'is-erro' : 'is-ok',
+        cor: atrasadas ? 'neg' : ''
+    });
+
+    cards.push({
+        label: 'Término da linha de base',
+        valor: fimBase ? fmtData(fimBase) : '—',
+        sub: fimProj
+            ? `tendência: ${fmtData(fimProj)}` + (atrasoDias !== null ? ` (${atrasoDias >= 0 ? '+' : ''}${atrasoDias} d)` : '')
+            : 'sem projeção calculada',
+        classe: 'is-marinho'
+    });
+
+    cards.push({
+        label: 'Duração total',
+        valor: duracaoTotal === null ? '—' : fmtNum(duracaoTotal, 0) + '<small>d</small>',
+        sub: inicio ? `início em ${fmtData(inicio)}` : '—',
+        classe: ''
+    });
+
+    grid.innerHTML = cards.map(c => `
+        <div class="kpi ${c.classe || ''}">
+            <span class="kpi-label">${c.label}</span>
+            <strong class="kpi-value ${c.cor || ''}">${c.valor}</strong>
+            <span class="kpi-sub">${c.sub}</span>
+        </div>
+    `).join('');
+}
+
+/* ------------------------------------------------------------------ */
+/* Curva S (canvas)                                                    */
+/* ------------------------------------------------------------------ */
+
+let sCurveGeom = null;
+let sCurveHover = null;
+
+function drawSCurve() {
+    const canvas = $('#s-curve');
+    const ctx = canvas.getContext('2d');
+    const box = canvas.parentElement;
+    const w = box.clientWidth;
+    const h = box.clientHeight;
+    if (!w || !h) return;
+
+    const dpr = window.devicePixelRatio || 1;
+    canvas.width = Math.round(w * dpr);
+    canvas.height = Math.round(h * dpr);
+    canvas.style.height = h + 'px';
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    ctx.clearRect(0, 0, w, h);
+
+    const s = state.series;
+
+    if (!s || s.points.length < 2) {
+        sCurveGeom = null;
+        ctx.fillStyle = 'rgba(1,30,56,.42)';
+        ctx.font = '13px "IBM Plex Sans", sans-serif';
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+        ctx.fillText('Sem dados suficientes para traçar a curva S.', w / 2, h / 2);
+        return;
+    }
+
+    const pad = { l: 48, r: 18, t: 16, b: 30 };
+    const W = Math.max(10, w - pad.l - pad.r);
+    const H = Math.max(10, h - pad.t - pad.b);
+    const t0 = s.domain[0].getTime();
+    const t1 = s.domain[1].getTime();
+    const xAt = t => pad.l + ((t - t0) / Math.max(t1 - t0, 1)) * W;
+    const yAt = v => pad.t + (1 - clamp(v, 0, 1)) * H;
+
+    // Grade horizontal
+    ctx.font = '10px "IBM Plex Sans", sans-serif';
+    ctx.textAlign = 'right';
+    ctx.textBaseline = 'middle';
+    for (let i = 0; i <= 4; i++) {
+        const v = i / 4;
+        const y = yAt(v);
+        ctx.strokeStyle = 'rgba(1,30,56,.09)';
+        ctx.lineWidth = 1;
+        ctx.beginPath();
+        ctx.moveTo(pad.l, y);
+        ctx.lineTo(pad.l + W, y);
+        ctx.stroke();
+        ctx.fillStyle = 'rgba(1,30,56,.5)';
+        ctx.fillText((v * 100).toFixed(0) + '%', pad.l - 9, y);
+    }
+
+    // Grade vertical + rótulos
+    const ticks = w < 620 ? 4 : 6;
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'top';
+    for (let i = 0; i <= ticks; i++) {
+        const t = t0 + (t1 - t0) * (i / ticks);
+        const x = xAt(t);
+        ctx.strokeStyle = 'rgba(1,30,56,.06)';
+        ctx.beginPath();
+        ctx.moveTo(x, pad.t);
+        ctx.lineTo(x, pad.t + H);
+        ctx.stroke();
+        ctx.fillStyle = 'rgba(1,30,56,.5)';
+        ctx.fillText(fmtCurta(new Date(t)), x, pad.t + H + 8);
+    }
+
+    // ---- Linha de base (marinho, tracejada)
+    ctx.save();
+    ctx.setLineDash([6, 4]);
+    ctx.lineWidth = 2;
+    ctx.strokeStyle = 'rgba(16,25,46,.85)';
+    ctx.beginPath();
+    s.points.forEach((p, i) => {
+        const x = xAt(p.date.getTime());
+        const y = yAt(p.planned);
+        i ? ctx.lineTo(x, y) : ctx.moveTo(x, y);
+    });
+    ctx.stroke();
+    ctx.restore();
+
+    // ---- Realizado (azul, com área)
+    const reais = s.points.filter(p => p.actual !== null);
+    if (reais.length > 1) {
+        // área
+        ctx.beginPath();
+        reais.forEach((p, i) => {
+            const x = xAt(p.date.getTime());
+            const y = yAt(p.actual);
+            i ? ctx.lineTo(x, y) : ctx.moveTo(x, y);
+        });
+        ctx.lineTo(xAt(reais[reais.length - 1].date.getTime()), pad.t + H);
+        ctx.lineTo(xAt(reais[0].date.getTime()), pad.t + H);
+        ctx.closePath();
+        const grad = ctx.createLinearGradient(0, pad.t, 0, pad.t + H);
+        grad.addColorStop(0, 'rgba(38,79,236,.24)');
+        grad.addColorStop(1, 'rgba(38,79,236,.02)');
+        ctx.fillStyle = grad;
+        ctx.fill();
+
+        // linha
+        ctx.beginPath();
+        reais.forEach((p, i) => {
+            const x = xAt(p.date.getTime());
+            const y = yAt(p.actual);
+            i ? ctx.lineTo(x, y) : ctx.moveTo(x, y);
+        });
+        ctx.lineWidth = 2.8;
+        ctx.lineJoin = 'round';
+        ctx.strokeStyle = '#264FEC';
+        ctx.shadowColor = 'rgba(38,79,236,.3)';
+        ctx.shadowBlur = 8;
+        ctx.stroke();
+        ctx.shadowBlur = 0;
+    }
+
+    // ---- Tendência (salmão, tracejada)
+    if (s.forecast && s.forecast.length > 1) {
+        ctx.save();
+        ctx.setLineDash([7, 5]);
+        ctx.lineWidth = 2.4;
+        ctx.strokeStyle = '#F0C089';
+        ctx.lineJoin = 'round';
+        ctx.beginPath();
+        s.forecast.forEach((p, i) => {
+            const x = xAt(p.date.getTime());
+            const y = yAt(p.value);
+            i ? ctx.lineTo(x, y) : ctx.moveTo(x, y);
+        });
+        ctx.stroke();
+        ctx.restore();
+    }
+
+    // ---- Data de corte
+    const xCorte = xAt(s.dataDate.getTime());
+    ctx.save();
+    ctx.setLineDash([2, 3]);
+    ctx.lineWidth = 1.6;
+    ctx.strokeStyle = 'rgba(192,69,59,.75)';
+    ctx.beginPath();
+    ctx.moveTo(xCorte, pad.t - 2);
+    ctx.lineTo(xCorte, pad.t + H);
+    ctx.stroke();
+    ctx.restore();
+
+    ctx.fillStyle = 'rgba(192,69,59,.9)';
+    ctx.font = '600 9.5px "IBM Plex Sans", sans-serif';
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'bottom';
+    ctx.fillText('corte', xCorte, pad.t - 4);
+
+    // ---- Pontos das extremidades
+    if (reais.length) {
+        ctx.fillStyle = '#F0C089';
+        [reais[0], reais[reais.length - 1]].forEach(p => {
+            ctx.beginPath();
+            ctx.arc(xAt(p.date.getTime()), yAt(p.actual), 3.6, 0, Math.PI * 2);
+            ctx.fill();
+        });
+    }
+
+    // ---- Marcador de hover
+    if (sCurveHover !== null && s.points[sCurveHover]) {
+        const p = s.points[sCurveHover];
+        const x = xAt(p.date.getTime());
+        ctx.strokeStyle = 'rgba(1,30,56,.22)';
+        ctx.lineWidth = 1;
+        ctx.beginPath();
+        ctx.moveTo(x, pad.t);
+        ctx.lineTo(x, pad.t + H);
+        ctx.stroke();
+
+        ctx.beginPath();
+        ctx.arc(x, yAt(p.planned), 4, 0, Math.PI * 2);
+        ctx.fillStyle = '#10192E';
+        ctx.fill();
+
+        if (p.actual !== null) {
+            ctx.beginPath();
+            ctx.arc(x, yAt(p.actual), 4.6, 0, Math.PI * 2);
+            ctx.fillStyle = '#264FEC';
+            ctx.fill();
+            ctx.strokeStyle = '#fff';
+            ctx.lineWidth = 1.6;
+            ctx.stroke();
+        }
+    }
+
+    sCurveGeom = { xAt, yAt, points: s.points, pad, W, H };
+}
+
+/* Tooltip da curva S */
+(function interacaoCurva() {
+    const canvas = $('#s-curve');
+    const tip = $('#s-curve-tip');
+
+    canvas.addEventListener('mousemove', ev => {
+        if (!sCurveGeom) return;
+        const rect = canvas.getBoundingClientRect();
+        const x = ev.clientX - rect.left;
+        const y = ev.clientY - rect.top;
+
+        let melhor = -1;
+        let dist = Infinity;
+        sCurveGeom.points.forEach((p, i) => {
+            const px = sCurveGeom.xAt(p.date.getTime());
+            const d = Math.abs(px - x);
+            if (d < dist) { dist = d; melhor = i; }
+        });
+
+        if (melhor < 0 || dist > 60) {
+            if (sCurveHover !== null) { sCurveHover = null; drawSCurve(); }
+            tip.classList.remove('on');
+            return;
+        }
+
+        const p = sCurveGeom.points[melhor];
+        const desvio = (p.actual !== null) ? (p.actual - p.planned) * 100 : null;
+
+        tip.innerHTML = `
+            <b>${p.isDataDate ? 'Data de corte · ' : ''}${fmtData(p.date)}</b>
+            <div class="row"><span>Linha de base</span><span>${fmtPct(p.planned * 100)}%</span></div>
+            <div class="row"><span>Realizado</span><span>${p.actual === null ? '—' : fmtPct(p.actual * 100) + '%'}</span></div>
+            <div class="row"><span>Desvio</span><span>${desvio === null ? '—' : (desvio >= 0 ? '+' : '') + fmtPct(desvio) + ' pp'}</span></div>
+        `;
+        tip.classList.add('on');
+
+        const boxW = canvas.parentElement.clientWidth;
+        const tipW = tip.offsetWidth || 180;
+        let left = sCurveGeom.xAt(p.date.getTime()) + 14;
+        if (left + tipW > boxW - 6) left = sCurveGeom.xAt(p.date.getTime()) - tipW - 14;
+        tip.style.left = Math.max(6, left) + 'px';
+        tip.style.top = Math.max(8, y - 10) + 'px';
+
+        if (sCurveHover !== melhor) {
+            sCurveHover = melhor;
+            drawSCurve();
+        }
+    });
+
+    canvas.addEventListener('mouseleave', () => {
+        tip.classList.remove('on');
+        if (sCurveHover !== null) { sCurveHover = null; drawSCurve(); }
+    });
+})();
+
+/* ------------------------------------------------------------------ */
+/* Gráfico de barras por período                                       */
+/* ------------------------------------------------------------------ */
+
+function drawBars() {
+    const canvas = $('#bars');
+    const ctx = canvas.getContext('2d');
+    const box = canvas.parentElement;
+    const w = box.clientWidth;
+    const h = box.clientHeight;
+    if (!w || !h) return;
+
+    const dpr = window.devicePixelRatio || 1;
+    canvas.width = Math.round(w * dpr);
+    canvas.height = Math.round(h * dpr);
+    canvas.style.height = h + 'px';
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    ctx.clearRect(0, 0, w, h);
+
+    const s = state.series;
+    const dados = s ? s.increments.filter(d => d.planned > 0 || d.actual !== null) : [];
+
+    if (!dados.length) {
+        ctx.fillStyle = 'rgba(1,30,56,.42)';
+        ctx.font = '12px "IBM Plex Sans", sans-serif';
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+        ctx.fillText('Sem dados por período.', w / 2, h / 2);
+        return;
+    }
+
+    const pad = { l: 42, r: 12, t: 12, b: 32 };
+    const W = Math.max(10, w - pad.l - pad.r);
+    const H = Math.max(10, h - pad.t - pad.b);
+
+    const maxVal = Math.max(...dados.map(d => Math.max(d.planned, d.actual || 0)), 0.0001);
+    const yAt = v => pad.t + (1 - v / maxVal) * H;
+
+    // Grade
+    ctx.font = '10px "IBM Plex Sans", sans-serif';
+    ctx.textAlign = 'right';
+    ctx.textBaseline = 'middle';
+    for (let i = 0; i <= 3; i++) {
+        const v = (maxVal * i) / 3;
+        const y = yAt(v);
+        ctx.strokeStyle = 'rgba(1,30,56,.08)';
+        ctx.beginPath();
+        ctx.moveTo(pad.l, y);
+        ctx.lineTo(pad.l + W, y);
+        ctx.stroke();
+        ctx.fillStyle = 'rgba(1,30,56,.5)';
+        ctx.fillText(fmtNum(v * 100, 1) + '%', pad.l - 8, y);
+    }
+
+    const slot = W / dados.length;
+    const barW = Math.max(2, Math.min(16, slot * 0.34));
+    const gap = Math.max(1, barW * 0.18);
+    const rotular = dados.length <= 18 ? 1 : Math.ceil(dados.length / 12);
+
+    dados.forEach((d, i) => {
+        const centro = pad.l + slot * i + slot / 2;
+
+        // Previsto
+        const hPlan = H - (yAt(d.planned) - pad.t);
+        ctx.fillStyle = 'rgba(16,25,46,.72)';
+        ctx.fillRect(centro - barW - gap / 2, yAt(d.planned), barW, Math.max(1, hPlan));
+
+        // Realizado
+        if (d.actual !== null) {
+            const hReal = H - (yAt(d.actual) - pad.t);
+            ctx.fillStyle = '#264FEC';
+            ctx.fillRect(centro + gap / 2, yAt(d.actual), barW, Math.max(1, hReal));
+        }
+
+        if (i % rotular === 0) {
+            ctx.save();
+            ctx.fillStyle = 'rgba(1,30,56,.5)';
+            ctx.font = '9.5px "IBM Plex Sans", sans-serif';
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'top';
+            ctx.translate(centro, pad.t + H + 8);
+            if (dados.length > 10) ctx.rotate(-Math.PI / 5);
+            ctx.fillText(d.label, 0, 0);
+            ctx.restore();
+        }
+    });
+}
+
+/* ------------------------------------------------------------------ */
+/* Distribuição por situação                                           */
+/* ------------------------------------------------------------------ */
+
+const CORES_STATUS = {
+    'Concluída': '#1B8A63',
+    'Em andamento': '#264FEC',
+    'Atrasada': '#C0453B',
+    'Não iniciada': '#8A93A6'
+};
+
+function renderStatus() {
+    const lista = $('#status-list');
+    const resumo = $('#status-resumo');
+    const acts = state.filtered;
+
+    const ordem = ['Concluída', 'Em andamento', 'Atrasada', 'Não iniciada'];
+    const contagem = {};
+    ordem.forEach(k => contagem[k] = 0);
+    acts.forEach(a => { contagem[a.status] = (contagem[a.status] || 0) + 1; });
+
+    const total = acts.length || 1;
+    const pesos = acts.reduce((s, a) => s + a.weight, 0) || 1;
+    const pesoPorStatus = {};
+    ordem.forEach(k => pesoPorStatus[k] = 0);
+    acts.forEach(a => { pesoPorStatus[a.status] += a.weight; });
+
+    lista.innerHTML = ordem.map(k => {
+        const n = contagem[k] || 0;
+        const pct = (n / total) * 100;
+        const pctPeso = (pesoPorStatus[k] / pesos) * 100;
+        return `
+            <div class="status-row">
+                <span class="status-dot" style="background:${CORES_STATUS[k]}"></span>
+                <span class="status-nome">${k}</span>
+                <span class="status-barra"><i style="width:${pct.toFixed(1)}%;background:${CORES_STATUS[k]}"></i></span>
+                <span class="status-num"><b>${n}</b> · ${fmtPct(pctPeso, 0)}%</span>
+            </div>
+        `;
+    }).join('');
+
+    resumo.textContent = `${total} atividade${total === 1 ? '' : 's'} no filtro atual`;
+}
+
+/* ------------------------------------------------------------------ */
+/* Tabela                                                              */
+/* ------------------------------------------------------------------ */
+
+function renderTabela() {
+    const tbody = $('#tabela-body');
+    const resumo = $('#tabela-resumo');
+    const acts = state.filtered;
+
+    if (!acts.length) {
+        tbody.innerHTML = `<tr><td colspan="9" class="tabela-vazia">Nenhuma atividade encontrada com os filtros atuais.</td></tr>`;
+        resumo.textContent = '';
+        return;
+    }
+
+    const limite = 600;
+    const lista = acts.slice().sort((a, b) => a.pStart - b.pStart || a.name.localeCompare(b.name, 'pt-BR'));
+    const exibidas = lista.slice(0, limite);
+
+    tbody.innerHTML = exibidas.map((a, i) => {
+        const pct = a.progress * 100;
+        const classePct = a.status === 'Concluída' ? 'completo' : (a.status === 'Atrasada' ? 'atraso' : '');
+        const classeTag = a.status === 'Concluída' ? 'concluida'
+            : a.status === 'Em andamento' ? 'andamento'
+            : a.status === 'Atrasada' ? 'atrasada' : 'naoiniciada';
+
+        return `
+            <tr>
+                <td class="col-num" style="color:var(--texto-fraco)">${i + 1}</td>
+                <td class="col-nome">${escaparHtml(a.name)}</td>
+                <td style="color:var(--texto-suave)">${escaparHtml(a.group)}</td>
+                <td class="col-num">${fmtData(a.pStart)}</td>
+                <td class="col-num">${fmtData(a.pFinish)}</td>
+                <td class="col-num">${fmtNum(a.duration, 0)}</td>
+                <td class="col-num">${fmtNum(a.weight, 2)}</td>
+                <td>
+                    <div class="prog">
+                        <span class="prog-barra"><i class="${classePct}" style="width:${pct.toFixed(1)}%"></i></span>
+                        <span class="prog-txt">${fmtPct(pct, 0)}%</span>
+                    </div>
+                </td>
+                <td><span class="tag ${classeTag}">${a.status}</span></td>
+            </tr>
+        `;
+    }).join('');
+
+    resumo.textContent = lista.length > limite
+        ? `Exibindo ${limite} de ${lista.length} atividades — refine os filtros para ver as demais.`
+        : `${lista.length} atividade${lista.length === 1 ? '' : 's'}`;
+}
+
+function escaparHtml(txt) {
+    return String(txt ?? '')
+        .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+}
+
+/* ------------------------------------------------------------------ */
+/* Exportação CSV da curva                                             */
+/* ------------------------------------------------------------------ */
+
+function exportarCSV() {
+    const s = state.series;
+    if (!s) return;
+
+    const linhas = [['Data', 'Periodo', 'Planejado_%', 'Realizado_%', 'Desvio_pp']];
+    s.points.forEach(p => {
+        linhas.push([
+            fmtData(p.date),
+            p.isDataDate ? 'Data de corte' : p.label,
+            (p.planned * 100).toFixed(3).replace('.', ','),
+            p.actual === null ? '' : (p.actual * 100).toFixed(3).replace('.', ','),
+            p.actual === null ? '' : ((p.actual - p.planned) * 100).toFixed(3).replace('.', ',')
+        ]);
+    });
+
+    if (s.forecast && s.forecast.length) {
+        linhas.push([]);
+        linhas.push(['Tendencia', 'Data', 'Projecao_%']);
+        s.forecast.forEach(p => {
+            linhas.push(['', fmtData(p.date), (p.value * 100).toFixed(3).replace('.', ',')]);
+        });
+    }
+
+    const csv = '\uFEFF' + linhas.map(l => l.join(';')).join('\r\n');
+    const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `curva-s_${(state.fileName || 'cronograma').replace(/\.[^.]+$/, '')}.csv`;
+    a.click();
+    setTimeout(() => URL.revokeObjectURL(url), 1500);
+}
+
+/* ------------------------------------------------------------------ */
+/* Dados de exemplo                                                    */
+/* ------------------------------------------------------------------ */
+
+function carregarExemplo() {
+    const hoje = startOfDay(new Date());
+    const inicioProjeto = addDays(hoje, -240);
+
+    const grupos = ['Terraplenagem', 'Drenagem', 'Pavimentação', 'Sinalização', 'Estruturas', 'Meio ambiente'];
+    const tarefas = [
+        'Mobilização e canteiro', 'Limpeza e supressão vegetal', 'Corte e aterro',
+        'Regularização do subleito', 'Drenagem profunda', 'Drenagem superficial',
+        'Base e sub-base', 'Imprimação e pintura de ligação', 'CBUQ — faixa 1',
+        'CBUQ — faixa 2', 'Sinalização horizontal', 'Sinalização vertical',
+        'Recuperação de taludes', 'Plantio e recomposição', 'Obra de arte especial',
+        'Urbanização e paisagismo'
+    ];
+
+    let seed = 7;
+    const rnd = () => (seed = (seed * 9301 + 49297) % 233280) / 233280;
+
+    const atividades = [];
+    for (let g = 0; g < grupos.length; g++) {
+        for (let i = 0; i < 4; i++) {
+            const nome = tarefas[(g * 4 + i) % tarefas.length];
+            const offset = Math.round(g * 34 + i * 19 + rnd() * 14);
+            const dur = Math.round(34 + rnd() * 58);
+            const pStart = addDays(inicioProjeto, offset);
+            const pFinish = addDays(pStart, dur);
+
+            const decorrido = (hoje - pStart) / DIAS;
+            let progresso = decorrido <= 0 ? 0 : decorrido >= dur ? 1 : decorrido / dur;
+            progresso = clamp(progresso * (0.70 + rnd() * 0.48), 0, 1);
+            progresso = Math.round(progresso * 100) / 100;
+
+            atividades.push({
+                index: atividades.length + 1,
+                name: `${g + 1}.${i + 1} ${nome}`,
+                group: grupos[g],
+                responsible: '',
+                pStart,
+                pFinish,
+                progress: progresso,
+                weight: Math.round(dur * (0.6 + rnd())),
+                duration: dur + 1,
+                actualStart: pStart,
+                actualFinish: progresso >= 0.999 ? pFinish : null,
+                status: 'Não iniciada',
+                aStart: pStart,
+                aEnd: pFinish
+            });
+        }
+    }
+
+    state.fileName = 'cronograma_exemplo';
+    state.activities = atividades;
+    state.rows = [];
+    state.headers = [];
+    state.mapping = {};
+    state.dataDate = hoje;
+
+    const chip = $('#file-chip');
+    chip.textContent = 'Dados de exemplo';
+    chip.hidden = false;
+
+    $('#load-card').hidden = true;
+    $('#config-card').hidden = false;
+    $('#kpi-grid').hidden = false;
+    $('#scurve-card').hidden = false;
+    $('#bars-card').hidden = false;
+    $('#status-card').hidden = false;
+    $('#tabela-card').hidden = false;
+    $('#detalhes-map').hidden = true;
+
+    // Filtros
+    const selGrupo = $('#sel-grupo');
+    selGrupo.innerHTML = '<option value="all">Todos</option>';
+    [...new Set(atividades.map(a => a.group))].sort().forEach(g => {
+        const o = document.createElement('option');
+        o.value = g;
+        o.textContent = g;
+        selGrupo.appendChild(o);
+    });
+    selGrupo.value = 'all';
+    state.filters.grupo = 'all';
+    $('#sel-sheet').innerHTML = '<option>Exemplo</option>';
+    $('#in-data-corte').value = toISODate(hoje);
+
+    atualizar();
+}
+
+/* ------------------------------------------------------------------ */
+/* Eventos                                                             */
+/* ------------------------------------------------------------------ */
+
+// Arquivo
+$('#file-input').addEventListener('change', ev => {
+    const f = ev.target.files && ev.target.files[0];
+    if (f) lerArquivo(f);
+    ev.target.value = '';
+});
+
+const dz = $('#dropzone');
+dz.addEventListener('click', () => $('#file-input').click());
+dz.addEventListener('keydown', ev => {
+    if (ev.key === 'Enter' || ev.key === ' ') { ev.preventDefault(); $('#file-input').click(); }
+});
+['dragenter', 'dragover'].forEach(evt => {
+    dz.addEventListener(evt, ev => { ev.preventDefault(); dz.classList.add('drag'); });
+});
+['dragleave', 'drop'].forEach(evt => {
+    dz.addEventListener(evt, ev => { ev.preventDefault(); dz.classList.remove('drag'); });
+});
+dz.addEventListener('drop', ev => {
+    const f = ev.dataTransfer.files && ev.dataTransfer.files[0];
+    if (f) lerArquivo(f);
+});
+document.addEventListener('dragover', e => e.preventDefault());
+document.addEventListener('drop', e => {
+    if (e.target.closest('#dropzone')) return;
+    e.preventDefault();
+    const f = e.dataTransfer.files && e.dataTransfer.files[0];
+    if (f) lerArquivo(f);
+});
+
+// Botões
+$('#btn-exemplo').addEventListener('click', carregarExemplo);
+$('#btn-trocar').addEventListener('click', () => $('#file-input').click());
+$('#btn-csv').addEventListener('click', exportarCSV);
+
+// Aba
+$('#sel-sheet').addEventListener('change', ev => {
+    if (!state.workbook) return;
+    try {
+        carregarAba(ev.target.value);
+    } catch (err) {
+        $('#load-msg').innerHTML = `<div class="aviso erro">${err.message}</div>`;
+    }
+});
+
+// Parâmetros
+$('#in-data-corte').addEventListener('change', ev => {
+    const d = parseData(ev.target.value);
+    if (d) { state.dataDate = d; atualizar(); }
+});
+
+$('#sel-gran').addEventListener('change', ev => {
+    state.granularity = ev.target.value;
+    atualizar();
+});
+
+$('#sel-grupo').addEventListener('change', ev => {
+    state.filters.grupo = ev.target.value;
+    atualizar();
+});
+
+$('#sel-status').addEventListener('change', ev => {
+    state.filters.status = ev.target.value;
+    atualizar();
+});
+
+$('#in-busca').addEventListener('input', debounce(ev => {
+    state.filters.search = ev.target.value;
+    atualizar();
+}, 220));
+
+// Redimensionamento
+window.addEventListener('resize', debounce(() => {
+    drawSCurve();
+    drawBars();
+}, 140));
+</script>
+</body>
+</html>
