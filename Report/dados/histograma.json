@@ -1,0 +1,5393 @@
+[
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "Equipamento",
+    "mes": "2026-03-31",
+    "equipamento": "Ambulância tipo B",
+    "prev": 1,
+    "real": 1.0
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "Equipamento",
+    "mes": "2026-04-30",
+    "equipamento": "Ambulância tipo B",
+    "prev": 1,
+    "real": 1.0
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "Equipamento",
+    "mes": "2026-05-31",
+    "equipamento": "Ambulância tipo B",
+    "prev": 1,
+    "real": 1.0
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "Equipamento",
+    "mes": "2026-06-30",
+    "equipamento": "Ambulância tipo B",
+    "prev": 1,
+    "real": 1.0
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "Equipamento",
+    "mes": "2026-07-31",
+    "equipamento": "Ambulância tipo B",
+    "prev": 0,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "Equipamento",
+    "mes": "2026-08-31",
+    "equipamento": "Ambulância tipo B",
+    "prev": 0,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "Equipamento",
+    "mes": "2026-09-30",
+    "equipamento": "Ambulância tipo B",
+    "prev": 0,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "Equipamento",
+    "mes": "2026-10-31",
+    "equipamento": "Ambulância tipo B",
+    "prev": 0,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "Equipamento",
+    "mes": "2026-11-30",
+    "equipamento": "Ambulância tipo B",
+    "prev": 0,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "Equipamento",
+    "mes": "2026-12-31",
+    "equipamento": "Ambulância tipo B",
+    "prev": 0,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "Equipamento",
+    "mes": "2027-01-31",
+    "equipamento": "Ambulância tipo B",
+    "prev": 0,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "Equipamento",
+    "mes": "2027-02-28",
+    "equipamento": "Ambulância tipo B",
+    "prev": 0,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "Equipamento",
+    "mes": "2027-03-31",
+    "equipamento": "Ambulância tipo B",
+    "prev": 0,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "Equipamento",
+    "mes": "2026-03-31",
+    "equipamento": "Caminhão basculante (16,00 m3)",
+    "prev": 10,
+    "real": 13.0
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "Equipamento",
+    "mes": "2026-04-30",
+    "equipamento": "Caminhão basculante (16,00 m3)",
+    "prev": 15,
+    "real": 15.0
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "Equipamento",
+    "mes": "2026-05-31",
+    "equipamento": "Caminhão basculante (16,00 m3)",
+    "prev": 15,
+    "real": 15.0
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "Equipamento",
+    "mes": "2026-06-30",
+    "equipamento": "Caminhão basculante (16,00 m3)",
+    "prev": 15,
+    "real": 15.0
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "Equipamento",
+    "mes": "2026-07-31",
+    "equipamento": "Caminhão basculante (16,00 m3)",
+    "prev": 15,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "Equipamento",
+    "mes": "2026-08-31",
+    "equipamento": "Caminhão basculante (16,00 m3)",
+    "prev": 15,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "Equipamento",
+    "mes": "2026-09-30",
+    "equipamento": "Caminhão basculante (16,00 m3)",
+    "prev": 15,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "Equipamento",
+    "mes": "2026-10-31",
+    "equipamento": "Caminhão basculante (16,00 m3)",
+    "prev": 15,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "Equipamento",
+    "mes": "2026-11-30",
+    "equipamento": "Caminhão basculante (16,00 m3)",
+    "prev": 15,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "Equipamento",
+    "mes": "2026-12-31",
+    "equipamento": "Caminhão basculante (16,00 m3)",
+    "prev": 15,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "Equipamento",
+    "mes": "2027-01-31",
+    "equipamento": "Caminhão basculante (16,00 m3)",
+    "prev": 15,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "Equipamento",
+    "mes": "2027-02-28",
+    "equipamento": "Caminhão basculante (16,00 m3)",
+    "prev": 15,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "Equipamento",
+    "mes": "2027-03-31",
+    "equipamento": "Caminhão basculante (16,00 m3)",
+    "prev": 5,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "Equipamento",
+    "mes": "2026-03-31",
+    "equipamento": "Caminhão comboio",
+    "prev": 1,
+    "real": 1.0
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "Equipamento",
+    "mes": "2026-04-30",
+    "equipamento": "Caminhão comboio",
+    "prev": 1,
+    "real": 2.0
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "Equipamento",
+    "mes": "2026-05-31",
+    "equipamento": "Caminhão comboio",
+    "prev": 1,
+    "real": 2.0
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "Equipamento",
+    "mes": "2026-06-30",
+    "equipamento": "Caminhão comboio",
+    "prev": 1,
+    "real": 2.0
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "Equipamento",
+    "mes": "2026-07-31",
+    "equipamento": "Caminhão comboio",
+    "prev": 1,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "Equipamento",
+    "mes": "2026-08-31",
+    "equipamento": "Caminhão comboio",
+    "prev": 1,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "Equipamento",
+    "mes": "2026-09-30",
+    "equipamento": "Caminhão comboio",
+    "prev": 1,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "Equipamento",
+    "mes": "2026-10-31",
+    "equipamento": "Caminhão comboio",
+    "prev": 1,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "Equipamento",
+    "mes": "2026-11-30",
+    "equipamento": "Caminhão comboio",
+    "prev": 1,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "Equipamento",
+    "mes": "2026-12-31",
+    "equipamento": "Caminhão comboio",
+    "prev": 1,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "Equipamento",
+    "mes": "2027-01-31",
+    "equipamento": "Caminhão comboio",
+    "prev": 1,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "Equipamento",
+    "mes": "2027-02-28",
+    "equipamento": "Caminhão comboio",
+    "prev": 1,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "Equipamento",
+    "mes": "2027-03-31",
+    "equipamento": "Caminhão comboio",
+    "prev": 1,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "Equipamento",
+    "mes": "2026-03-31",
+    "equipamento": "Caminhão pipa (16.000,00 l)",
+    "prev": 2,
+    "real": 1.0
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "Equipamento",
+    "mes": "2026-04-30",
+    "equipamento": "Caminhão pipa (16.000,00 l)",
+    "prev": 2,
+    "real": 2.0
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "Equipamento",
+    "mes": "2026-05-31",
+    "equipamento": "Caminhão pipa (16.000,00 l)",
+    "prev": 2,
+    "real": 2.0
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "Equipamento",
+    "mes": "2026-06-30",
+    "equipamento": "Caminhão pipa (16.000,00 l)",
+    "prev": 2,
+    "real": 2.0
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "Equipamento",
+    "mes": "2026-07-31",
+    "equipamento": "Caminhão pipa (16.000,00 l)",
+    "prev": 2,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "Equipamento",
+    "mes": "2026-08-31",
+    "equipamento": "Caminhão pipa (16.000,00 l)",
+    "prev": 2,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "Equipamento",
+    "mes": "2026-09-30",
+    "equipamento": "Caminhão pipa (16.000,00 l)",
+    "prev": 2,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "Equipamento",
+    "mes": "2026-10-31",
+    "equipamento": "Caminhão pipa (16.000,00 l)",
+    "prev": 2,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "Equipamento",
+    "mes": "2026-11-30",
+    "equipamento": "Caminhão pipa (16.000,00 l)",
+    "prev": 2,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "Equipamento",
+    "mes": "2026-12-31",
+    "equipamento": "Caminhão pipa (16.000,00 l)",
+    "prev": 2,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "Equipamento",
+    "mes": "2027-01-31",
+    "equipamento": "Caminhão pipa (16.000,00 l)",
+    "prev": 2,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "Equipamento",
+    "mes": "2027-02-28",
+    "equipamento": "Caminhão pipa (16.000,00 l)",
+    "prev": 2,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "Equipamento",
+    "mes": "2027-03-31",
+    "equipamento": "Caminhão pipa (16.000,00 l)",
+    "prev": 2,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "Equipamento",
+    "mes": "2026-03-31",
+    "equipamento": "Gerador a diesel",
+    "prev": 1,
+    "real": 1.0
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "Equipamento",
+    "mes": "2026-04-30",
+    "equipamento": "Gerador a diesel",
+    "prev": 1,
+    "real": 3.0
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "Equipamento",
+    "mes": "2026-05-31",
+    "equipamento": "Gerador a diesel",
+    "prev": 1,
+    "real": 3.0
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "Equipamento",
+    "mes": "2026-06-30",
+    "equipamento": "Caminhão Munck",
+    "prev": null,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "Equipamento",
+    "mes": "2026-06-30",
+    "equipamento": "Gerador a diesel",
+    "prev": 1,
+    "real": 2.0
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "Equipamento",
+    "mes": "2026-07-31",
+    "equipamento": "Gerador a diesel",
+    "prev": 1,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "Equipamento",
+    "mes": "2026-08-31",
+    "equipamento": "Gerador a diesel",
+    "prev": 1,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "Equipamento",
+    "mes": "2026-09-30",
+    "equipamento": "Gerador a diesel",
+    "prev": 1,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "Equipamento",
+    "mes": "2026-10-31",
+    "equipamento": "Gerador a diesel",
+    "prev": 1,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "Equipamento",
+    "mes": "2026-11-30",
+    "equipamento": "Gerador a diesel",
+    "prev": 1,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "Equipamento",
+    "mes": "2026-12-31",
+    "equipamento": "Gerador a diesel",
+    "prev": 1,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "Equipamento",
+    "mes": "2027-01-31",
+    "equipamento": "Gerador a diesel",
+    "prev": 1,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "Equipamento",
+    "mes": "2027-02-28",
+    "equipamento": "Gerador a diesel",
+    "prev": 1,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "Equipamento",
+    "mes": "2027-03-31",
+    "equipamento": "Gerador a diesel",
+    "prev": 1,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "Equipamento",
+    "mes": "2026-03-31",
+    "equipamento": "Escavadeira hidráulica 20 Ton",
+    "prev": 2,
+    "real": 3.0
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "Equipamento",
+    "mes": "2026-04-30",
+    "equipamento": "Escavadeira hidráulica 20 Ton",
+    "prev": 2,
+    "real": 3.0
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "Equipamento",
+    "mes": "2026-05-31",
+    "equipamento": "Escavadeira hidráulica 20 Ton",
+    "prev": 2,
+    "real": 3.0
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "Equipamento",
+    "mes": "2026-06-30",
+    "equipamento": "Escavadeira hidráulica 20 Ton",
+    "prev": 2,
+    "real": 3.0
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "Equipamento",
+    "mes": "2026-07-31",
+    "equipamento": "Escavadeira hidráulica 20 Ton",
+    "prev": 2,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "Equipamento",
+    "mes": "2026-08-31",
+    "equipamento": "Escavadeira hidráulica 20 Ton",
+    "prev": 2,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "Equipamento",
+    "mes": "2026-09-30",
+    "equipamento": "Escavadeira hidráulica 20 Ton",
+    "prev": 2,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "Equipamento",
+    "mes": "2026-10-31",
+    "equipamento": "Escavadeira hidráulica 20 Ton",
+    "prev": 2,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "Equipamento",
+    "mes": "2026-11-30",
+    "equipamento": "Escavadeira hidráulica 20 Ton",
+    "prev": 2,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "Equipamento",
+    "mes": "2026-12-31",
+    "equipamento": "Escavadeira hidráulica 20 Ton",
+    "prev": 2,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "Equipamento",
+    "mes": "2027-01-31",
+    "equipamento": "Escavadeira hidráulica 20 Ton",
+    "prev": 2,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "Equipamento",
+    "mes": "2027-02-28",
+    "equipamento": "Escavadeira hidráulica 20 Ton",
+    "prev": 2,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "Equipamento",
+    "mes": "2027-03-31",
+    "equipamento": "Escavadeira hidráulica 20 Ton",
+    "prev": 2,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "Equipamento",
+    "mes": "2026-03-31",
+    "equipamento": "Escavadeira hidráulica 36 Ton",
+    "prev": 4,
+    "real": 4.0
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "Equipamento",
+    "mes": "2026-04-30",
+    "equipamento": "Escavadeira hidráulica 36 Ton",
+    "prev": 4,
+    "real": 6.0
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "Equipamento",
+    "mes": "2026-05-31",
+    "equipamento": "Escavadeira hidráulica 36 Ton",
+    "prev": 4,
+    "real": 6.0
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "Equipamento",
+    "mes": "2026-06-30",
+    "equipamento": "Escavadeira hidráulica 36 Ton",
+    "prev": 4,
+    "real": 6.0
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "Equipamento",
+    "mes": "2026-07-31",
+    "equipamento": "Escavadeira hidráulica 36 Ton",
+    "prev": 4,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "Equipamento",
+    "mes": "2026-08-31",
+    "equipamento": "Escavadeira hidráulica 36 Ton",
+    "prev": 4,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "Equipamento",
+    "mes": "2026-09-30",
+    "equipamento": "Escavadeira hidráulica 36 Ton",
+    "prev": 4,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "Equipamento",
+    "mes": "2026-10-31",
+    "equipamento": "Escavadeira hidráulica 36 Ton",
+    "prev": 4,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "Equipamento",
+    "mes": "2026-11-30",
+    "equipamento": "Escavadeira hidráulica 36 Ton",
+    "prev": 4,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "Equipamento",
+    "mes": "2026-12-31",
+    "equipamento": "Escavadeira hidráulica 36 Ton",
+    "prev": 4,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "Equipamento",
+    "mes": "2027-01-31",
+    "equipamento": "Escavadeira hidráulica 36 Ton",
+    "prev": 4,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "Equipamento",
+    "mes": "2027-02-28",
+    "equipamento": "Escavadeira hidráulica 36 Ton",
+    "prev": 4,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "Equipamento",
+    "mes": "2027-03-31",
+    "equipamento": "Escavadeira hidráulica 36 Ton",
+    "prev": 2,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "Equipamento",
+    "mes": "2026-03-31",
+    "equipamento": "Extrusora de valeta trapezoidal",
+    "prev": 0,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "Equipamento",
+    "mes": "2026-04-30",
+    "equipamento": "Extrusora de valeta trapezoidal",
+    "prev": 0,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "Equipamento",
+    "mes": "2026-05-31",
+    "equipamento": "Extrusora de valeta trapezoidal",
+    "prev": 0,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "Equipamento",
+    "mes": "2026-06-30",
+    "equipamento": "Extrusora de valeta trapezoidal",
+    "prev": 1,
+    "real": 1.0
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "Equipamento",
+    "mes": "2026-07-31",
+    "equipamento": "Extrusora de valeta trapezoidal",
+    "prev": 1,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "Equipamento",
+    "mes": "2026-08-31",
+    "equipamento": "Extrusora de valeta trapezoidal",
+    "prev": 1,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "Equipamento",
+    "mes": "2026-09-30",
+    "equipamento": "Extrusora de valeta trapezoidal",
+    "prev": 1,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "Equipamento",
+    "mes": "2026-10-31",
+    "equipamento": "Extrusora de valeta trapezoidal",
+    "prev": 1,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "Equipamento",
+    "mes": "2026-11-30",
+    "equipamento": "Extrusora de valeta trapezoidal",
+    "prev": 1,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "Equipamento",
+    "mes": "2026-12-31",
+    "equipamento": "Extrusora de valeta trapezoidal",
+    "prev": 1,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "Equipamento",
+    "mes": "2027-01-31",
+    "equipamento": "Extrusora de valeta trapezoidal",
+    "prev": 1,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "Equipamento",
+    "mes": "2027-02-28",
+    "equipamento": "Extrusora de valeta trapezoidal",
+    "prev": 1,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "Equipamento",
+    "mes": "2027-03-31",
+    "equipamento": "Extrusora de valeta trapezoidal",
+    "prev": 1,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "Equipamento",
+    "mes": "2026-03-31",
+    "equipamento": "Mini escavadeira 3,5 Ton.",
+    "prev": 0,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "Equipamento",
+    "mes": "2026-04-30",
+    "equipamento": "Mini escavadeira 3,5 Ton.",
+    "prev": 0,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "Equipamento",
+    "mes": "2026-05-31",
+    "equipamento": "Mini escavadeira 3,5 Ton.",
+    "prev": 0,
+    "real": 1.0
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "Equipamento",
+    "mes": "2026-06-30",
+    "equipamento": "Mini escavadeira 3,5 Ton.",
+    "prev": 1,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "Equipamento",
+    "mes": "2026-07-31",
+    "equipamento": "Mini escavadeira 3,5 Ton.",
+    "prev": 1,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "Equipamento",
+    "mes": "2026-08-31",
+    "equipamento": "Mini escavadeira 3,5 Ton.",
+    "prev": 1,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "Equipamento",
+    "mes": "2026-09-30",
+    "equipamento": "Mini escavadeira 3,5 Ton.",
+    "prev": 1,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "Equipamento",
+    "mes": "2026-10-31",
+    "equipamento": "Mini escavadeira 3,5 Ton.",
+    "prev": 1,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "Equipamento",
+    "mes": "2026-11-30",
+    "equipamento": "Mini escavadeira 3,5 Ton.",
+    "prev": 1,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "Equipamento",
+    "mes": "2026-12-31",
+    "equipamento": "Mini escavadeira 3,5 Ton.",
+    "prev": 1,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "Equipamento",
+    "mes": "2027-01-31",
+    "equipamento": "Mini escavadeira 3,5 Ton.",
+    "prev": 1,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "Equipamento",
+    "mes": "2027-02-28",
+    "equipamento": "Mini escavadeira 3,5 Ton.",
+    "prev": 1,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "Equipamento",
+    "mes": "2027-03-31",
+    "equipamento": "Mini escavadeira 3,5 Ton.",
+    "prev": 1,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "Equipamento",
+    "mes": "2026-03-31",
+    "equipamento": "Motoscraper Caterpillar 631",
+    "prev": 8,
+    "real": 5.0
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "Equipamento",
+    "mes": "2026-04-30",
+    "equipamento": "Motoscraper Caterpillar 631",
+    "prev": 8,
+    "real": 9.0
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "Equipamento",
+    "mes": "2026-05-31",
+    "equipamento": "Motoscraper Caterpillar 631",
+    "prev": 8,
+    "real": 10.0
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "Equipamento",
+    "mes": "2026-06-30",
+    "equipamento": "Motoscraper Caterpillar 631",
+    "prev": 8,
+    "real": 10.0
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "Equipamento",
+    "mes": "2026-07-31",
+    "equipamento": "Motoscraper Caterpillar 631",
+    "prev": 8,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "Equipamento",
+    "mes": "2026-08-31",
+    "equipamento": "Motoscraper Caterpillar 631",
+    "prev": 8,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "Equipamento",
+    "mes": "2026-09-30",
+    "equipamento": "Motoscraper Caterpillar 631",
+    "prev": 8,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "Equipamento",
+    "mes": "2026-10-31",
+    "equipamento": "Motoscraper Caterpillar 631",
+    "prev": 8,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "Equipamento",
+    "mes": "2026-11-30",
+    "equipamento": "Motoscraper Caterpillar 631",
+    "prev": 8,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "Equipamento",
+    "mes": "2026-12-31",
+    "equipamento": "Motoscraper Caterpillar 631",
+    "prev": 8,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "Equipamento",
+    "mes": "2027-01-31",
+    "equipamento": "Motoscraper Caterpillar 631",
+    "prev": 8,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "Equipamento",
+    "mes": "2027-02-28",
+    "equipamento": "Motoscraper Caterpillar 631",
+    "prev": 8,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "Equipamento",
+    "mes": "2027-03-31",
+    "equipamento": "Motoscraper Caterpillar 631",
+    "prev": 0,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "Equipamento",
+    "mes": "2026-03-31",
+    "equipamento": "Motoniveladora",
+    "prev": 3,
+    "real": 3.0
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "Equipamento",
+    "mes": "2026-04-30",
+    "equipamento": "Motoniveladora",
+    "prev": 3,
+    "real": 3.0
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "Equipamento",
+    "mes": "2026-05-31",
+    "equipamento": "Motoniveladora",
+    "prev": 3,
+    "real": 3.0
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "Equipamento",
+    "mes": "2026-06-30",
+    "equipamento": "Motoniveladora",
+    "prev": 3,
+    "real": 3.0
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "Equipamento",
+    "mes": "2026-07-31",
+    "equipamento": "Motoniveladora",
+    "prev": 3,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "Equipamento",
+    "mes": "2026-08-31",
+    "equipamento": "Motoniveladora",
+    "prev": 3,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "Equipamento",
+    "mes": "2026-09-30",
+    "equipamento": "Motoniveladora",
+    "prev": 3,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "Equipamento",
+    "mes": "2026-10-31",
+    "equipamento": "Motoniveladora",
+    "prev": 3,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "Equipamento",
+    "mes": "2026-11-30",
+    "equipamento": "Motoniveladora",
+    "prev": 3,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "Equipamento",
+    "mes": "2026-12-31",
+    "equipamento": "Motoniveladora",
+    "prev": 3,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "Equipamento",
+    "mes": "2027-01-31",
+    "equipamento": "Motoniveladora",
+    "prev": 3,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "Equipamento",
+    "mes": "2027-02-28",
+    "equipamento": "Motoniveladora",
+    "prev": 3,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "Equipamento",
+    "mes": "2027-03-31",
+    "equipamento": "Motoniveladora",
+    "prev": 2,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "Equipamento",
+    "mes": "2026-03-31",
+    "equipamento": "Motoserra",
+    "prev": 2,
+    "real": 0.0
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "Equipamento",
+    "mes": "2026-04-30",
+    "equipamento": "Motoserra",
+    "prev": 2,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "Equipamento",
+    "mes": "2026-05-31",
+    "equipamento": "Motoserra",
+    "prev": 2,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "Equipamento",
+    "mes": "2026-06-30",
+    "equipamento": "Motoserra",
+    "prev": 0,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "Equipamento",
+    "mes": "2026-07-31",
+    "equipamento": "Motoserra",
+    "prev": 0,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "Equipamento",
+    "mes": "2026-08-31",
+    "equipamento": "Motoserra",
+    "prev": 0,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "Equipamento",
+    "mes": "2026-09-30",
+    "equipamento": "Motoserra",
+    "prev": 0,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "Equipamento",
+    "mes": "2026-10-31",
+    "equipamento": "Motoserra",
+    "prev": 0,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "Equipamento",
+    "mes": "2026-11-30",
+    "equipamento": "Motoserra",
+    "prev": 0,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "Equipamento",
+    "mes": "2026-12-31",
+    "equipamento": "Motoserra",
+    "prev": 0,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "Equipamento",
+    "mes": "2027-01-31",
+    "equipamento": "Motoserra",
+    "prev": 0,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "Equipamento",
+    "mes": "2027-02-28",
+    "equipamento": "Motoserra",
+    "prev": 0,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "Equipamento",
+    "mes": "2027-03-31",
+    "equipamento": "Motoserra",
+    "prev": 0,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "Equipamento",
+    "mes": "2026-03-31",
+    "equipamento": "Ônibus",
+    "prev": 3,
+    "real": 1.0
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "Equipamento",
+    "mes": "2026-04-30",
+    "equipamento": "Ônibus",
+    "prev": 4,
+    "real": 2.0
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "Equipamento",
+    "mes": "2026-05-31",
+    "equipamento": "Ônibus",
+    "prev": 4,
+    "real": 2.0
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "Equipamento",
+    "mes": "2026-06-30",
+    "equipamento": "Ônibus",
+    "prev": 4,
+    "real": 2.0
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "Equipamento",
+    "mes": "2026-07-31",
+    "equipamento": "Ônibus",
+    "prev": 4,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "Equipamento",
+    "mes": "2026-08-31",
+    "equipamento": "Ônibus",
+    "prev": 4,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "Equipamento",
+    "mes": "2026-09-30",
+    "equipamento": "Ônibus",
+    "prev": 4,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "Equipamento",
+    "mes": "2026-10-31",
+    "equipamento": "Ônibus",
+    "prev": 4,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "Equipamento",
+    "mes": "2026-11-30",
+    "equipamento": "Ônibus",
+    "prev": 4,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "Equipamento",
+    "mes": "2026-12-31",
+    "equipamento": "Ônibus",
+    "prev": 4,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "Equipamento",
+    "mes": "2027-01-31",
+    "equipamento": "Ônibus",
+    "prev": 4,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "Equipamento",
+    "mes": "2027-02-28",
+    "equipamento": "Ônibus",
+    "prev": 3,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "Equipamento",
+    "mes": "2027-03-31",
+    "equipamento": "Ônibus",
+    "prev": 2,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "Equipamento",
+    "mes": "2026-03-31",
+    "equipamento": "Posto de abastecimento",
+    "prev": 1,
+    "real": 0.0
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "Equipamento",
+    "mes": "2026-04-30",
+    "equipamento": "Posto de abastecimento",
+    "prev": 1,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "Equipamento",
+    "mes": "2026-05-31",
+    "equipamento": "Posto de abastecimento",
+    "prev": 1,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "Equipamento",
+    "mes": "2026-06-30",
+    "equipamento": "Posto de abastecimento",
+    "prev": 1,
+    "real": 1.0
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "Equipamento",
+    "mes": "2026-07-31",
+    "equipamento": "Posto de abastecimento",
+    "prev": 1,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "Equipamento",
+    "mes": "2026-08-31",
+    "equipamento": "Posto de abastecimento",
+    "prev": 1,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "Equipamento",
+    "mes": "2026-09-30",
+    "equipamento": "Posto de abastecimento",
+    "prev": 1,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "Equipamento",
+    "mes": "2026-10-31",
+    "equipamento": "Posto de abastecimento",
+    "prev": 1,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "Equipamento",
+    "mes": "2026-11-30",
+    "equipamento": "Posto de abastecimento",
+    "prev": 1,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "Equipamento",
+    "mes": "2026-12-31",
+    "equipamento": "Posto de abastecimento",
+    "prev": 1,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "Equipamento",
+    "mes": "2027-01-31",
+    "equipamento": "Posto de abastecimento",
+    "prev": 1,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "Equipamento",
+    "mes": "2027-02-28",
+    "equipamento": "Posto de abastecimento",
+    "prev": 1,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "Equipamento",
+    "mes": "2027-03-31",
+    "equipamento": "Posto de abastecimento",
+    "prev": 1,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "Equipamento",
+    "mes": "2026-03-31",
+    "equipamento": "Retroescavadeira",
+    "prev": 1,
+    "real": 0.0
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "Equipamento",
+    "mes": "2026-04-30",
+    "equipamento": "Retroescavadeira",
+    "prev": 2,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "Equipamento",
+    "mes": "2026-05-31",
+    "equipamento": "Retroescavadeira",
+    "prev": 2,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "Equipamento",
+    "mes": "2026-06-30",
+    "equipamento": "Retroescavadeira",
+    "prev": 2,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "Equipamento",
+    "mes": "2026-07-31",
+    "equipamento": "Retroescavadeira",
+    "prev": 2,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "Equipamento",
+    "mes": "2026-08-31",
+    "equipamento": "Retroescavadeira",
+    "prev": 2,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "Equipamento",
+    "mes": "2026-09-30",
+    "equipamento": "Retroescavadeira",
+    "prev": 2,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "Equipamento",
+    "mes": "2026-10-31",
+    "equipamento": "Retroescavadeira",
+    "prev": 2,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "Equipamento",
+    "mes": "2026-11-30",
+    "equipamento": "Retroescavadeira",
+    "prev": 2,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "Equipamento",
+    "mes": "2026-12-31",
+    "equipamento": "Retroescavadeira",
+    "prev": 2,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "Equipamento",
+    "mes": "2027-01-31",
+    "equipamento": "Retroescavadeira",
+    "prev": 2,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "Equipamento",
+    "mes": "2027-02-28",
+    "equipamento": "Retroescavadeira",
+    "prev": 2,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "Equipamento",
+    "mes": "2027-03-31",
+    "equipamento": "Retroescavadeira",
+    "prev": 2,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "Equipamento",
+    "mes": "2026-03-31",
+    "equipamento": "Rolo compactador pé de carneiro",
+    "prev": 8,
+    "real": 8.0
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "Equipamento",
+    "mes": "2026-04-30",
+    "equipamento": "Rolo compactador pé de carneiro",
+    "prev": 9,
+    "real": 9.0
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "Equipamento",
+    "mes": "2026-05-31",
+    "equipamento": "Rolo compactador pé de carneiro",
+    "prev": 9,
+    "real": 8.0
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "Equipamento",
+    "mes": "2026-06-30",
+    "equipamento": "Rolo compactador pé de carneiro",
+    "prev": 9,
+    "real": 8.0
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "Equipamento",
+    "mes": "2026-07-31",
+    "equipamento": "Rolo compactador pé de carneiro",
+    "prev": 9,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "Equipamento",
+    "mes": "2026-08-31",
+    "equipamento": "Rolo compactador pé de carneiro",
+    "prev": 9,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "Equipamento",
+    "mes": "2026-09-30",
+    "equipamento": "Rolo compactador pé de carneiro",
+    "prev": 9,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "Equipamento",
+    "mes": "2026-10-31",
+    "equipamento": "Rolo compactador pé de carneiro",
+    "prev": 9,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "Equipamento",
+    "mes": "2026-11-30",
+    "equipamento": "Rolo compactador pé de carneiro",
+    "prev": 9,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "Equipamento",
+    "mes": "2026-12-31",
+    "equipamento": "Rolo compactador pé de carneiro",
+    "prev": 9,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "Equipamento",
+    "mes": "2027-01-31",
+    "equipamento": "Rolo compactador pé de carneiro",
+    "prev": 9,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "Equipamento",
+    "mes": "2027-02-28",
+    "equipamento": "Rolo compactador pé de carneiro",
+    "prev": 9,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "Equipamento",
+    "mes": "2027-03-31",
+    "equipamento": "Rolo compactador pé de carneiro",
+    "prev": 4,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "Equipamento",
+    "mes": "2026-03-31",
+    "equipamento": "Rolo compactador Hyster",
+    "prev": 1,
+    "real": 1.0
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "Equipamento",
+    "mes": "2026-04-30",
+    "equipamento": "Rolo compactador Hyster",
+    "prev": 1,
+    "real": 1.0
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "Equipamento",
+    "mes": "2026-05-31",
+    "equipamento": "Rolo compactador Hyster",
+    "prev": 1,
+    "real": 1.0
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "Equipamento",
+    "mes": "2026-06-30",
+    "equipamento": "Rolo compactador Hyster",
+    "prev": 1,
+    "real": 1.0
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "Equipamento",
+    "mes": "2026-07-31",
+    "equipamento": "Rolo compactador Hyster",
+    "prev": 1,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "Equipamento",
+    "mes": "2026-08-31",
+    "equipamento": "Rolo compactador Hyster",
+    "prev": 1,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "Equipamento",
+    "mes": "2026-09-30",
+    "equipamento": "Rolo compactador Hyster",
+    "prev": 1,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "Equipamento",
+    "mes": "2026-10-31",
+    "equipamento": "Rolo compactador Hyster",
+    "prev": 1,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "Equipamento",
+    "mes": "2026-11-30",
+    "equipamento": "Rolo compactador Hyster",
+    "prev": 1,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "Equipamento",
+    "mes": "2026-12-31",
+    "equipamento": "Rolo compactador Hyster",
+    "prev": 1,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "Equipamento",
+    "mes": "2027-01-31",
+    "equipamento": "Rolo compactador Hyster",
+    "prev": 1,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "Equipamento",
+    "mes": "2027-02-28",
+    "equipamento": "Rolo compactador Hyster",
+    "prev": 1,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "Equipamento",
+    "mes": "2027-03-31",
+    "equipamento": "Rolo compactador Hyster",
+    "prev": 0,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "Equipamento",
+    "mes": "2026-03-31",
+    "equipamento": "Rolo compactador liso",
+    "prev": 0,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "Equipamento",
+    "mes": "2026-04-30",
+    "equipamento": "Rolo compactador liso",
+    "prev": 0,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "Equipamento",
+    "mes": "2026-05-31",
+    "equipamento": "Rolo compactador liso",
+    "prev": 0,
+    "real": 1.0
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "Equipamento",
+    "mes": "2026-06-30",
+    "equipamento": "Rolo compactador liso",
+    "prev": 0,
+    "real": 1.0
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "Equipamento",
+    "mes": "2026-07-31",
+    "equipamento": "Rolo compactador liso",
+    "prev": 0,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "Equipamento",
+    "mes": "2026-08-31",
+    "equipamento": "Rolo compactador liso",
+    "prev": 0,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "Equipamento",
+    "mes": "2026-09-30",
+    "equipamento": "Rolo compactador liso",
+    "prev": 0,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "Equipamento",
+    "mes": "2026-10-31",
+    "equipamento": "Rolo compactador liso",
+    "prev": 0,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "Equipamento",
+    "mes": "2026-11-30",
+    "equipamento": "Rolo compactador liso",
+    "prev": 0,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "Equipamento",
+    "mes": "2026-12-31",
+    "equipamento": "Rolo compactador liso",
+    "prev": 0,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "Equipamento",
+    "mes": "2027-01-31",
+    "equipamento": "Rolo compactador liso",
+    "prev": 1,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "Equipamento",
+    "mes": "2027-02-28",
+    "equipamento": "Rolo compactador liso",
+    "prev": 1,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "Equipamento",
+    "mes": "2027-03-31",
+    "equipamento": "Rolo compactador liso",
+    "prev": 1,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "Equipamento",
+    "mes": "2026-03-31",
+    "equipamento": "Trator agrícola com grade aradora",
+    "prev": 6,
+    "real": 6.0
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "Equipamento",
+    "mes": "2026-04-30",
+    "equipamento": "Trator agrícola com grade aradora",
+    "prev": 6,
+    "real": 6.0
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "Equipamento",
+    "mes": "2026-05-31",
+    "equipamento": "Trator agrícola com grade aradora",
+    "prev": 6,
+    "real": 6.0
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "Equipamento",
+    "mes": "2026-06-30",
+    "equipamento": "Trator agrícola com grade aradora",
+    "prev": 6,
+    "real": 6.0
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "Equipamento",
+    "mes": "2026-07-31",
+    "equipamento": "Trator agrícola com grade aradora",
+    "prev": 6,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "Equipamento",
+    "mes": "2026-08-31",
+    "equipamento": "Trator agrícola com grade aradora",
+    "prev": 6,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "Equipamento",
+    "mes": "2026-09-30",
+    "equipamento": "Trator agrícola com grade aradora",
+    "prev": 6,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "Equipamento",
+    "mes": "2026-10-31",
+    "equipamento": "Trator agrícola com grade aradora",
+    "prev": 6,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "Equipamento",
+    "mes": "2026-11-30",
+    "equipamento": "Trator agrícola com grade aradora",
+    "prev": 6,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "Equipamento",
+    "mes": "2026-12-31",
+    "equipamento": "Trator agrícola com grade aradora",
+    "prev": 6,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "Equipamento",
+    "mes": "2027-01-31",
+    "equipamento": "Trator agrícola com grade aradora",
+    "prev": 6,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "Equipamento",
+    "mes": "2027-02-28",
+    "equipamento": "Trator agrícola com grade aradora",
+    "prev": 6,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "Equipamento",
+    "mes": "2027-03-31",
+    "equipamento": "Trator agrícola com grade aradora",
+    "prev": 3,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "Equipamento",
+    "mes": "2026-03-31",
+    "equipamento": "Trator esteiras 41 toneladas",
+    "prev": 2,
+    "real": 2.0
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "Equipamento",
+    "mes": "2026-04-30",
+    "equipamento": "Trator esteiras 41 toneladas",
+    "prev": 2,
+    "real": 2.0
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "Equipamento",
+    "mes": "2026-05-31",
+    "equipamento": "Trator esteiras 41 toneladas",
+    "prev": 2,
+    "real": 5.0
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "Equipamento",
+    "mes": "2026-06-30",
+    "equipamento": "Trator esteiras 41 toneladas",
+    "prev": 2,
+    "real": 5.0
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "Equipamento",
+    "mes": "2026-07-31",
+    "equipamento": "Trator esteiras 41 toneladas",
+    "prev": 2,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "Equipamento",
+    "mes": "2026-08-31",
+    "equipamento": "Trator esteiras 41 toneladas",
+    "prev": 2,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "Equipamento",
+    "mes": "2026-09-30",
+    "equipamento": "Trator esteiras 41 toneladas",
+    "prev": 2,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "Equipamento",
+    "mes": "2026-10-31",
+    "equipamento": "Trator esteiras 41 toneladas",
+    "prev": 2,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "Equipamento",
+    "mes": "2026-11-30",
+    "equipamento": "Trator esteiras 41 toneladas",
+    "prev": 2,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "Equipamento",
+    "mes": "2026-12-31",
+    "equipamento": "Trator esteiras 41 toneladas",
+    "prev": 2,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "Equipamento",
+    "mes": "2027-01-31",
+    "equipamento": "Trator esteiras 41 toneladas",
+    "prev": 2,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "Equipamento",
+    "mes": "2027-02-28",
+    "equipamento": "Trator esteiras 41 toneladas",
+    "prev": 2,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "Equipamento",
+    "mes": "2027-03-31",
+    "equipamento": "Trator esteiras 41 toneladas",
+    "prev": 0,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "Equipamento",
+    "mes": "2026-03-31",
+    "equipamento": "Trator esteiras 14 toneladas",
+    "prev": 4,
+    "real": 5.0
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "Equipamento",
+    "mes": "2026-04-30",
+    "equipamento": "Trator esteiras 14 toneladas",
+    "prev": 4,
+    "real": 5.0
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "Equipamento",
+    "mes": "2026-05-31",
+    "equipamento": "Trator esteiras 14 toneladas",
+    "prev": 4,
+    "real": 4.0
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "Equipamento",
+    "mes": "2026-06-30",
+    "equipamento": "Trator esteiras 14 toneladas",
+    "prev": 4,
+    "real": 4.0
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "Equipamento",
+    "mes": "2026-07-31",
+    "equipamento": "Trator esteiras 14 toneladas",
+    "prev": 4,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "Equipamento",
+    "mes": "2026-08-31",
+    "equipamento": "Trator esteiras 14 toneladas",
+    "prev": 4,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "Equipamento",
+    "mes": "2026-09-30",
+    "equipamento": "Trator esteiras 14 toneladas",
+    "prev": 4,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "Equipamento",
+    "mes": "2026-10-31",
+    "equipamento": "Trator esteiras 14 toneladas",
+    "prev": 4,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "Equipamento",
+    "mes": "2026-11-30",
+    "equipamento": "Trator esteiras 14 toneladas",
+    "prev": 4,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "Equipamento",
+    "mes": "2026-12-31",
+    "equipamento": "Trator esteiras 14 toneladas",
+    "prev": 4,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "Equipamento",
+    "mes": "2027-01-31",
+    "equipamento": "Trator esteiras 14 toneladas",
+    "prev": 4,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "Equipamento",
+    "mes": "2027-02-28",
+    "equipamento": "Trator esteiras 14 toneladas",
+    "prev": 4,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "Equipamento",
+    "mes": "2027-03-31",
+    "equipamento": "Trator esteiras 14 toneladas",
+    "prev": 2,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "MOD",
+    "mes": "2026-03-31",
+    "equipamento": "Auxiliar de Topografia",
+    "prev": 2,
+    "real": 2.0
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "MOD",
+    "mes": "2026-04-30",
+    "equipamento": "Auxiliar de Topografia",
+    "prev": 2,
+    "real": 3.0
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "MOD",
+    "mes": "2026-05-31",
+    "equipamento": "Auxiliar de Topografia",
+    "prev": 2,
+    "real": 3.0
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "MOD",
+    "mes": "2026-06-30",
+    "equipamento": "Auxiliar de Topografia",
+    "prev": 2,
+    "real": 2.0
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "MOD",
+    "mes": "2026-07-31",
+    "equipamento": "Auxiliar de Topografia",
+    "prev": 2,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "MOD",
+    "mes": "2026-08-31",
+    "equipamento": "Auxiliar de Topografia",
+    "prev": 2,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "MOD",
+    "mes": "2026-09-30",
+    "equipamento": "Auxiliar de Topografia",
+    "prev": 2,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "MOD",
+    "mes": "2026-10-31",
+    "equipamento": "Auxiliar de Topografia",
+    "prev": 2,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "MOD",
+    "mes": "2026-11-30",
+    "equipamento": "Auxiliar de Topografia",
+    "prev": 2,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "MOD",
+    "mes": "2026-12-31",
+    "equipamento": "Auxiliar de Topografia",
+    "prev": 2,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "MOD",
+    "mes": "2027-01-31",
+    "equipamento": "Auxiliar de Topografia",
+    "prev": 2,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "MOD",
+    "mes": "2027-02-28",
+    "equipamento": "Auxiliar de Topografia",
+    "prev": 2,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "MOD",
+    "mes": "2027-03-31",
+    "equipamento": "Auxiliar de Topografia",
+    "prev": 2,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "MOD",
+    "mes": "2026-03-31",
+    "equipamento": "Greidista",
+    "prev": 2,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "MOD",
+    "mes": "2026-04-30",
+    "equipamento": "Greidista",
+    "prev": 2,
+    "real": 1.0
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "MOD",
+    "mes": "2026-05-31",
+    "equipamento": "Greidista",
+    "prev": 2,
+    "real": 1.0
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "MOD",
+    "mes": "2026-06-30",
+    "equipamento": "Greidista",
+    "prev": 2,
+    "real": 1.0
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "MOD",
+    "mes": "2026-07-31",
+    "equipamento": "Greidista",
+    "prev": 2,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "MOD",
+    "mes": "2026-08-31",
+    "equipamento": "Greidista",
+    "prev": 2,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "MOD",
+    "mes": "2026-09-30",
+    "equipamento": "Greidista",
+    "prev": 2,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "MOD",
+    "mes": "2026-10-31",
+    "equipamento": "Greidista",
+    "prev": 2,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "MOD",
+    "mes": "2026-11-30",
+    "equipamento": "Greidista",
+    "prev": 2,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "MOD",
+    "mes": "2026-12-31",
+    "equipamento": "Greidista",
+    "prev": 2,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "MOD",
+    "mes": "2027-01-31",
+    "equipamento": "Greidista",
+    "prev": 2,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "MOD",
+    "mes": "2027-02-28",
+    "equipamento": "Greidista",
+    "prev": 1,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "MOD",
+    "mes": "2027-03-31",
+    "equipamento": "Greidista",
+    "prev": 1,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "MOD",
+    "mes": "2026-03-31",
+    "equipamento": "Laboratorista ou ajudante de laboratorista",
+    "prev": 2,
+    "real": 4.0
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "MOD",
+    "mes": "2026-04-30",
+    "equipamento": "Laboratorista ou ajudante de laboratorista",
+    "prev": 3,
+    "real": 4.0
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "MOD",
+    "mes": "2026-05-31",
+    "equipamento": "Laboratorista ou ajudante de laboratorista",
+    "prev": 4,
+    "real": 4.0
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "MOD",
+    "mes": "2026-06-30",
+    "equipamento": "Laboratorista ou ajudante de laboratorista",
+    "prev": 4,
+    "real": 4.0
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "MOD",
+    "mes": "2026-07-31",
+    "equipamento": "Laboratorista ou ajudante de laboratorista",
+    "prev": 4,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "MOD",
+    "mes": "2026-08-31",
+    "equipamento": "Laboratorista ou ajudante de laboratorista",
+    "prev": 4,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "MOD",
+    "mes": "2026-09-30",
+    "equipamento": "Laboratorista ou ajudante de laboratorista",
+    "prev": 4,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "MOD",
+    "mes": "2026-10-31",
+    "equipamento": "Laboratorista ou ajudante de laboratorista",
+    "prev": 4,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "MOD",
+    "mes": "2026-11-30",
+    "equipamento": "Laboratorista ou ajudante de laboratorista",
+    "prev": 4,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "MOD",
+    "mes": "2026-12-31",
+    "equipamento": "Laboratorista ou ajudante de laboratorista",
+    "prev": 4,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "MOD",
+    "mes": "2027-01-31",
+    "equipamento": "Laboratorista ou ajudante de laboratorista",
+    "prev": 4,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "MOD",
+    "mes": "2027-02-28",
+    "equipamento": "Laboratorista ou ajudante de laboratorista",
+    "prev": 4,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "MOD",
+    "mes": "2027-03-31",
+    "equipamento": "Laboratorista ou ajudante de laboratorista",
+    "prev": 3,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "MOD",
+    "mes": "2026-03-31",
+    "equipamento": "Motorista",
+    "prev": 13,
+    "real": 7.0
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "MOD",
+    "mes": "2026-04-30",
+    "equipamento": "Motorista basculante",
+    "prev": 18,
+    "real": 12.0
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "MOD",
+    "mes": "2026-04-30",
+    "equipamento": "Motorista comboio e munck",
+    "prev": null,
+    "real": 4.0
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "MOD",
+    "mes": "2026-05-31",
+    "equipamento": "Motorista comboio e munck",
+    "prev": 3,
+    "real": 4.0
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "MOD",
+    "mes": "2026-06-30",
+    "equipamento": "Motorista",
+    "prev": null,
+    "real": 3.0
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "MOD",
+    "mes": "2026-07-31",
+    "equipamento": "Motorista",
+    "prev": 18,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "MOD",
+    "mes": "2026-08-31",
+    "equipamento": "Motorista",
+    "prev": 18,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "MOD",
+    "mes": "2026-09-30",
+    "equipamento": "Motorista",
+    "prev": 18,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "MOD",
+    "mes": "2026-10-31",
+    "equipamento": "Motorista",
+    "prev": 18,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "MOD",
+    "mes": "2026-11-30",
+    "equipamento": "Motorista",
+    "prev": 18,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "MOD",
+    "mes": "2026-12-31",
+    "equipamento": "Motorista",
+    "prev": 18,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "MOD",
+    "mes": "2027-01-31",
+    "equipamento": "Motorista",
+    "prev": 18,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "MOD",
+    "mes": "2027-02-28",
+    "equipamento": "Motorista",
+    "prev": 18,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "MOD",
+    "mes": "2027-03-31",
+    "equipamento": "Motorista",
+    "prev": 8,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "MOD",
+    "mes": "2026-03-31",
+    "equipamento": "Operador",
+    "prev": 39,
+    "real": 22.0
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "MOD",
+    "mes": "2026-04-30",
+    "equipamento": "Operador",
+    "prev": 41,
+    "real": 25.0
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "MOD",
+    "mes": "2026-05-31",
+    "equipamento": "Motorista Basculante",
+    "prev": 16,
+    "real": 17.0
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "MOD",
+    "mes": "2026-05-31",
+    "equipamento": "Operador",
+    "prev": 41,
+    "real": 38.0
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "MOD",
+    "mes": "2026-06-30",
+    "equipamento": "Motorista basculante",
+    "prev": 18,
+    "real": 16.0
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "MOD",
+    "mes": "2026-06-30",
+    "equipamento": "Operador",
+    "prev": 42,
+    "real": 41.0
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "MOD",
+    "mes": "2026-07-31",
+    "equipamento": "Operador",
+    "prev": 42,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "MOD",
+    "mes": "2026-08-31",
+    "equipamento": "Operador",
+    "prev": 42,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "MOD",
+    "mes": "2026-09-30",
+    "equipamento": "Operador",
+    "prev": 42,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "MOD",
+    "mes": "2026-10-31",
+    "equipamento": "Operador",
+    "prev": 42,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "MOD",
+    "mes": "2026-11-30",
+    "equipamento": "Operador",
+    "prev": 42,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "MOD",
+    "mes": "2026-12-31",
+    "equipamento": "Operador",
+    "prev": 42,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "MOD",
+    "mes": "2027-01-31",
+    "equipamento": "Operador",
+    "prev": 43,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "MOD",
+    "mes": "2027-02-28",
+    "equipamento": "Operador",
+    "prev": 43,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "MOD",
+    "mes": "2027-03-31",
+    "equipamento": "Operador",
+    "prev": 19,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "MOD",
+    "mes": "2026-03-31",
+    "equipamento": "Pedreiro",
+    "prev": 2,
+    "real": 2.0
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "MOD",
+    "mes": "2026-04-30",
+    "equipamento": "Pedreiro",
+    "prev": 2,
+    "real": 7.0
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "MOD",
+    "mes": "2026-05-31",
+    "equipamento": "Pedreiro",
+    "prev": 3,
+    "real": 7.0
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "MOD",
+    "mes": "2026-06-30",
+    "equipamento": "Pedreiro",
+    "prev": 6,
+    "real": 6.0
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "MOD",
+    "mes": "2026-07-31",
+    "equipamento": "Pedreiro",
+    "prev": 6,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "MOD",
+    "mes": "2026-08-31",
+    "equipamento": "Pedreiro",
+    "prev": 8,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "MOD",
+    "mes": "2026-09-30",
+    "equipamento": "Pedreiro",
+    "prev": 8,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "MOD",
+    "mes": "2026-10-31",
+    "equipamento": "Pedreiro",
+    "prev": 8,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "MOD",
+    "mes": "2026-11-30",
+    "equipamento": "Pedreiro",
+    "prev": 8,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "MOD",
+    "mes": "2026-12-31",
+    "equipamento": "Pedreiro",
+    "prev": 8,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "MOD",
+    "mes": "2027-01-31",
+    "equipamento": "Pedreiro",
+    "prev": 8,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "MOD",
+    "mes": "2027-02-28",
+    "equipamento": "Pedreiro",
+    "prev": 4,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "MOD",
+    "mes": "2027-03-31",
+    "equipamento": "Pedreiro",
+    "prev": 4,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "MOD",
+    "mes": "2026-03-31",
+    "equipamento": "Servente",
+    "prev": 3,
+    "real": 8.0
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "MOD",
+    "mes": "2026-04-30",
+    "equipamento": "Servente",
+    "prev": 3,
+    "real": 9.0
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "MOD",
+    "mes": "2026-05-31",
+    "equipamento": "Servente",
+    "prev": 5,
+    "real": 7.0
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "MOD",
+    "mes": "2026-05-31",
+    "equipamento": "Soldador",
+    "prev": null,
+    "real": 1.0
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "MOD",
+    "mes": "2026-06-30",
+    "equipamento": "Servente",
+    "prev": 9,
+    "real": 7.0
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "MOD",
+    "mes": "2026-07-31",
+    "equipamento": "Servente",
+    "prev": 9,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "MOD",
+    "mes": "2026-08-31",
+    "equipamento": "Servente",
+    "prev": 12,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "MOD",
+    "mes": "2026-09-30",
+    "equipamento": "Servente",
+    "prev": 12,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "MOD",
+    "mes": "2026-10-31",
+    "equipamento": "Servente",
+    "prev": 12,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "MOD",
+    "mes": "2026-11-30",
+    "equipamento": "Servente",
+    "prev": 12,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "MOD",
+    "mes": "2026-12-31",
+    "equipamento": "Servente",
+    "prev": 12,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "MOD",
+    "mes": "2027-01-31",
+    "equipamento": "Servente",
+    "prev": 12,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "MOD",
+    "mes": "2027-02-28",
+    "equipamento": "Servente",
+    "prev": 6,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "MOD",
+    "mes": "2027-03-31",
+    "equipamento": "Servente",
+    "prev": 6,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "MOD",
+    "mes": "2026-03-31",
+    "equipamento": "Topógrafo",
+    "prev": 1,
+    "real": 1.0
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "MOD",
+    "mes": "2026-04-30",
+    "equipamento": "Topógrafo",
+    "prev": 1,
+    "real": 1.0
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "MOD",
+    "mes": "2026-05-31",
+    "equipamento": "Topógrafo",
+    "prev": 1,
+    "real": 2.0
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "MOD",
+    "mes": "2026-06-30",
+    "equipamento": "Soldador",
+    "prev": null,
+    "real": 1.0
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "MOD",
+    "mes": "2026-06-30",
+    "equipamento": "Topógrafo",
+    "prev": 1,
+    "real": 1.0
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "MOD",
+    "mes": "2026-07-31",
+    "equipamento": "Topógrafo",
+    "prev": 1,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "MOD",
+    "mes": "2026-08-31",
+    "equipamento": "Topógrafo",
+    "prev": 1,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "MOD",
+    "mes": "2026-09-30",
+    "equipamento": "Topógrafo",
+    "prev": 1,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "MOD",
+    "mes": "2026-10-31",
+    "equipamento": "Topógrafo",
+    "prev": 1,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "MOD",
+    "mes": "2026-11-30",
+    "equipamento": "Topógrafo",
+    "prev": 1,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "MOD",
+    "mes": "2026-12-31",
+    "equipamento": "Topógrafo",
+    "prev": 1,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "MOD",
+    "mes": "2027-01-31",
+    "equipamento": "Topógrafo",
+    "prev": 1,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "MOD",
+    "mes": "2027-02-28",
+    "equipamento": "Topógrafo",
+    "prev": 1,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "MOD",
+    "mes": "2027-03-31",
+    "equipamento": "Topógrafo",
+    "prev": 1,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "MOI",
+    "mes": "2026-03-31",
+    "equipamento": "Apontador",
+    "prev": 3,
+    "real": 0.0
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "MOI",
+    "mes": "2026-04-30",
+    "equipamento": "Apontador",
+    "prev": 3,
+    "real": 1.0
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "MOI",
+    "mes": "2026-05-31",
+    "equipamento": "Apontador",
+    "prev": 3,
+    "real": 3.0
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "MOI",
+    "mes": "2026-05-31",
+    "equipamento": "Administrativo",
+    "prev": null,
+    "real": 2.0
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "MOI",
+    "mes": "2026-06-30",
+    "equipamento": "Apontador",
+    "prev": 3,
+    "real": 4.0
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "MOI",
+    "mes": "2026-07-31",
+    "equipamento": "Apontador",
+    "prev": 3,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "MOI",
+    "mes": "2026-08-31",
+    "equipamento": "Apontador",
+    "prev": 3,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "MOI",
+    "mes": "2026-09-30",
+    "equipamento": "Apontador",
+    "prev": 3,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "MOI",
+    "mes": "2026-10-31",
+    "equipamento": "Apontador",
+    "prev": 3,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "MOI",
+    "mes": "2026-11-30",
+    "equipamento": "Apontador",
+    "prev": 3,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "MOI",
+    "mes": "2026-12-31",
+    "equipamento": "Apontador",
+    "prev": 3,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "MOI",
+    "mes": "2027-01-31",
+    "equipamento": "Apontador",
+    "prev": 3,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "MOI",
+    "mes": "2027-02-28",
+    "equipamento": "Apontador",
+    "prev": 1,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "MOI",
+    "mes": "2027-03-31",
+    "equipamento": "Apontador",
+    "prev": 1,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "MOI",
+    "mes": "2026-03-31",
+    "equipamento": "Coordenador de engenharia",
+    "prev": 0,
+    "real": 0.33
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "MOI",
+    "mes": "2026-04-30",
+    "equipamento": "Coordenador de engenharia",
+    "prev": 0,
+    "real": 0.33
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "MOI",
+    "mes": "2026-05-31",
+    "equipamento": "Coordenador de engenharia",
+    "prev": 0,
+    "real": 0.33
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "MOI",
+    "mes": "2026-06-30",
+    "equipamento": "Administrativo",
+    "prev": null,
+    "real": 1.0
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "MOI",
+    "mes": "2026-06-30",
+    "equipamento": "Almoxarife",
+    "prev": null,
+    "real": 1.0
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "MOI",
+    "mes": "2026-06-30",
+    "equipamento": "Coordenador de engenharia",
+    "prev": 0,
+    "real": 0.33
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "MOI",
+    "mes": "2026-07-31",
+    "equipamento": "Coordenador de engenharia",
+    "prev": 0,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "MOI",
+    "mes": "2026-08-31",
+    "equipamento": "Coordenador de engenharia",
+    "prev": 0,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "MOI",
+    "mes": "2026-09-30",
+    "equipamento": "Coordenador de engenharia",
+    "prev": 0,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "MOI",
+    "mes": "2026-10-31",
+    "equipamento": "Coordenador de engenharia",
+    "prev": 0,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "MOI",
+    "mes": "2026-11-30",
+    "equipamento": "Coordenador de engenharia",
+    "prev": 0,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "MOI",
+    "mes": "2026-12-31",
+    "equipamento": "Coordenador de engenharia",
+    "prev": 0,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "MOI",
+    "mes": "2027-01-31",
+    "equipamento": "Coordenador de engenharia",
+    "prev": 0,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "MOI",
+    "mes": "2027-02-28",
+    "equipamento": "Coordenador de engenharia",
+    "prev": 0,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "MOI",
+    "mes": "2027-03-31",
+    "equipamento": "Coordenador de engenharia",
+    "prev": 0,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "MOI",
+    "mes": "2026-03-31",
+    "equipamento": "Coordenador de segurança do trabalho",
+    "prev": 0,
+    "real": 0.33
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "MOI",
+    "mes": "2026-04-30",
+    "equipamento": "Coordenador de segurança do trabalho",
+    "prev": 0,
+    "real": 0.33
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "MOI",
+    "mes": "2026-05-31",
+    "equipamento": "Coordenador de segurança do trabalho",
+    "prev": 0,
+    "real": 0.33
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "MOI",
+    "mes": "2026-06-30",
+    "equipamento": "Coordenador de segurança do trabalho",
+    "prev": 0,
+    "real": 0.33
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "MOI",
+    "mes": "2026-07-31",
+    "equipamento": "Coordenador de segurança do trabalho",
+    "prev": 0,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "MOI",
+    "mes": "2026-08-31",
+    "equipamento": "Coordenador de segurança do trabalho",
+    "prev": 0,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "MOI",
+    "mes": "2026-09-30",
+    "equipamento": "Coordenador de segurança do trabalho",
+    "prev": 0,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "MOI",
+    "mes": "2026-10-31",
+    "equipamento": "Coordenador de segurança do trabalho",
+    "prev": 0,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "MOI",
+    "mes": "2026-11-30",
+    "equipamento": "Coordenador de segurança do trabalho",
+    "prev": 0,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "MOI",
+    "mes": "2026-12-31",
+    "equipamento": "Coordenador de segurança do trabalho",
+    "prev": 0,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "MOI",
+    "mes": "2027-01-31",
+    "equipamento": "Coordenador de segurança do trabalho",
+    "prev": 0,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "MOI",
+    "mes": "2027-02-28",
+    "equipamento": "Coordenador de segurança do trabalho",
+    "prev": 0,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "MOI",
+    "mes": "2027-03-31",
+    "equipamento": "Coordenador de segurança do trabalho",
+    "prev": 0,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "MOI",
+    "mes": "2026-03-31",
+    "equipamento": "Coordenador de topografia",
+    "prev": 0,
+    "real": 0.33
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "MOI",
+    "mes": "2026-04-30",
+    "equipamento": "Coordenador de topografia",
+    "prev": 0,
+    "real": 0.33
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "MOI",
+    "mes": "2026-05-31",
+    "equipamento": "Coordenador de topografia",
+    "prev": 0,
+    "real": 0.33
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "MOI",
+    "mes": "2026-06-30",
+    "equipamento": "Coordenador de topografia",
+    "prev": 0,
+    "real": 0.33
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "MOI",
+    "mes": "2026-07-31",
+    "equipamento": "Coordenador de topografia",
+    "prev": 0,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "MOI",
+    "mes": "2026-08-31",
+    "equipamento": "Coordenador de topografia",
+    "prev": 0,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "MOI",
+    "mes": "2026-09-30",
+    "equipamento": "Coordenador de topografia",
+    "prev": 0,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "MOI",
+    "mes": "2026-10-31",
+    "equipamento": "Coordenador de topografia",
+    "prev": 0,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "MOI",
+    "mes": "2026-11-30",
+    "equipamento": "Coordenador de topografia",
+    "prev": 0,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "MOI",
+    "mes": "2026-12-31",
+    "equipamento": "Coordenador de topografia",
+    "prev": 0,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "MOI",
+    "mes": "2027-01-31",
+    "equipamento": "Coordenador de topografia",
+    "prev": 0,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "MOI",
+    "mes": "2027-02-28",
+    "equipamento": "Coordenador de topografia",
+    "prev": 0,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "MOI",
+    "mes": "2027-03-31",
+    "equipamento": "Coordenador de topografia",
+    "prev": 0,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "MOI",
+    "mes": "2026-03-31",
+    "equipamento": "Enfermeiro",
+    "prev": 1,
+    "real": 1.0
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "MOI",
+    "mes": "2026-04-30",
+    "equipamento": "Enfermeiro",
+    "prev": 1,
+    "real": 1.0
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "MOI",
+    "mes": "2026-05-31",
+    "equipamento": "Enfermeiro",
+    "prev": 1,
+    "real": 1.0
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "MOI",
+    "mes": "2026-06-30",
+    "equipamento": "Enfermeiro",
+    "prev": 0,
+    "real": 1.0
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "MOI",
+    "mes": "2026-07-31",
+    "equipamento": "Enfermeiro",
+    "prev": 0,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "MOI",
+    "mes": "2026-08-31",
+    "equipamento": "Enfermeiro",
+    "prev": 0,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "MOI",
+    "mes": "2026-09-30",
+    "equipamento": "Enfermeiro",
+    "prev": 0,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "MOI",
+    "mes": "2026-10-31",
+    "equipamento": "Enfermeiro",
+    "prev": 0,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "MOI",
+    "mes": "2026-11-30",
+    "equipamento": "Enfermeiro",
+    "prev": 0,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "MOI",
+    "mes": "2026-12-31",
+    "equipamento": "Enfermeiro",
+    "prev": 0,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "MOI",
+    "mes": "2027-01-31",
+    "equipamento": "Enfermeiro",
+    "prev": 0,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "MOI",
+    "mes": "2027-02-28",
+    "equipamento": "Enfermeiro",
+    "prev": 0,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "MOI",
+    "mes": "2027-03-31",
+    "equipamento": "Enfermeiro",
+    "prev": 0,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "MOI",
+    "mes": "2026-03-31",
+    "equipamento": "Eletricista de canteiro de obras",
+    "prev": 0,
+    "real": 0.33
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "MOI",
+    "mes": "2026-04-30",
+    "equipamento": "Eletricista de canteiro de obras",
+    "prev": 0,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "MOI",
+    "mes": "2026-05-31",
+    "equipamento": "Eletricista de canteiro de obras",
+    "prev": 0,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "MOI",
+    "mes": "2026-06-30",
+    "equipamento": "Eletricista de canteiro de obras",
+    "prev": 0,
+    "real": 1.0
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "MOI",
+    "mes": "2026-07-31",
+    "equipamento": "Eletricista de canteiro de obras",
+    "prev": 0,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "MOI",
+    "mes": "2026-08-31",
+    "equipamento": "Eletricista de canteiro de obras",
+    "prev": 0,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "MOI",
+    "mes": "2026-09-30",
+    "equipamento": "Eletricista de canteiro de obras",
+    "prev": 0,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "MOI",
+    "mes": "2026-10-31",
+    "equipamento": "Eletricista de canteiro de obras",
+    "prev": 0,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "MOI",
+    "mes": "2026-11-30",
+    "equipamento": "Eletricista de canteiro de obras",
+    "prev": 0,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "MOI",
+    "mes": "2026-12-31",
+    "equipamento": "Eletricista de canteiro de obras",
+    "prev": 0,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "MOI",
+    "mes": "2027-01-31",
+    "equipamento": "Eletricista de canteiro de obras",
+    "prev": 0,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "MOI",
+    "mes": "2027-02-28",
+    "equipamento": "Eletricista de canteiro de obras",
+    "prev": 0,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "MOI",
+    "mes": "2027-03-31",
+    "equipamento": "Eletricista de canteiro de obras",
+    "prev": 0,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "MOI",
+    "mes": "2026-03-31",
+    "equipamento": "Eletricista de equipamento",
+    "prev": 1,
+    "real": 1.0
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "MOI",
+    "mes": "2026-04-30",
+    "equipamento": "Eletricista de equipamento",
+    "prev": 1,
+    "real": 1.0
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "MOI",
+    "mes": "2026-05-31",
+    "equipamento": "Eletricista de equipamento",
+    "prev": 1,
+    "real": 1.0
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "MOI",
+    "mes": "2026-06-30",
+    "equipamento": "Eletricista de equipamento",
+    "prev": 1,
+    "real": 2.0
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "MOI",
+    "mes": "2026-07-31",
+    "equipamento": "Eletricista de equipamento",
+    "prev": 1,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "MOI",
+    "mes": "2026-08-31",
+    "equipamento": "Eletricista de equipamento",
+    "prev": 1,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "MOI",
+    "mes": "2026-09-30",
+    "equipamento": "Eletricista de equipamento",
+    "prev": 1,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "MOI",
+    "mes": "2026-10-31",
+    "equipamento": "Eletricista de equipamento",
+    "prev": 1,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "MOI",
+    "mes": "2026-11-30",
+    "equipamento": "Eletricista de equipamento",
+    "prev": 1,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "MOI",
+    "mes": "2026-12-31",
+    "equipamento": "Eletricista de equipamento",
+    "prev": 1,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "MOI",
+    "mes": "2027-01-31",
+    "equipamento": "Eletricista de equipamento",
+    "prev": 1,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "MOI",
+    "mes": "2027-02-28",
+    "equipamento": "Eletricista de equipamento",
+    "prev": 1,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "MOI",
+    "mes": "2027-03-31",
+    "equipamento": "Eletricista de equipamento",
+    "prev": 1,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "MOI",
+    "mes": "2026-03-31",
+    "equipamento": "Encarregado  Administrativo",
+    "prev": 2,
+    "real": 1.0
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "MOI",
+    "mes": "2026-04-30",
+    "equipamento": "Encarregado  Administrativo",
+    "prev": 2,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "MOI",
+    "mes": "2026-05-31",
+    "equipamento": "Encarregado  Administrativo",
+    "prev": 2,
+    "real": 1.0
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "MOI",
+    "mes": "2026-06-30",
+    "equipamento": "Encarregado  Administrativo",
+    "prev": 2,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "MOI",
+    "mes": "2026-07-31",
+    "equipamento": "Encarregado  Administrativo",
+    "prev": 2,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "MOI",
+    "mes": "2026-08-31",
+    "equipamento": "Encarregado  Administrativo",
+    "prev": 2,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "MOI",
+    "mes": "2026-09-30",
+    "equipamento": "Encarregado  Administrativo",
+    "prev": 2,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "MOI",
+    "mes": "2026-10-31",
+    "equipamento": "Encarregado  Administrativo",
+    "prev": 2,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "MOI",
+    "mes": "2026-11-30",
+    "equipamento": "Encarregado  Administrativo",
+    "prev": 2,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "MOI",
+    "mes": "2026-12-31",
+    "equipamento": "Encarregado  Administrativo",
+    "prev": 2,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "MOI",
+    "mes": "2027-01-31",
+    "equipamento": "Encarregado  Administrativo",
+    "prev": 2,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "MOI",
+    "mes": "2027-02-28",
+    "equipamento": "Encarregado  Administrativo",
+    "prev": 2,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "MOI",
+    "mes": "2027-03-31",
+    "equipamento": "Encarregado  Administrativo",
+    "prev": 2,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "MOI",
+    "mes": "2026-03-31",
+    "equipamento": "Encarregado de Serviço",
+    "prev": 3,
+    "real": 2.0
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "MOI",
+    "mes": "2026-04-30",
+    "equipamento": "Encarregado de Serviço",
+    "prev": 3,
+    "real": 7.0
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "MOI",
+    "mes": "2026-05-31",
+    "equipamento": "Encarregado de Serviço",
+    "prev": 3,
+    "real": 7.0
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "MOI",
+    "mes": "2026-06-30",
+    "equipamento": "Encarregado de Serviço",
+    "prev": 3,
+    "real": 6.0
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "MOI",
+    "mes": "2026-07-31",
+    "equipamento": "Encarregado de Serviço",
+    "prev": 3,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "MOI",
+    "mes": "2026-08-31",
+    "equipamento": "Encarregado de Serviço",
+    "prev": 3,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "MOI",
+    "mes": "2026-09-30",
+    "equipamento": "Encarregado de Serviço",
+    "prev": 3,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "MOI",
+    "mes": "2026-10-31",
+    "equipamento": "Encarregado de Serviço",
+    "prev": 3,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "MOI",
+    "mes": "2026-11-30",
+    "equipamento": "Encarregado de Serviço",
+    "prev": 3,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "MOI",
+    "mes": "2026-12-31",
+    "equipamento": "Encarregado de Serviço",
+    "prev": 3,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "MOI",
+    "mes": "2027-01-31",
+    "equipamento": "Encarregado de Serviço",
+    "prev": 3,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "MOI",
+    "mes": "2027-02-28",
+    "equipamento": "Encarregado de Serviço",
+    "prev": 2,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "MOI",
+    "mes": "2027-03-31",
+    "equipamento": "Encarregado de Serviço",
+    "prev": 2,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "MOI",
+    "mes": "2026-03-31",
+    "equipamento": "Engenheiro Civil",
+    "prev": 1,
+    "real": 1.0
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "MOI",
+    "mes": "2026-04-30",
+    "equipamento": "Engenheiro Civil",
+    "prev": 2,
+    "real": 3.0
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "MOI",
+    "mes": "2026-05-31",
+    "equipamento": "Engenheiro Civil",
+    "prev": 2,
+    "real": 1.0
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "MOI",
+    "mes": "2026-06-30",
+    "equipamento": "Engenheiro Civil",
+    "prev": 2,
+    "real": 3.0
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "MOI",
+    "mes": "2026-07-31",
+    "equipamento": "Engenheiro Civil",
+    "prev": 2,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "MOI",
+    "mes": "2026-08-31",
+    "equipamento": "Engenheiro Civil",
+    "prev": 2,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "MOI",
+    "mes": "2026-09-30",
+    "equipamento": "Engenheiro Civil",
+    "prev": 2,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "MOI",
+    "mes": "2026-10-31",
+    "equipamento": "Engenheiro Civil",
+    "prev": 2,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "MOI",
+    "mes": "2026-11-30",
+    "equipamento": "Engenheiro Civil",
+    "prev": 2,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "MOI",
+    "mes": "2026-12-31",
+    "equipamento": "Engenheiro Civil",
+    "prev": 2,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "MOI",
+    "mes": "2027-01-31",
+    "equipamento": "Engenheiro Civil",
+    "prev": 2,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "MOI",
+    "mes": "2027-02-28",
+    "equipamento": "Engenheiro Civil",
+    "prev": 2,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "MOI",
+    "mes": "2027-03-31",
+    "equipamento": "Engenheiro Civil",
+    "prev": 1,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "MOI",
+    "mes": "2026-03-31",
+    "equipamento": "Lubrificador",
+    "prev": 2,
+    "real": 1.0
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "MOI",
+    "mes": "2026-04-30",
+    "equipamento": "Lubrificador",
+    "prev": 2,
+    "real": 2.0
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "MOI",
+    "mes": "2026-05-31",
+    "equipamento": "Lubrificador",
+    "prev": 2,
+    "real": 2.0
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "MOI",
+    "mes": "2026-06-30",
+    "equipamento": "Lubrificador",
+    "prev": 2,
+    "real": 3.0
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "MOI",
+    "mes": "2026-07-31",
+    "equipamento": "Lubrificador",
+    "prev": 2,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "MOI",
+    "mes": "2026-08-31",
+    "equipamento": "Lubrificador",
+    "prev": 2,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "MOI",
+    "mes": "2026-09-30",
+    "equipamento": "Lubrificador",
+    "prev": 2,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "MOI",
+    "mes": "2026-10-31",
+    "equipamento": "Lubrificador",
+    "prev": 2,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "MOI",
+    "mes": "2026-11-30",
+    "equipamento": "Lubrificador",
+    "prev": 2,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "MOI",
+    "mes": "2026-12-31",
+    "equipamento": "Lubrificador",
+    "prev": 2,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "MOI",
+    "mes": "2027-01-31",
+    "equipamento": "Lubrificador",
+    "prev": 2,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "MOI",
+    "mes": "2027-02-28",
+    "equipamento": "Lubrificador",
+    "prev": 2,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "MOI",
+    "mes": "2027-03-31",
+    "equipamento": "Lubrificador",
+    "prev": 2,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "MOI",
+    "mes": "2026-03-31",
+    "equipamento": "Mecânico (preventivo/reparos)",
+    "prev": 2,
+    "real": 3.0
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "MOI",
+    "mes": "2026-04-30",
+    "equipamento": "Mecânico (preventivo/reparos)",
+    "prev": 3,
+    "real": 2.0
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "MOI",
+    "mes": "2026-05-31",
+    "equipamento": "Mecânico (preventivo/reparos)",
+    "prev": 3,
+    "real": 2.0
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "MOI",
+    "mes": "2026-06-30",
+    "equipamento": "Mecânico (preventivo/reparos)",
+    "prev": 3,
+    "real": 3.0
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "MOI",
+    "mes": "2026-07-31",
+    "equipamento": "Mecânico (preventivo/reparos)",
+    "prev": 3,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "MOI",
+    "mes": "2026-08-31",
+    "equipamento": "Mecânico (preventivo/reparos)",
+    "prev": 3,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "MOI",
+    "mes": "2026-09-30",
+    "equipamento": "Mecânico (preventivo/reparos)",
+    "prev": 3,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "MOI",
+    "mes": "2026-10-31",
+    "equipamento": "Mecânico (preventivo/reparos)",
+    "prev": 3,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "MOI",
+    "mes": "2026-11-30",
+    "equipamento": "Mecânico (preventivo/reparos)",
+    "prev": 3,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "MOI",
+    "mes": "2026-12-31",
+    "equipamento": "Mecânico (preventivo/reparos)",
+    "prev": 3,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "MOI",
+    "mes": "2027-01-31",
+    "equipamento": "Mecânico (preventivo/reparos)",
+    "prev": 3,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "MOI",
+    "mes": "2027-02-28",
+    "equipamento": "Mecânico (preventivo/reparos)",
+    "prev": 3,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "MOI",
+    "mes": "2027-03-31",
+    "equipamento": "Mecânico (preventivo/reparos)",
+    "prev": 3,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "MOI",
+    "mes": "2026-03-31",
+    "equipamento": "Socorrista",
+    "prev": 1,
+    "real": 1.0
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "MOI",
+    "mes": "2026-04-30",
+    "equipamento": "Socorrista",
+    "prev": 1,
+    "real": 1.0
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "MOI",
+    "mes": "2026-05-31",
+    "equipamento": "Socorrista",
+    "prev": 1,
+    "real": 1.0
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "MOI",
+    "mes": "2026-06-30",
+    "equipamento": "Socorrista",
+    "prev": 0,
+    "real": 1.0
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "MOI",
+    "mes": "2026-07-31",
+    "equipamento": "Socorrista",
+    "prev": 0,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "MOI",
+    "mes": "2026-08-31",
+    "equipamento": "Socorrista",
+    "prev": 0,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "MOI",
+    "mes": "2026-09-30",
+    "equipamento": "Socorrista",
+    "prev": 0,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "MOI",
+    "mes": "2026-10-31",
+    "equipamento": "Socorrista",
+    "prev": 0,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "MOI",
+    "mes": "2026-11-30",
+    "equipamento": "Socorrista",
+    "prev": 0,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "MOI",
+    "mes": "2026-12-31",
+    "equipamento": "Socorrista",
+    "prev": 0,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "MOI",
+    "mes": "2027-01-31",
+    "equipamento": "Socorrista",
+    "prev": 0,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "MOI",
+    "mes": "2027-02-28",
+    "equipamento": "Socorrista",
+    "prev": 0,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "MOI",
+    "mes": "2027-03-31",
+    "equipamento": "Socorrista",
+    "prev": 0,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "MOI",
+    "mes": "2026-03-31",
+    "equipamento": "Técnico de Segurança do Trabalho / Meio Ambiente",
+    "prev": 2,
+    "real": 2.0
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "MOI",
+    "mes": "2026-04-30",
+    "equipamento": "Técnico de Segurança do Trabalho / Meio Ambiente",
+    "prev": 3,
+    "real": 4.0
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "MOI",
+    "mes": "2026-05-31",
+    "equipamento": "Técnico de Segurança do Trabalho / Meio Ambiente",
+    "prev": 3,
+    "real": 4.0
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "MOI",
+    "mes": "2026-06-30",
+    "equipamento": "Técnico de Segurança do Trabalho / Meio Ambiente",
+    "prev": 3,
+    "real": 3.0
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "MOI",
+    "mes": "2026-07-31",
+    "equipamento": "Técnico de Segurança do Trabalho / Meio Ambiente",
+    "prev": 3,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "MOI",
+    "mes": "2026-08-31",
+    "equipamento": "Técnico de Segurança do Trabalho / Meio Ambiente",
+    "prev": 3,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "MOI",
+    "mes": "2026-09-30",
+    "equipamento": "Técnico de Segurança do Trabalho / Meio Ambiente",
+    "prev": 3,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "MOI",
+    "mes": "2026-10-31",
+    "equipamento": "Técnico de Segurança do Trabalho / Meio Ambiente",
+    "prev": 3,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "MOI",
+    "mes": "2026-11-30",
+    "equipamento": "Técnico de Segurança do Trabalho / Meio Ambiente",
+    "prev": 3,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "MOI",
+    "mes": "2026-12-31",
+    "equipamento": "Técnico de Segurança do Trabalho / Meio Ambiente",
+    "prev": 3,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "MOI",
+    "mes": "2027-01-31",
+    "equipamento": "Técnico de Segurança do Trabalho / Meio Ambiente",
+    "prev": 3,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "MOI",
+    "mes": "2027-02-28",
+    "equipamento": "Técnico de Segurança do Trabalho / Meio Ambiente",
+    "prev": 3,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "MOI",
+    "mes": "2027-03-31",
+    "equipamento": "Técnico de Segurança do Trabalho / Meio Ambiente",
+    "prev": 2,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "MOI",
+    "mes": "2026-03-31",
+    "equipamento": "Técnico de TI",
+    "prev": 0,
+    "real": 0.33
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "MOI",
+    "mes": "2026-04-30",
+    "equipamento": "Técnico de TI",
+    "prev": 0,
+    "real": 0.33
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "MOI",
+    "mes": "2026-05-31",
+    "equipamento": "Técnico de TI",
+    "prev": 0,
+    "real": 0.33
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "MOI",
+    "mes": "2026-06-30",
+    "equipamento": "Técnico de TI",
+    "prev": 0,
+    "real": 0.33
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "MOI",
+    "mes": "2026-07-31",
+    "equipamento": "Técnico de TI",
+    "prev": 0,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "MOI",
+    "mes": "2026-08-31",
+    "equipamento": "Técnico de TI",
+    "prev": 0,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "MOI",
+    "mes": "2026-09-30",
+    "equipamento": "Técnico de TI",
+    "prev": 0,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "MOI",
+    "mes": "2026-10-31",
+    "equipamento": "Técnico de TI",
+    "prev": 0,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "MOI",
+    "mes": "2026-11-30",
+    "equipamento": "Técnico de TI",
+    "prev": 0,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "MOI",
+    "mes": "2026-12-31",
+    "equipamento": "Técnico de TI",
+    "prev": 0,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "MOI",
+    "mes": "2027-01-31",
+    "equipamento": "Técnico de TI",
+    "prev": 0,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "MOI",
+    "mes": "2027-02-28",
+    "equipamento": "Técnico de TI",
+    "prev": 0,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "MOI",
+    "mes": "2027-03-31",
+    "equipamento": "Técnico de TI",
+    "prev": 0,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "MOI",
+    "mes": "2026-03-31",
+    "equipamento": "Vigia noturno",
+    "prev": 1,
+    "real": 1.0
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "MOI",
+    "mes": "2026-04-30",
+    "equipamento": "Vigia noturno",
+    "prev": 1,
+    "real": 1.0
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "MOI",
+    "mes": "2026-05-31",
+    "equipamento": "Vigia noturno",
+    "prev": 1,
+    "real": 1.0
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "MOI",
+    "mes": "2026-06-30",
+    "equipamento": "Vigia noturno",
+    "prev": 1,
+    "real": 1.0
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "MOI",
+    "mes": "2026-07-31",
+    "equipamento": "Vigia noturno",
+    "prev": 1,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "MOI",
+    "mes": "2026-08-31",
+    "equipamento": "Vigia noturno",
+    "prev": 1,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "MOI",
+    "mes": "2026-09-30",
+    "equipamento": "Vigia noturno",
+    "prev": 1,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "MOI",
+    "mes": "2026-10-31",
+    "equipamento": "Vigia noturno",
+    "prev": 1,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "MOI",
+    "mes": "2026-11-30",
+    "equipamento": "Vigia noturno",
+    "prev": 1,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "MOI",
+    "mes": "2026-12-31",
+    "equipamento": "Vigia noturno",
+    "prev": 1,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "MOI",
+    "mes": "2027-01-31",
+    "equipamento": "Vigia noturno",
+    "prev": 1,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "MOI",
+    "mes": "2027-02-28",
+    "equipamento": "Vigia noturno",
+    "prev": 1,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "MOI",
+    "mes": "2027-03-31",
+    "equipamento": "Vigia noturno",
+    "prev": 1,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "MOI",
+    "mes": "2026-04-30",
+    "equipamento": "Administrativo",
+    "prev": 2,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "MOI",
+    "mes": "2026-04-30",
+    "equipamento": "Coordenador Administrativo",
+    "prev": 1,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "MOI",
+    "mes": "2026-04-30",
+    "equipamento": "Coordenador de Transportes",
+    "prev": 1,
+    "real": null
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "MOD",
+    "mes": "2026-04-30",
+    "equipamento": "Soldador",
+    "prev": null,
+    "real": 1.0
+  },
+  {
+    "id_contrato": "110340.0",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "tipo": "Equipamento",
+    "mes": "2026-04-30",
+    "equipamento": "Caminhão Munck",
+    "prev": null,
+    "real": 1.0
+  }
+]

@@ -1,0 +1,1532 @@
+[
+  {
+    "validacao": "No prazo",
+    "id_contrato": "110340",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "mes": "2026-04-30",
+    "indicador": "Aderência ao Cronograma de Terraplenagem",
+    "meta": "≥ 95% do volume previsto",
+    "resultado": 1.435,
+    "aplicacao": 0.02
+  },
+  {
+    "validacao": "Atraso > 5 dias",
+    "id_contrato": "110340",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "mes": "2026-04-30",
+    "indicador": "Eficiência de Equipamentos (Histograma)",
+    "meta": "Manutenção de ≥ 90% da frota operacional",
+    "resultado": 0.0,
+    "aplicacao": -0.02
+  },
+  {
+    "validacao": "Estável",
+    "id_contrato": "110340",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "mes": "2026-04-30",
+    "indicador": "Qualidade da Compactação e Solo",
+    "meta": "100% dos ensaios em conformidade",
+    "resultado": 1.0,
+    "aplicacao": null
+  },
+  {
+    "validacao": "Retrabalho em contenção",
+    "id_contrato": "110340",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "mes": "2026-04-30",
+    "indicador": "Gestão de Riscos e STMA",
+    "meta": "≥ 82% de performance no índice GB",
+    "resultado": null,
+    "aplicacao": 0.0
+  },
+  {
+    "validacao": "Conforme",
+    "id_contrato": "110340",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "mes": "2026-04-30",
+    "indicador": "Controle de Erosão e APP",
+    "meta": "Zero extravasamento de sedimentos para APP",
+    "resultado": null,
+    "aplicacao": 0.0
+  },
+  {
+    "validacao": "Incidente grave",
+    "id_contrato": "110340",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "mes": "2026-04-30",
+    "indicador": "Incidentes de Alto Impacto",
+    "meta": "≤ 2 por semestre",
+    "resultado": 0.0,
+    "aplicacao": 0.0
+  },
+  {
+    "validacao": null,
+    "id_contrato": "110340",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "mes": "2026-04-30",
+    "indicador": "Aderência aos Marcos do Projeto",
+    "meta": "Atraso zero em marcos críticos",
+    "resultado": null,
+    "aplicacao": -0.02
+  },
+  {
+    "validacao": null,
+    "id_contrato": "110340",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "mes": "2026-04-30",
+    "indicador": "Aprovação dos Projetos Otimizados",
+    "meta": "Entrega em até 15 dias após mobilização",
+    "resultado": null,
+    "aplicacao": -0.02
+  },
+  {
+    "validacao": null,
+    "id_contrato": "110340",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "mes": "2026-04-30",
+    "indicador": "Eficiência de Balanço de Solo)",
+    "meta": "≥ 98% de solo compensado internamente",
+    "resultado": null,
+    "aplicacao": null
+  },
+  {
+    "validacao": null,
+    "id_contrato": "110340",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "mes": "2026-04-30",
+    "indicador": "Integridade das Contenções e Lagoas",
+    "meta": "Zero ocorrências de instabilidade ou erosão",
+    "resultado": null,
+    "aplicacao": null
+  },
+  {
+    "validacao": null,
+    "id_contrato": "110340",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "mes": "2026-05-31",
+    "indicador": "Aderência ao Cronograma de Terraplenagem",
+    "meta": "≥ 95% do volume previsto",
+    "resultado": 0.9058,
+    "aplicacao": -0.02
+  },
+  {
+    "validacao": null,
+    "id_contrato": "110340",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "mes": "2026-05-31",
+    "indicador": "Eficiência de Equipamentos (Histograma)",
+    "meta": "Manutenção de ≥ 90% da frota operacional",
+    "resultado": 0.8678,
+    "aplicacao": 0.0
+  },
+  {
+    "validacao": null,
+    "id_contrato": "110340",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "mes": "2026-05-31",
+    "indicador": "Qualidade da Compactação e Solo",
+    "meta": "100% dos ensaios em conformidade",
+    "resultado": 0.977,
+    "aplicacao": null
+  },
+  {
+    "validacao": null,
+    "id_contrato": "110340",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "mes": "2026-05-31",
+    "indicador": "Gestão de Riscos e STMA",
+    "meta": "≥ 82% de performance no índice GB",
+    "resultado": 0.8815,
+    "aplicacao": 0.0
+  },
+  {
+    "validacao": null,
+    "id_contrato": "110340",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "mes": "2026-05-31",
+    "indicador": "Controle de Erosão e APP",
+    "meta": "Zero extravasamento de sedimentos para APP",
+    "resultado": null,
+    "aplicacao": 0.0
+  },
+  {
+    "validacao": null,
+    "id_contrato": "110340",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "mes": "2026-05-31",
+    "indicador": "Incidentes de Alto Impacto",
+    "meta": "≤ 2 por semestre",
+    "resultado": 0.0,
+    "aplicacao": 0.0
+  },
+  {
+    "validacao": null,
+    "id_contrato": "110340",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "mes": "2026-05-31",
+    "indicador": "Aderência aos Marcos do Projeto",
+    "meta": "Atraso zero em marcos críticos",
+    "resultado": null,
+    "aplicacao": -0.04
+  },
+  {
+    "validacao": null,
+    "id_contrato": "110340",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "mes": "2026-05-31",
+    "indicador": "Aprovação dos Projetos Otimizados",
+    "meta": "Entrega em até 15 dias após mobilização",
+    "resultado": null,
+    "aplicacao": null
+  },
+  {
+    "validacao": null,
+    "id_contrato": "110340",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "mes": "2026-05-31",
+    "indicador": "Eficiência de Balanço de Solo",
+    "meta": "≥ 98% de solo compensado internamente",
+    "resultado": 1.0,
+    "aplicacao": 0.01
+  },
+  {
+    "validacao": null,
+    "id_contrato": "110340",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "mes": "2026-05-31",
+    "indicador": "Integridade das Contenções e Lagoas",
+    "meta": "Zero ocorrências de instabilidade ou erosão",
+    "resultado": null,
+    "aplicacao": 0.0
+  },
+  {
+    "validacao": null,
+    "id_contrato": "106893",
+    "contratada": "AFRY BRASIL LTDA.",
+    "mes": "2026-02-28",
+    "indicador": "Aderência ao Cronograma Físico-Financeiro",
+    "meta": "≥ 95% das atividades no prazo",
+    "resultado": null,
+    "aplicacao": null
+  },
+  {
+    "validacao": null,
+    "id_contrato": "106893",
+    "contratada": "AFRY BRASIL LTDA.",
+    "mes": "2026-02-28",
+    "indicador": "Reprogramações do Cronograma",
+    "meta": "< 1 revisão significativa em 6 meses",
+    "resultado": null,
+    "aplicacao": null
+  },
+  {
+    "validacao": null,
+    "id_contrato": "106893",
+    "contratada": "AFRY BRASIL LTDA.",
+    "mes": "2026-02-28",
+    "indicador": "Variação Orçamentária",
+    "meta": "≤ 1% de desvio mensal",
+    "resultado": null,
+    "aplicacao": null
+  },
+  {
+    "validacao": null,
+    "id_contrato": "106893",
+    "contratada": "AFRY BRASIL LTDA.",
+    "mes": "2026-02-28",
+    "indicador": "Gestão de Riscos",
+    "meta": "≥ 95% riscos tratados em até 5 dias úteis",
+    "resultado": null,
+    "aplicacao": null
+  },
+  {
+    "validacao": null,
+    "id_contrato": "106893",
+    "contratada": "AFRY BRASIL LTDA.",
+    "mes": "2026-02-28",
+    "indicador": "Incidentes de Alto Impacto",
+    "meta": "≤ 2 por semestre",
+    "resultado": null,
+    "aplicacao": null
+  },
+  {
+    "validacao": null,
+    "id_contrato": "106893",
+    "contratada": "AFRY BRASIL LTDA.",
+    "mes": "2026-02-28",
+    "indicador": "Qualidade – Não Conformidades",
+    "meta": "< 95% NC identificadas e encaminhadas mensal",
+    "resultado": null,
+    "aplicacao": null
+  },
+  {
+    "validacao": null,
+    "id_contrato": "106893",
+    "contratada": "AFRY BRASIL LTDA.",
+    "mes": "2026-02-28",
+    "indicador": "IGPP-GF-STMA",
+    "meta": "≥ 82% / 30 dias",
+    "resultado": null,
+    "aplicacao": null
+  },
+  {
+    "validacao": null,
+    "id_contrato": "106893",
+    "contratada": "AFRY BRASIL LTDA.",
+    "mes": "2026-03-31",
+    "indicador": "Aderência ao Cronograma Físico-Financeiro",
+    "meta": "≥ 95% das atividades no prazo",
+    "resultado": null,
+    "aplicacao": null
+  },
+  {
+    "validacao": null,
+    "id_contrato": "106893",
+    "contratada": "AFRY BRASIL LTDA.",
+    "mes": "2026-03-31",
+    "indicador": "Reprogramações do Cronograma",
+    "meta": "< 1 revisão significativa em 6 meses",
+    "resultado": null,
+    "aplicacao": null
+  },
+  {
+    "validacao": null,
+    "id_contrato": "106893",
+    "contratada": "AFRY BRASIL LTDA.",
+    "mes": "2026-03-31",
+    "indicador": "Variação Orçamentária",
+    "meta": "≤ 1% de desvio mensal",
+    "resultado": null,
+    "aplicacao": null
+  },
+  {
+    "validacao": null,
+    "id_contrato": "106893",
+    "contratada": "AFRY BRASIL LTDA.",
+    "mes": "2026-03-31",
+    "indicador": "Gestão de Riscos",
+    "meta": "≥ 95% riscos tratados em até 5 dias úteis",
+    "resultado": null,
+    "aplicacao": null
+  },
+  {
+    "validacao": null,
+    "id_contrato": "106893",
+    "contratada": "AFRY BRASIL LTDA.",
+    "mes": "2026-03-31",
+    "indicador": "Incidentes de Alto Impacto",
+    "meta": "≤ 2 por semestre",
+    "resultado": null,
+    "aplicacao": null
+  },
+  {
+    "validacao": null,
+    "id_contrato": "106893",
+    "contratada": "AFRY BRASIL LTDA.",
+    "mes": "2026-03-31",
+    "indicador": "Qualidade – Não Conformidades",
+    "meta": "< 95% NC identificadas e encaminhadas mensal",
+    "resultado": null,
+    "aplicacao": null
+  },
+  {
+    "validacao": null,
+    "id_contrato": "106893",
+    "contratada": "AFRY BRASIL LTDA.",
+    "mes": "2026-03-31",
+    "indicador": "IGPP-GF-STMA",
+    "meta": "≥ 82% / 30 dias",
+    "resultado": null,
+    "aplicacao": null
+  },
+  {
+    "validacao": null,
+    "id_contrato": "106893",
+    "contratada": "AFRY BRASIL LTDA.",
+    "mes": "2026-04-30",
+    "indicador": "Aderência ao Cronograma Físico-Financeiro",
+    "meta": "≥ 95% das atividades no prazo",
+    "resultado": null,
+    "aplicacao": null
+  },
+  {
+    "validacao": null,
+    "id_contrato": "106893",
+    "contratada": "AFRY BRASIL LTDA.",
+    "mes": "2026-04-30",
+    "indicador": "Reprogramações do Cronograma",
+    "meta": "< 1 revisão significativa em 6 meses",
+    "resultado": null,
+    "aplicacao": null
+  },
+  {
+    "validacao": null,
+    "id_contrato": "106893",
+    "contratada": "AFRY BRASIL LTDA.",
+    "mes": "2026-04-30",
+    "indicador": "Variação Orçamentária",
+    "meta": "≤ 1% de desvio mensal",
+    "resultado": null,
+    "aplicacao": null
+  },
+  {
+    "validacao": null,
+    "id_contrato": "106893",
+    "contratada": "AFRY BRASIL LTDA.",
+    "mes": "2026-04-30",
+    "indicador": "Gestão de Riscos",
+    "meta": "≥ 95% riscos tratados em até 5 dias úteis",
+    "resultado": null,
+    "aplicacao": null
+  },
+  {
+    "validacao": null,
+    "id_contrato": "106893",
+    "contratada": "AFRY BRASIL LTDA.",
+    "mes": "2026-04-30",
+    "indicador": "Incidentes de Alto Impacto",
+    "meta": "≤ 2 por semestre",
+    "resultado": null,
+    "aplicacao": null
+  },
+  {
+    "validacao": null,
+    "id_contrato": "106893",
+    "contratada": "AFRY BRASIL LTDA.",
+    "mes": "2026-04-30",
+    "indicador": "Qualidade – Não Conformidades",
+    "meta": "< 95% NC identificadas e encaminhadas mensal",
+    "resultado": null,
+    "aplicacao": null
+  },
+  {
+    "validacao": null,
+    "id_contrato": "106893",
+    "contratada": "AFRY BRASIL LTDA.",
+    "mes": "2026-04-30",
+    "indicador": "IGPP-GF-STMA",
+    "meta": "≥ 82% / 30 dias",
+    "resultado": null,
+    "aplicacao": null
+  },
+  {
+    "validacao": null,
+    "id_contrato": "106893",
+    "contratada": "AFRY BRASIL LTDA.",
+    "mes": "2026-05-31",
+    "indicador": "Aderência ao Cronograma Físico-Financeiro",
+    "meta": "≥ 95% das atividades no prazo",
+    "resultado": null,
+    "aplicacao": null
+  },
+  {
+    "validacao": null,
+    "id_contrato": "106893",
+    "contratada": "AFRY BRASIL LTDA.",
+    "mes": "2026-05-31",
+    "indicador": "Reprogramações do Cronograma",
+    "meta": "< 1 revisão significativa em 6 meses",
+    "resultado": null,
+    "aplicacao": null
+  },
+  {
+    "validacao": null,
+    "id_contrato": "106893",
+    "contratada": "AFRY BRASIL LTDA.",
+    "mes": "2026-05-31",
+    "indicador": "Variação Orçamentária",
+    "meta": "≤ 1% de desvio mensal",
+    "resultado": null,
+    "aplicacao": null
+  },
+  {
+    "validacao": null,
+    "id_contrato": "106893",
+    "contratada": "AFRY BRASIL LTDA.",
+    "mes": "2026-05-31",
+    "indicador": "Gestão de Riscos",
+    "meta": "≥ 95% riscos tratados em até 5 dias úteis",
+    "resultado": null,
+    "aplicacao": null
+  },
+  {
+    "validacao": null,
+    "id_contrato": "106893",
+    "contratada": "AFRY BRASIL LTDA.",
+    "mes": "2026-05-31",
+    "indicador": "Incidentes de Alto Impacto",
+    "meta": "≤ 2 por semestre",
+    "resultado": null,
+    "aplicacao": null
+  },
+  {
+    "validacao": null,
+    "id_contrato": "106893",
+    "contratada": "AFRY BRASIL LTDA.",
+    "mes": "2026-05-31",
+    "indicador": "Qualidade – Não Conformidades",
+    "meta": "< 95% NC identificadas e encaminhadas mensal",
+    "resultado": null,
+    "aplicacao": null
+  },
+  {
+    "validacao": null,
+    "id_contrato": "106893",
+    "contratada": "AFRY BRASIL LTDA.",
+    "mes": "2026-05-31",
+    "indicador": "IGPP-GF-STMA",
+    "meta": "≥ 82% / 30 dias",
+    "resultado": null,
+    "aplicacao": null
+  },
+  {
+    "validacao": null,
+    "id_contrato": "112410",
+    "contratada": "VIRTUAL INFRAESTRUTURA E ENERGIA LTDA",
+    "mes": "2026-06-30",
+    "indicador": "Cumprimento do Cronograma (Parcial)",
+    "meta": "0 dias de atraso (100% de aderência às datas parciais).",
+    "resultado": null,
+    "aplicacao": null
+  },
+  {
+    "validacao": null,
+    "id_contrato": "112410",
+    "contratada": "VIRTUAL INFRAESTRUTURA E ENERGIA LTDA",
+    "mes": "2026-06-30",
+    "indicador": "Cumprimento do Cronograma (Final)",
+    "meta": "0 dias de atraso na entrega final da obra.",
+    "resultado": null,
+    "aplicacao": null
+  },
+  {
+    "validacao": null,
+    "id_contrato": "112410",
+    "contratada": "VIRTUAL INFRAESTRUTURA E ENERGIA LTDA",
+    "mes": "2026-06-30",
+    "indicador": "Gestão de Terceiros",
+    "meta": "100% de conformidade dos cadastros no sistema.",
+    "resultado": null,
+    "aplicacao": null
+  },
+  {
+    "validacao": null,
+    "id_contrato": "112410",
+    "contratada": "VIRTUAL INFRAESTRUTURA E ENERGIA LTDA",
+    "mes": "2026-06-30",
+    "indicador": "Fornecimento de ART",
+    "meta": "Entrega em até 7 dias após aprovação da contratação.",
+    "resultado": null,
+    "aplicacao": null
+  },
+  {
+    "validacao": null,
+    "id_contrato": "112410",
+    "contratada": "VIRTUAL INFRAESTRUTURA E ENERGIA LTDA",
+    "mes": "2026-06-30",
+    "indicador": "Entrega técnica e Documentação",
+    "meta": "100% de entrega no prazo estipulado.",
+    "resultado": null,
+    "aplicacao": null
+  },
+  {
+    "validacao": null,
+    "id_contrato": "112410",
+    "contratada": "VIRTUAL INFRAESTRUTURA E ENERGIA LTDA",
+    "mes": "2026-06-30",
+    "indicador": "Qualidade da entrega",
+    "meta": "100% de aderência às especificações técnicas (0 retrabalho).",
+    "resultado": null,
+    "aplicacao": null
+  },
+  {
+    "validacao": null,
+    "id_contrato": "112410",
+    "contratada": "VIRTUAL INFRAESTRUTURA E ENERGIA LTDA",
+    "mes": "2026-06-30",
+    "indicador": "Pós Projeto (Garantia)",
+    "meta": "100% de atendimento aos chamados de garantia.",
+    "resultado": null,
+    "aplicacao": null
+  },
+  {
+    "validacao": null,
+    "id_contrato": "112410",
+    "contratada": "VIRTUAL INFRAESTRUTURA E ENERGIA LTDA",
+    "mes": "2026-06-30",
+    "indicador": "SLA Manutenção (Crítico)",
+    "meta": "Atendimento ≤ 4h; Contorno ≤ 48h; Solução ≤ 72h.",
+    "resultado": null,
+    "aplicacao": null
+  },
+  {
+    "validacao": null,
+    "id_contrato": "112410",
+    "contratada": "VIRTUAL INFRAESTRUTURA E ENERGIA LTDA",
+    "mes": "2026-06-30",
+    "indicador": "SLA Manutenção (Urgente)",
+    "meta": "Atendimento ≤ 8h; Contorno ≤ 48h.",
+    "resultado": null,
+    "aplicacao": null
+  },
+  {
+    "validacao": null,
+    "id_contrato": "112410",
+    "contratada": "VIRTUAL INFRAESTRUTURA E ENERGIA LTDA",
+    "mes": "2026-06-30",
+    "indicador": "SLA Manutenção (Rotina)",
+    "meta": "Atendimento ≤ 12h; Contorno ≤ 72h; Solução ≤ 5 dias.",
+    "resultado": null,
+    "aplicacao": null
+  },
+  {
+    "validacao": null,
+    "id_contrato": "112410",
+    "contratada": "VIRTUAL INFRAESTRUTURA E ENERGIA LTDA",
+    "mes": "2026-06-30",
+    "indicador": "Segurança do Trabalho",
+    "meta": "0 Acidentes e 0 Desvios de comportamento.",
+    "resultado": null,
+    "aplicacao": null
+  },
+  {
+    "validacao": null,
+    "id_contrato": "109367",
+    "contratada": "SOTTOMAIOR CONSULTORIA LTDA",
+    "mes": "2026-06-30",
+    "indicador": "Multas por atraso (Parcial)",
+    "meta": "0 dias de atraso.",
+    "resultado": null,
+    "aplicacao": null
+  },
+  {
+    "validacao": null,
+    "id_contrato": "109367",
+    "contratada": "SOTTOMAIOR CONSULTORIA LTDA",
+    "mes": "2026-06-30",
+    "indicador": "Multas por atraso (Final)",
+    "meta": "0 dias de atraso na entrega final.",
+    "resultado": null,
+    "aplicacao": null
+  },
+  {
+    "validacao": null,
+    "id_contrato": "109367",
+    "contratada": "SOTTOMAIOR CONSULTORIA LTDA",
+    "mes": "2026-06-30",
+    "indicador": "Cadastro de terceiros",
+    "meta": "100% de cadastros regulares no SG3.",
+    "resultado": null,
+    "aplicacao": null
+  },
+  {
+    "validacao": null,
+    "id_contrato": "109367",
+    "contratada": "SOTTOMAIOR CONSULTORIA LTDA",
+    "mes": "2026-06-30",
+    "indicador": "Qualidade da entrega",
+    "meta": "100% de aderência técnica.",
+    "resultado": null,
+    "aplicacao": null
+  },
+  {
+    "validacao": null,
+    "id_contrato": "109367",
+    "contratada": "SOTTOMAIOR CONSULTORIA LTDA",
+    "mes": "2026-06-30",
+    "indicador": "Segurança do Trabalho",
+    "meta": "0 Acidentes e 0 Desvios.",
+    "resultado": null,
+    "aplicacao": null
+  },
+  {
+    "validacao": null,
+    "id_contrato": "106126",
+    "contratada": "BAIKAL CONSTRUÇÕES E INSTALAÇÕES LTDA.",
+    "mes": "2026-06-30",
+    "indicador": "Atraso do Cronograma (Parcial)",
+    "meta": "0 dias de atraso.",
+    "resultado": null,
+    "aplicacao": null
+  },
+  {
+    "validacao": null,
+    "id_contrato": "106126",
+    "contratada": "BAIKAL CONSTRUÇÕES E INSTALAÇÕES LTDA.",
+    "mes": "2026-06-30",
+    "indicador": "Atraso do Cronograma (Final)",
+    "meta": "0 dias de atraso na conclusão.",
+    "resultado": null,
+    "aplicacao": null
+  },
+  {
+    "validacao": null,
+    "id_contrato": "106126",
+    "contratada": "BAIKAL CONSTRUÇÕES E INSTALAÇÕES LTDA.",
+    "mes": "2026-06-30",
+    "indicador": "Cadastros de terceiros",
+    "meta": "100% de regularidade.",
+    "resultado": null,
+    "aplicacao": null
+  },
+  {
+    "validacao": null,
+    "id_contrato": "106126",
+    "contratada": "BAIKAL CONSTRUÇÕES E INSTALAÇÕES LTDA.",
+    "mes": "2026-06-30",
+    "indicador": "Documentação e ARTs",
+    "meta": "100% de entrega no prazo.",
+    "resultado": null,
+    "aplicacao": null
+  },
+  {
+    "validacao": null,
+    "id_contrato": "106126",
+    "contratada": "BAIKAL CONSTRUÇÕES E INSTALAÇÕES LTDA.",
+    "mes": "2026-06-30",
+    "indicador": "Qualidade da entrega",
+    "meta": "100% de aderência técnica.",
+    "resultado": null,
+    "aplicacao": null
+  },
+  {
+    "validacao": null,
+    "id_contrato": "106126",
+    "contratada": "BAIKAL CONSTRUÇÕES E INSTALAÇÕES LTDA.",
+    "mes": "2026-06-30",
+    "indicador": "Segurança do Trabalho",
+    "meta": "0 Acidentes e 0 Desvios.",
+    "resultado": null,
+    "aplicacao": null
+  },
+  {
+    "validacao": null,
+    "id_contrato": "61667",
+    "contratada": "SSI SCHAEFER LTDA.",
+    "mes": "2026-06-30",
+    "indicador": "Retenção de Pagamento (HOLD)",
+    "meta": "0 dias de atraso nos marcos do projeto.",
+    "resultado": null,
+    "aplicacao": null
+  },
+  {
+    "validacao": null,
+    "id_contrato": "61667",
+    "contratada": "SSI SCHAEFER LTDA.",
+    "mes": "2026-06-30",
+    "indicador": "Multa Moratória (Atrasos/Shortage)",
+    "meta": "0 dias de atraso (entregas de equipamentos e vistos).",
+    "resultado": null,
+    "aplicacao": null
+  },
+  {
+    "validacao": null,
+    "id_contrato": "61667",
+    "contratada": "SSI SCHAEFER LTDA.",
+    "mes": "2026-06-30",
+    "indicador": "Teto (Cap) para penalidades",
+    "meta": "Não aplicável (Garantia do Teto)",
+    "resultado": null,
+    "aplicacao": null
+  },
+  {
+    "validacao": null,
+    "id_contrato": "61667",
+    "contratada": "SSI SCHAEFER LTDA.",
+    "mes": "2026-06-30",
+    "indicador": "Não Conformidade Técnica (NCT)",
+    "meta": "100% de aderência ao ERU.",
+    "resultado": null,
+    "aplicacao": null
+  },
+  {
+    "validacao": null,
+    "id_contrato": "61667",
+    "contratada": "SSI SCHAEFER LTDA.",
+    "mes": "2026-06-30",
+    "indicador": "Não Conformidade Crítica (NCC)",
+    "meta": "0 vícios ou falhas críticas.",
+    "resultado": null,
+    "aplicacao": null
+  },
+  {
+    "validacao": null,
+    "id_contrato": "61667",
+    "contratada": "SSI SCHAEFER LTDA.",
+    "mes": "2026-06-30",
+    "indicador": "Segurança do Trabalho",
+    "meta": "0 Acidentes Graves e 0 Desvios.",
+    "resultado": null,
+    "aplicacao": null
+  },
+  {
+    "validacao": null,
+    "id_contrato": "61667",
+    "contratada": "SSI SCHAEFER LTDA.",
+    "mes": "2026-06-30",
+    "indicador": "Penalidades por Desempenho (IGPP)",
+    "meta": "≥ 84% no Índice IGPP.",
+    "resultado": null,
+    "aplicacao": null
+  },
+  {
+    "validacao": null,
+    "id_contrato": "130375",
+    "contratada": "CTE - CENTRO DE TECNOLOGIA DE EDIFICAÇÕES E HOLDING LTDA",
+    "mes": "2026-06-30",
+    "indicador": "Multas por atraso (Até 30 dias)",
+    "meta": "0 dias de atraso (100% de cumprimento do cronograma).",
+    "resultado": null,
+    "aplicacao": null
+  },
+  {
+    "validacao": null,
+    "id_contrato": "130375",
+    "contratada": "CTE - CENTRO DE TECNOLOGIA DE EDIFICAÇÕES E HOLDING LTDA",
+    "mes": "2026-06-30",
+    "indicador": "Multas por atraso (A partir de 31 dias)",
+    "meta": "0 dias de atraso (100% de cumprimento do cronograma).",
+    "resultado": null,
+    "aplicacao": null
+  },
+  {
+    "validacao": null,
+    "id_contrato": "130375",
+    "contratada": "CTE - CENTRO DE TECNOLOGIA DE EDIFICAÇÕES E HOLDING LTDA",
+    "mes": "2026-06-30",
+    "indicador": "Controle e entrega de documentações",
+    "meta": "100% de entrega no prazo e conformidade.",
+    "resultado": null,
+    "aplicacao": null
+  },
+  {
+    "validacao": null,
+    "id_contrato": "130375",
+    "contratada": "CTE - CENTRO DE TECNOLOGIA DE EDIFICAÇÕES E HOLDING LTDA",
+    "mes": "2026-06-30",
+    "indicador": "Qualidade da entrega dos serviços",
+    "meta": "100% de aderência às especificações (0 retrabalho).",
+    "resultado": null,
+    "aplicacao": null
+  },
+  {
+    "validacao": null,
+    "id_contrato": "130375",
+    "contratada": "CTE - CENTRO DE TECNOLOGIA DE EDIFICAÇÕES E HOLDING LTDA",
+    "mes": "2026-06-30",
+    "indicador": "Pós Projeto",
+    "meta": "100% de atendimento à garantia acionada.",
+    "resultado": null,
+    "aplicacao": null
+  },
+  {
+    "validacao": null,
+    "id_contrato": "130375",
+    "contratada": "CTE - CENTRO DE TECNOLOGIA DE EDIFICAÇÕES E HOLDING LTDA",
+    "mes": "2026-06-30",
+    "indicador": "Segurança do Trabalho (Desvios)",
+    "meta": "0 Desvios de comportamento (100% aderência às normas).",
+    "resultado": null,
+    "aplicacao": null
+  },
+  {
+    "validacao": null,
+    "id_contrato": "130375",
+    "contratada": "CTE - CENTRO DE TECNOLOGIA DE EDIFICAÇÕES E HOLDING LTDA",
+    "mes": "2026-06-30",
+    "indicador": "Segurança do Trabalho (Acidentes)",
+    "meta": "0 Acidentes de trabalho.",
+    "resultado": null,
+    "aplicacao": null
+  },
+  {
+    "validacao": null,
+    "id_contrato": "130375",
+    "contratada": "CTE - CENTRO DE TECNOLOGIA DE EDIFICAÇÕES E HOLDING LTDA",
+    "mes": "2026-06-30",
+    "indicador": "Segurança do Trabalho (Óbito)",
+    "meta": "0 Acidentes com fatalidade.",
+    "resultado": null,
+    "aplicacao": null
+  },
+  {
+    "validacao": null,
+    "id_contrato": "110340",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "mes": "2026-06-30",
+    "indicador": "Aderência ao Cronograma de Terraplenagem",
+    "meta": "≥ 95% do volume previsto",
+    "resultado": 1.0189,
+    "aplicacao": 0.02
+  },
+  {
+    "validacao": null,
+    "id_contrato": "110340",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "mes": "2026-06-30",
+    "indicador": "Eficiência de Equipamentos (Histograma)",
+    "meta": "Manutenção de ≥ 90% da frota operacional",
+    "resultado": 0.8685,
+    "aplicacao": 0.0
+  },
+  {
+    "validacao": null,
+    "id_contrato": "110340",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "mes": "2026-06-30",
+    "indicador": "Qualidade da Compactação e Solo",
+    "meta": "100% dos ensaios em conformidade",
+    "resultado": 0.9722,
+    "aplicacao": null
+  },
+  {
+    "validacao": null,
+    "id_contrato": "110340",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "mes": "2026-06-30",
+    "indicador": "Gestão de Riscos e STMA",
+    "meta": "≥ 82% de performance no índice GB",
+    "resultado": 0.8722,
+    "aplicacao": 0.0
+  },
+  {
+    "validacao": null,
+    "id_contrato": "110340",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "mes": "2026-06-30",
+    "indicador": "Controle de Erosão e APP",
+    "meta": "Zero extravasamento de sedimentos para APP",
+    "resultado": null,
+    "aplicacao": 0.0
+  },
+  {
+    "validacao": null,
+    "id_contrato": "110340",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "mes": "2026-06-30",
+    "indicador": "Incidentes de Alto Impacto",
+    "meta": "≤ 2 por semestre",
+    "resultado": 0.0,
+    "aplicacao": 0.0
+  },
+  {
+    "validacao": null,
+    "id_contrato": "110340",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "mes": "2026-06-30",
+    "indicador": "Aderência aos Marcos do Projeto",
+    "meta": "Atraso zero em marcos críticos",
+    "resultado": null,
+    "aplicacao": -0.02
+  },
+  {
+    "validacao": null,
+    "id_contrato": "110340",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "mes": "2026-06-30",
+    "indicador": "Aprovação dos Projetos Otimizados",
+    "meta": "Entrega em até 15 dias após mobilização",
+    "resultado": null,
+    "aplicacao": 0.0
+  },
+  {
+    "validacao": null,
+    "id_contrato": "110340",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "mes": "2026-06-30",
+    "indicador": "Eficiência de Balanço de Solo",
+    "meta": "≥ 98% de solo compensado internamente",
+    "resultado": null,
+    "aplicacao": 0.0
+  },
+  {
+    "validacao": null,
+    "id_contrato": "110340",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "mes": "2026-06-30",
+    "indicador": "Integridade das Contenções e Lagoas",
+    "meta": "Zero ocorrências de instabilidade ou erosão",
+    "resultado": null,
+    "aplicacao": null
+  },
+  {
+    "validacao": null,
+    "id_contrato": "106893",
+    "contratada": "AFRY BRASIL LTDA.",
+    "mes": "2026-06-30",
+    "indicador": "Aderência ao Cronograma Físico-Financeiro",
+    "meta": "≥ 95% das atividades no prazo",
+    "resultado": null,
+    "aplicacao": null
+  },
+  {
+    "validacao": null,
+    "id_contrato": "106893",
+    "contratada": "AFRY BRASIL LTDA.",
+    "mes": "2026-06-30",
+    "indicador": "Reprogramações do Cronograma",
+    "meta": "< 1 revisão significativa em 6 meses",
+    "resultado": null,
+    "aplicacao": null
+  },
+  {
+    "validacao": null,
+    "id_contrato": "106893",
+    "contratada": "AFRY BRASIL LTDA.",
+    "mes": "2026-06-30",
+    "indicador": "Variação Orçamentária",
+    "meta": "≤ 1% de desvio mensal",
+    "resultado": null,
+    "aplicacao": null
+  },
+  {
+    "validacao": null,
+    "id_contrato": "106893",
+    "contratada": "AFRY BRASIL LTDA.",
+    "mes": "2026-06-30",
+    "indicador": "Gestão de Riscos",
+    "meta": "≥ 95% riscos tratados em até 5 dias úteis",
+    "resultado": null,
+    "aplicacao": null
+  },
+  {
+    "validacao": null,
+    "id_contrato": "106893",
+    "contratada": "AFRY BRASIL LTDA.",
+    "mes": "2026-06-30",
+    "indicador": "Incidentes de Alto Impacto",
+    "meta": "≤ 2 por semestre",
+    "resultado": null,
+    "aplicacao": null
+  },
+  {
+    "validacao": null,
+    "id_contrato": "106893",
+    "contratada": "AFRY BRASIL LTDA.",
+    "mes": "2026-06-30",
+    "indicador": "Qualidade – Não Conformidades",
+    "meta": "< 95% NC identificadas e encaminhadas mensal",
+    "resultado": null,
+    "aplicacao": null
+  },
+  {
+    "validacao": null,
+    "id_contrato": "106893",
+    "contratada": "AFRY BRASIL LTDA.",
+    "mes": "2026-06-30",
+    "indicador": "IGPP-GF-STMA",
+    "meta": "≥ 82% / 30 dias",
+    "resultado": null,
+    "aplicacao": null
+  },
+  {
+    "validacao": null,
+    "id_contrato": "110340",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "mes": "2026-07-31",
+    "indicador": "Aderência ao Cronograma de Terraplenagem",
+    "meta": "≥ 95% Aderência",
+    "resultado": 0.9074,
+    "aplicacao": -0.02
+  },
+  {
+    "validacao": null,
+    "id_contrato": "110340",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "mes": "2026-07-31",
+    "indicador": "Eficiência de Equipamentos (Histograma)",
+    "meta": "Manutenção de ≥ 90% da frota operacional",
+    "resultado": 0.8406,
+    "aplicacao": -0.02
+  },
+  {
+    "validacao": null,
+    "id_contrato": "110340",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "mes": "2026-07-31",
+    "indicador": "Qualidade da Compactação e Solo",
+    "meta": "100% Ensaio AP",
+    "resultado": 0.9902,
+    "aplicacao": null
+  },
+  {
+    "validacao": null,
+    "id_contrato": "110340",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "mes": "2026-07-31",
+    "indicador": "Gestão de Riscos e STMA",
+    "meta": "≥ 82% de performance no índice GB",
+    "resultado": 0.9087,
+    "aplicacao": 0.0
+  },
+  {
+    "validacao": null,
+    "id_contrato": "110340",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "mes": "2026-07-31",
+    "indicador": "Controle de Erosão e APP",
+    "meta": "Zero extravasamento de sedimentos para APP",
+    "resultado": null,
+    "aplicacao": 0.0
+  },
+  {
+    "validacao": null,
+    "id_contrato": "110340",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "mes": "2026-07-31",
+    "indicador": "Incidentes de Alto Impacto",
+    "meta": "≤ 2 por semestre",
+    "resultado": 0.0,
+    "aplicacao": 0.0
+  },
+  {
+    "validacao": null,
+    "id_contrato": "110340",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "mes": "2026-07-31",
+    "indicador": "Aderência aos Marcos do Projeto",
+    "meta": "Atraso zero em marcos críticos",
+    "resultado": null,
+    "aplicacao": -0.02
+  },
+  {
+    "validacao": null,
+    "id_contrato": "110340",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "mes": "2026-07-31",
+    "indicador": "Aprovação dos Projetos Otimizados",
+    "meta": "Entrega em até 15 dias após mobilização",
+    "resultado": null,
+    "aplicacao": 0.0
+  },
+  {
+    "validacao": null,
+    "id_contrato": "110340",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "mes": "2026-07-31",
+    "indicador": "Eficiência de Balanço de Solo",
+    "meta": "≥ 98% de solo compensado internamente",
+    "resultado": 1.0,
+    "aplicacao": 0.01
+  },
+  {
+    "validacao": null,
+    "id_contrato": "110340",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "mes": "2026-07-31",
+    "indicador": "Integridade das Contenções e Lagoas",
+    "meta": "Zero ocorrências de instabilidade ou erosão",
+    "resultado": null,
+    "aplicacao": 0.0
+  },
+  {
+    "validacao": null,
+    "id_contrato": "110340",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "mes": "2026-08-31",
+    "indicador": "Aderência ao Cronograma de Terraplenagem",
+    "meta": "≥ 95% Aderência",
+    "resultado": 0.9506,
+    "aplicacao": 0.0
+  },
+  {
+    "validacao": null,
+    "id_contrato": "110340",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "mes": "2026-08-31",
+    "indicador": "Eficiência de Equipamentos (Histograma)",
+    "meta": "≥ 90% de disponibilidade",
+    "resultado": 0.771,
+    "aplicacao": -0.02
+  },
+  {
+    "validacao": null,
+    "id_contrato": "110340",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "mes": "2026-08-31",
+    "indicador": "Qualidade da Compactação e Solo",
+    "meta": "100% Ensaio AP",
+    "resultado": 2.0434,
+    "aplicacao": null
+  },
+  {
+    "validacao": null,
+    "id_contrato": "110340",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "mes": "2026-08-31",
+    "indicador": "Gestão de Riscos e STMA",
+    "meta": "≥ 82% de performance no índice GB",
+    "resultado": 0.9298,
+    "aplicacao": 0.0
+  },
+  {
+    "validacao": null,
+    "id_contrato": "110340",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "mes": "2026-08-31",
+    "indicador": "Controle de Erosão e APP",
+    "meta": "Zero extravasamento de sedimentos para APP",
+    "resultado": null,
+    "aplicacao": 0.0
+  },
+  {
+    "validacao": null,
+    "id_contrato": "110340",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "mes": "2026-08-31",
+    "indicador": "Incidentes de Alto Impacto",
+    "meta": "≤ 2 por semestre",
+    "resultado": 1.0,
+    "aplicacao": 0.0
+  },
+  {
+    "validacao": null,
+    "id_contrato": "110340",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "mes": "2026-08-31",
+    "indicador": "Aderência aos Marcos do Projeto",
+    "meta": "Atraso zero em marcos críticos",
+    "resultado": null,
+    "aplicacao": -0.02
+  },
+  {
+    "validacao": null,
+    "id_contrato": "110340",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "mes": "2026-08-31",
+    "indicador": "Aprovação dos Projetos Otimizados",
+    "meta": "Entrega em até 15 dias após mobilização",
+    "resultado": null,
+    "aplicacao": 0.0
+  },
+  {
+    "validacao": null,
+    "id_contrato": "110340",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "mes": "2026-08-31",
+    "indicador": "Eficiência de Balanço de Solo",
+    "meta": "≥ 98% de solo compensado internamente",
+    "resultado": null,
+    "aplicacao": 0.0
+  },
+  {
+    "validacao": null,
+    "id_contrato": "110340",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "mes": "2026-08-31",
+    "indicador": "Integridade das Contenções e Lagoas",
+    "meta": "Zero ocorrências de instabilidade ou erosão",
+    "resultado": null,
+    "aplicacao": null
+  },
+  {
+    "validacao": null,
+    "id_contrato": "110340",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "mes": "2026-09-30",
+    "indicador": "Aderência ao Cronograma de Terraplenagem",
+    "meta": "≥ 95% Aderência",
+    "resultado": 0.8604,
+    "aplicacao": -0.02
+  },
+  {
+    "validacao": null,
+    "id_contrato": "110340",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "mes": "2026-09-30",
+    "indicador": "Eficiência de Equipamentos (Histograma)",
+    "meta": "≥ 90% de disponibilidade",
+    "resultado": null,
+    "aplicacao": -0.02
+  },
+  {
+    "validacao": null,
+    "id_contrato": "110340",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "mes": "2026-09-30",
+    "indicador": "Qualidade da Compactação e Solo",
+    "meta": "100% Ensaio AP",
+    "resultado": null,
+    "aplicacao": null
+  },
+  {
+    "validacao": null,
+    "id_contrato": "110340",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "mes": "2026-09-30",
+    "indicador": "Gestão de Riscos e STMA",
+    "meta": "≥ 82% de performance no índice GB",
+    "resultado": 0.9543,
+    "aplicacao": 0.0
+  },
+  {
+    "validacao": null,
+    "id_contrato": "110340",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "mes": "2026-09-30",
+    "indicador": "Controle de Erosão e APP",
+    "meta": "Zero extravasamento de sedimentos para APP",
+    "resultado": null,
+    "aplicacao": 0.0
+  },
+  {
+    "validacao": null,
+    "id_contrato": "110340",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "mes": "2026-09-30",
+    "indicador": "Incidentes de Alto Impacto",
+    "meta": "≤ 2 por semestre",
+    "resultado": 1.0,
+    "aplicacao": 0.0
+  },
+  {
+    "validacao": null,
+    "id_contrato": "110340",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "mes": "2026-09-30",
+    "indicador": "Aderência aos Marcos do Projeto",
+    "meta": "Atraso zero em marcos críticos",
+    "resultado": null,
+    "aplicacao": 0.0
+  },
+  {
+    "validacao": null,
+    "id_contrato": "110340",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "mes": "2026-09-30",
+    "indicador": "Aprovação dos Projetos Otimizados",
+    "meta": "Entrega em até 15 dias após mobilização",
+    "resultado": null,
+    "aplicacao": 0.0
+  },
+  {
+    "validacao": null,
+    "id_contrato": "110340",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "mes": "2026-09-30",
+    "indicador": "Eficiência de Balanço de Solo",
+    "meta": "≥ 98% de solo compensado internamente",
+    "resultado": null,
+    "aplicacao": 0.0
+  },
+  {
+    "validacao": null,
+    "id_contrato": "110340",
+    "contratada": "TERRAM ENGENHARIA DE INFRAESTRUTURA S.A.",
+    "mes": "2026-09-30",
+    "indicador": "Integridade das Contenções e Lagoas",
+    "meta": "Zero ocorrências de instabilidade ou erosão",
+    "resultado": null,
+    "aplicacao": -0.03
+  },
+  {
+    "validacao": null,
+    "id_contrato": "106893",
+    "contratada": "AFRY BRASIL LTDA.",
+    "mes": "2026-07-31",
+    "indicador": "Aderência ao Cronograma Físico-Financeiro",
+    "meta": "≥ 95% das atividades no prazo",
+    "resultado": null,
+    "aplicacao": null
+  },
+  {
+    "validacao": null,
+    "id_contrato": "106893",
+    "contratada": "AFRY BRASIL LTDA.",
+    "mes": "2026-07-31",
+    "indicador": "Reprogramações do Cronograma",
+    "meta": "< 1 revisão significativa em 6 meses",
+    "resultado": null,
+    "aplicacao": null
+  },
+  {
+    "validacao": null,
+    "id_contrato": "106893",
+    "contratada": "AFRY BRASIL LTDA.",
+    "mes": "2026-07-31",
+    "indicador": "Variação Orçamentária",
+    "meta": "≤ 1% de desvio mensal",
+    "resultado": null,
+    "aplicacao": null
+  },
+  {
+    "validacao": null,
+    "id_contrato": "106893",
+    "contratada": "AFRY BRASIL LTDA.",
+    "mes": "2026-07-31",
+    "indicador": "Gestão de Riscos",
+    "meta": "≥ 95% riscos tratados em até 5 dias úteis",
+    "resultado": null,
+    "aplicacao": null
+  },
+  {
+    "validacao": null,
+    "id_contrato": "106893",
+    "contratada": "AFRY BRASIL LTDA.",
+    "mes": "2026-07-31",
+    "indicador": "Incidentes de Alto Impacto",
+    "meta": "≤ 2 por semestre",
+    "resultado": null,
+    "aplicacao": null
+  },
+  {
+    "validacao": null,
+    "id_contrato": "106893",
+    "contratada": "AFRY BRASIL LTDA.",
+    "mes": "2026-07-31",
+    "indicador": "Qualidade – Não Conformidades",
+    "meta": "< 95% NC identificadas e encaminhadas mensal",
+    "resultado": null,
+    "aplicacao": null
+  },
+  {
+    "validacao": null,
+    "id_contrato": "106893",
+    "contratada": "AFRY BRASIL LTDA.",
+    "mes": "2026-07-31",
+    "indicador": "IGPP-GF-STMA",
+    "meta": "≥ 82% / 30 dias",
+    "resultado": null,
+    "aplicacao": null
+  },
+  {
+    "validacao": null,
+    "id_contrato": "106893",
+    "contratada": "AFRY BRASIL LTDA.",
+    "mes": "2026-08-31",
+    "indicador": "Aderência ao Cronograma Físico-Financeiro",
+    "meta": "≥ 95% das atividades no prazo",
+    "resultado": null,
+    "aplicacao": null
+  },
+  {
+    "validacao": null,
+    "id_contrato": "106893",
+    "contratada": "AFRY BRASIL LTDA.",
+    "mes": "2026-08-31",
+    "indicador": "Reprogramações do Cronograma",
+    "meta": "< 1 revisão significativa em 6 meses",
+    "resultado": null,
+    "aplicacao": null
+  },
+  {
+    "validacao": null,
+    "id_contrato": "106893",
+    "contratada": "AFRY BRASIL LTDA.",
+    "mes": "2026-08-31",
+    "indicador": "Variação Orçamentária",
+    "meta": "≤ 1% de desvio mensal",
+    "resultado": null,
+    "aplicacao": null
+  },
+  {
+    "validacao": null,
+    "id_contrato": "106893",
+    "contratada": "AFRY BRASIL LTDA.",
+    "mes": "2026-08-31",
+    "indicador": "Gestão de Riscos",
+    "meta": "≥ 95% riscos tratados em até 5 dias úteis",
+    "resultado": null,
+    "aplicacao": null
+  },
+  {
+    "validacao": null,
+    "id_contrato": "106893",
+    "contratada": "AFRY BRASIL LTDA.",
+    "mes": "2026-08-31",
+    "indicador": "Incidentes de Alto Impacto",
+    "meta": "≤ 2 por semestre",
+    "resultado": null,
+    "aplicacao": null
+  },
+  {
+    "validacao": null,
+    "id_contrato": "106893",
+    "contratada": "AFRY BRASIL LTDA.",
+    "mes": "2026-08-31",
+    "indicador": "Qualidade – Não Conformidades",
+    "meta": "< 95% NC identificadas e encaminhadas mensal",
+    "resultado": null,
+    "aplicacao": null
+  },
+  {
+    "validacao": null,
+    "id_contrato": "106893",
+    "contratada": "AFRY BRASIL LTDA.",
+    "mes": "2026-08-31",
+    "indicador": "IGPP-GF-STMA",
+    "meta": "≥ 82% / 30 dias",
+    "resultado": null,
+    "aplicacao": null
+  },
+  {
+    "validacao": null,
+    "id_contrato": "106893",
+    "contratada": "AFRY BRASIL LTDA.",
+    "mes": "2026-09-30",
+    "indicador": "Aderência ao Cronograma Físico-Financeiro",
+    "meta": "≥ 95% das atividades no prazo",
+    "resultado": null,
+    "aplicacao": null
+  },
+  {
+    "validacao": null,
+    "id_contrato": "106893",
+    "contratada": "AFRY BRASIL LTDA.",
+    "mes": "2026-09-30",
+    "indicador": "Reprogramações do Cronograma",
+    "meta": "< 1 revisão significativa em 6 meses",
+    "resultado": null,
+    "aplicacao": null
+  },
+  {
+    "validacao": null,
+    "id_contrato": "106893",
+    "contratada": "AFRY BRASIL LTDA.",
+    "mes": "2026-09-30",
+    "indicador": "Variação Orçamentária",
+    "meta": "≤ 1% de desvio mensal",
+    "resultado": null,
+    "aplicacao": null
+  },
+  {
+    "validacao": null,
+    "id_contrato": "106893",
+    "contratada": "AFRY BRASIL LTDA.",
+    "mes": "2026-09-30",
+    "indicador": "Gestão de Riscos",
+    "meta": "≥ 95% riscos tratados em até 5 dias úteis",
+    "resultado": null,
+    "aplicacao": null
+  },
+  {
+    "validacao": null,
+    "id_contrato": "106893",
+    "contratada": "AFRY BRASIL LTDA.",
+    "mes": "2026-09-30",
+    "indicador": "Incidentes de Alto Impacto",
+    "meta": "≤ 2 por semestre",
+    "resultado": null,
+    "aplicacao": null
+  },
+  {
+    "validacao": null,
+    "id_contrato": "106893",
+    "contratada": "AFRY BRASIL LTDA.",
+    "mes": "2026-09-30",
+    "indicador": "Qualidade – Não Conformidades",
+    "meta": "< 95% NC identificadas e encaminhadas mensal",
+    "resultado": null,
+    "aplicacao": null
+  },
+  {
+    "validacao": null,
+    "id_contrato": "106893",
+    "contratada": "AFRY BRASIL LTDA.",
+    "mes": "2026-09-30",
+    "indicador": "IGPP-GF-STMA",
+    "meta": "≥ 82% / 30 dias",
+    "resultado": null,
+    "aplicacao": null
+  }
+]

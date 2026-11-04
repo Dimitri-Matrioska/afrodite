@@ -1,0 +1,177 @@
+:root {
+  --pbi-foreground: #252423;
+  --pbi-background: #FFFFFF;
+  --pbi-accent: #118DFF;
+  --pbi-bad: #D64550;
+  --pbi-azul-escuro: #001d37;
+  --pbi-sidebar-fundo: #001d37;
+  --pbi-sidebar-borda: #4a6fa5;
+  --pbi-botao-ativo: #3a2a20;
+  --pbi-fundo-pagina: #f3f0eb;
+  --fonte-principal: "Segoe UI", helvetica, arial, sans-serif;
+  --bege-fundo: #f3f0eb;
+  --azul-prev: #001d37;
+  --real: #ffbe83;
+}
+
+/* ========================================== */
+/* CONFIGURAÇÕES COMPLETAS DOS BALÕES (TOOLTIPS/POPUPS) */
+/* ========================================== */
+
+/* Estilo geral para os balões do ECharts e do Leaflet */
+.echarts-tooltip,
+div[style*="position: absolute"][style*="pointer-events: none"],
+.leaflet-popup-content-wrapper,
+.leaflet-tooltip {
+  /* Cores de Fundo e Texto */
+  background-color: #f3f0eb !important; /* Fundo azul escuro */
+  color: #001d37 !important;           /* Cor padrão do texto (branco) */
+  
+  /* Tipografia (Fontes) */
+  font-family: inherit !important;     /* Herda a fonte padrão do seu projeto */
+  font-size: 10px !important;          /* -> TAMANHO DA FONTE: Altere aqui (ex: 11px, 12px, 14px) */
+  font-weight: normal !important;      /* Peso da fonte (normal, bold) */
+  line-height: 1.4 !important;         /* Espaçamento entre as linhas do texto */
+  
+  /* Espaçamentos e Bordas */
+  padding: 8px 12px !important;        /* -> ESPAÇAMENTO INTERNO: Margem interna do balão */
+  border-radius: 6px !important;       /* -> ARREDONDAMENTO: Cantos arredondados (ex: 4px, 8px, 12px) */
+  border: 1px solid rgba(255, 255, 255, 0.08) !important; /* -> BORDA: Linha sutil opcional ao redor */
+  
+  /* Efeitos Visuais e Sombras */
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.35) !important; /* -> LEVE SOMBRA: Profundidade do balão */
+  backdrop-filter: blur(4px);          /* Efeito de desfoque sutil no fundo (estilo glassmorphism) */
+  
+  /* Transições e Animações (Efeitos gerais ao aparecer/mover) */
+  transition: opacity 0.15s ease, transform 0.15s ease !important;
+}
+
+/* Garante que os elementos de texto internos acompanhem a estilização */
+.echarts-tooltip *,
+.leaflet-popup-content-wrapper *,
+.leaflet-tooltip * {
+  color: inherit !important;
+}
+
+/* Estilização específica para títulos ou textos em negrito (<b> / <strong>) dentro dos balões */
+.echarts-tooltip b,
+.echarts-tooltip strong,
+.leaflet-popup-content-wrapper b,
+.leaflet-tooltip b {
+  font-weight: bold !important;
+  color: #001d37 !important;           /* Cor dos títulos em destaque */
+  font-size: 2px !important;          /* Tamanho da fonte específica para títulos */
+}
+
+/* Setas indicadoras dos popups e tooltips do Leaflet (acompanham a cor do fundo) */
+.leaflet-popup-tip,
+.leaflet-tooltip-top::before,
+.leaflet-tooltip-bottom::before,
+.leaflet-tooltip-left::before,
+.leaflet-tooltip-right::before {
+  background-color: #f3f0eb !important;
+  border-color: #001e38 !important;
+}
+
+* { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; background: #ffffff; font-family: var(--fonte-principal); height: 100vh; overflow: hidden; display: flex; justify-content: center; align-items: center; }
+.app { display: flex; width: 100vw; height: 100vh; }
+.canvas-wrapper { display: block; flex-shrink: 0; }
+.pbi-canvas { position: relative; width: 1280px; height: 725px; background: var(--pbi-fundo-pagina) url('../imagens/bacground-padrão.png') center/cover no-repeat; border-radius: 4px; box-shadow: 0 2px 12px rgba(0,0,0,0.15); overflow: hidden; flex-shrink: 0; --escala: 1; zoom: var(--escala); }
+
+/* Sidebar padrao compartilhada em ../assets/sidebar-padrao.css */
+
+/* Título Azul Topo */
+#title-pluviometria { position: absolute; left: 240px; top: 35px; width: 1020px; height: 30px; z-index: 9999; text-align: center; font-size: 14pt; font-weight: 700; color: var(--bege-fundo); background: var(--pbi-azul-escuro); border-radius: 3px; line-height: 1.2; }
+
+/* Componentes Visuais */
+.chart-container { position: absolute; background: transparent; border-radius: 0px; z-index: 10; }
+.visual-title { position: absolute; background: #001d37; color: #ffffff; font-size: 9pt; font-weight: 700; display: flex; align-items: center; justify-content: center; text-align: center; letter-spacing: 0.4px; z-index: 300; border-radius: 3px 3px 0 0; }
+
+/* KPIs do PDF */
+.kpi-pluvio {
+  position: absolute; background: #FFFFFF; border: 1px solid #e0e0e0;
+  padding: 15px; display: flex; flex-direction: column; align-items: flex-start; border-radius: 4px; z-index: 10;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.05); border-left: 4px solid var(--pbi-accent);
+}
+.kpi-pluvio .kpi-value { font-size: 16pt; font-weight: 400; color: #252423; line-height: 1; margin-bottom: 1px;}
+.kpi-pluvio .kpi-label { font-size: 9pt; color: #605e5c; font-weight: 400; }
+
+/* Posicionamento */
+#kpi-mm-mes { left: 240px; top: 70px; width: 200px; height: 60px; }
+#kpi-media-dia { left: 240px; top: 140px; width: 200px; height: 60px; }
+#kpi-dias-impactados { left: 240px; top: 210px; width: 200px; height: 60px; }
+
+/* Gráfico Barras (Topo) */
+#chart-pluvio-historico { left: 460px; top: 80px; width: 800px; height: 200px; }
+#title-pluvio-historico { left: 460px; top: 70px; width: 800px; height: 22px; }
+
+/* Gráfico Área (Inferior) */
+#chart-pluvio-mes { left: 240px; top: 330px; width: 650px; height: 350px; }
+#title-pluvio-mes { left: 240px; top: 308px; width: 650px; height: 22px; }
+
+/* Calendário */
+#chart-calendario { left: 910px; top: 330px; width: 350px; height: 350px; background: rgba(255,255,255,0.88); border: 1px solid rgba(0,29,55,0.12); border-radius: 6px; box-shadow: 0 2px 8px rgba(0,0,0,0.08); padding: 8px; overflow: hidden; }
+#title-calendario { left: 910px; top: 308px; width: 350px; height: 22px; }
+
+.calendario-header {
+  display: flex; align-items: center; justify-content: space-between; gap: 8px;
+  height: 30px; margin-bottom: 8px; color: var(--pbi-azul-escuro);
+}
+.calendario-nav {
+  width: 26px; height: 26px; border: 1px solid rgba(0,29,55,0.2); border-radius: 50%;
+  background: var(--bege-fundo); color: var(--pbi-azul-escuro); font-size: 16px; font-weight: 700;
+  cursor: pointer; display: flex; align-items: center; justify-content: center; line-height: 1;
+}
+.calendario-nav:hover { background: #e4dfd9; }
+.calendario-titulo {
+  flex: 1; text-align: center; font-size: 12px; font-weight: 700; letter-spacing: 0.3px; color: var(--pbi-azul-escuro);
+  text-transform: capitalize;
+}
+.calendario-semana {
+  display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px; margin-bottom: 6px; color: #605e5c; font-size: 9px; font-weight: 700; text-transform: uppercase; text-align: center;
+}
+.calendario-dia-semana { padding: 2px 0; }
+.calendario-grade {
+  display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px; align-content: start;
+}
+.calendario-dia {
+  position: relative; aspect-ratio: 1; min-height: 27px; border-radius: 6px; border: 1px solid rgba(0,29,55,0.12);
+  display: flex; align-items: center; justify-content: center; background: rgba(255,255,255,0.25); transition: transform 0.15s ease, box-shadow 0.15s ease; overflow: hidden;
+  color: var(--pbi-foreground);
+}
+.calendario-dia:hover { transform: translateY(-1px); box-shadow: 0 3px 8px rgba(0,0,0,0.08); }
+.calendario-dia.vazio { background: transparent; border-color: transparent; }
+.calendario-dia.sem-chuva { background: rgba(243,240,235,0.7); }
+.calendario-numero {
+  position: absolute; top: 3px; left: 5px; font-size: 8px; font-weight: 700; line-height: 1; z-index: 1;
+}
+.calendario-icone {
+  width: 30px; height: 30px; object-fit: contain; display: block; margin-top: 4px; filter: drop-shadow(0 1px 2px rgba(0,0,0,0.08));
+  transition: transform 0.15s ease, filter 0.15s ease;
+}
+.calendario-dia:hover .calendario-icone { transform: scale(1.5); }
+.calendario-legenda {
+  display: flex; flex-wrap: wrap; justify-content: center; gap: 8px 10px; margin-top: 8px; padding-top: 8px; border-top: 1px solid rgba(0,29,55,0.08); color: #605e5c; font-size: 8px;
+}
+.calendario-legenda-item {
+  display: inline-flex; align-items: center; gap: 5px; text-transform: uppercase; letter-spacing: 0.2px;
+}
+.calendario-legenda-item img {
+  width: 12px; height: 12px; display: inline-block; object-fit: contain;
+}
+.calendario-vazio {
+  width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; color: #605e5c; font-size: 11px; font-weight: 600;
+}
+
+.calendario-tooltip {
+  position: fixed; z-index: 99999; pointer-events: none; background: rgba(0, 29, 55, 0.96);
+  color: #ffffff; border: 1px solid rgba(255,255,255,0.12); border-radius: 6px; box-shadow: 0 6px 18px rgba(0,0,0,0.2);
+  padding: 8px 10px; font-size: 10px; line-height: 1.5; letter-spacing: 0.15px; min-width: 150px;
+}
+.calendario-tooltip strong { color: #ffffff; font-weight: 700; }
+.calendario-tooltip .tooltip-label { color: rgba(255,255,255,0.7); }
+.calendario-tooltip .tooltip-value { color: #ffbe83; font-weight: 700; }
+.calendario-tooltip .tooltip-status { color: #ffffff; }
+
+.loading { color: #a0a0a0 !important; font-weight: 400 !important; }
