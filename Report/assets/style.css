@@ -1,0 +1,69 @@
+/* ============================================================
+   STYLE.CSS — Estilos Globais (Estrutura e Canvas)
+   ============================================================ */
+
+:root {
+  /* Paleta do tema CY26SU02 */
+  --pbi-foreground: #252423;
+  --pbi-background: #FFFFFF;
+  --pbi-accent: #118DFF;
+  --pbi-cor-1: #118DFF;
+  --pbi-cor-2: #12239E;
+  --pbi-cor-3: #E66C37;
+  --pbi-cor-4: #6B007B;
+  --pbi-cor-5: #E044A7;
+  --pbi-good: #1AAB40;
+  --pbi-bad: #D64550;
+
+  --pbi-azul-escuro: #001d37;
+  --pbi-sidebar-fundo: #001d37;
+  --pbi-sidebar-borda: #4a6fa5;
+  --pbi-botao-ativo: #3a2a20;
+  --pbi-fundo-pagina: #f3f0eb;
+
+  --fonte-principal: "Segoe UI", helvetica, arial, sans-serif;
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  padding: 0;
+  background: #ffffff;
+  font-family: var(--fonte-principal);
+  height: 100vh;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.app {
+  display: flex;
+  width: 100vw;
+  height: 100vh;
+}
+
+.canvas-wrapper {
+  display: block;
+  flex-shrink: 0;
+}
+
+.pbi-canvas {
+  position: relative;
+  width: 1280px;
+  height: 720px;
+  background: var(--pbi-fundo-pagina);
+  border-radius: 4px;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.15);
+  overflow: hidden;
+  flex-shrink: 0;
+  
+  /* Controle de escala via JS */
+  --escala: 1;
+  zoom: var(--escala);
+}
+
+/* Estados globais */
+.loading { color: #a0a0a0 !important; font-weight: 400 !important; }
+.error { color: var(--pbi-bad) !important; font-size: 8pt !important; }
