@@ -251,6 +251,7 @@
             </div>
         </header>
 
+<<<<<<< Updated upstream
         <!-- BOTÕES DE ACESSO -->
         <main>
             <a href="#" class="btn-portal" onclick="navegarPara(event, 'lidar.html')">
@@ -281,12 +282,20 @@
         <footer>
             <span class="brand-desenvolvido"> </span>
         </footer>
+=======
+    <!-- BARRA DE TÍTULO -->
+    <div class="titulo-bar">
+        <span class="acento"></span>
+        <h1>PROJETO AFRODITE</h1>
+        <span class="subtitulo">Aero Levantamento</span>
+>>>>>>> Stashed changes
     </div>
 
     <script>
         const SPLASH_KEY = "afroditeSplashShown";
         const splash = document.getElementById("loading");
 
+<<<<<<< Updated upstream
         // Exibe o splash apenas na primeira entrada da aba e sem esperar o carregamento completo.
         document.addEventListener("DOMContentLoaded", () => {
             const jaMostrouSplash = sessionStorage.getItem(SPLASH_KEY) === "1";
@@ -300,6 +309,142 @@
                 splash.classList.add("hidden");
                 sessionStorage.setItem(SPLASH_KEY, "1");
             }, 1800);
+=======
+        const CONFIG = {
+            baseUrlArquivos: "https://pub-ff165ed52c304df59d57ae2f21220e3c.r2.dev",
+            prefixoArquivo: "voo-",
+            sufixoArquivo: ".copc.laz",
+            viewerBase: "https://olv-afrodite.matrioska-dev.workers.dev/?copc=",
+            diasBusca: 365,
+            maxVoosTimeline: 12,
+        };
+
+        function pad(n) {
+            return String(n).padStart(2, "0");
+        }
+
+        function formatarDataArquivo(d) {
+            return `${pad(d.getDate())}-${pad(d.getMonth() + 1)}-${d.getFullYear()}`;
+        }
+
+        function formatarDataLabel(d) {
+            return `${pad(d.getDate())}/${pad(d.getMonth() + 1)}`;
+        }
+
+        function nomeArquivoPara(d) {
+            return `${CONFIG.prefixoArquivo}${formatarDataArquivo(d)}${CONFIG.sufixoArquivo}`;
+        }
+
+        function urlArquivoPara(d) {
+            return `${CONFIG.baseUrlArquivos}/${nomeArquivoPara(d)}`;
+        }
+
+        async function arquivoExiste(url) {
+            try {
+                const res = await fetch(url, { method: "HEAD", mode: "cors" });
+                return res.ok;
+            } catch (e) {
+                return false;
+            }
+        }
+
+        async function listarVoosDisponiveis({ maxDias = CONFIG.diasBusca, maxResultados = CONFIG.maxVoosTimeline } = {}) {
+            const hoje = new Date();
+            const resultados = [];
+
+            for (let diasAtras = 0; diasAtras < maxDias && resultados.length < maxResultados; diasAtras++) {
+                const data = new Date(hoje);
+                data.setHours(0, 0, 0, 0);
+                data.setDate(data.getDate() - diasAtras);
+
+                const url = urlArquivoPara(data);
+                if (await arquivoExiste(url)) {
+                    resultados.push({ data, url });
+                }
+            }
+
+            return resultados.sort((a, b) => b.data.getTime() - a.data.getTime());
+        }
+
+        function iconeLidarSvg() {
+            return `<svg class="icone-lidar" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M12 2v4"/><path d="M12 18v4"/><path d="M4.93 4.93l2.83 2.83"/>
+                <path d="M16.24 16.24l2.83 2.83"/><path d="M2 12h4"/><path d="M18 12h4"/>
+                <path d="M4.93 19.07l2.83-2.83"/><path d="M16.24 7.76l2.83-2.83"/>
+                <circle cx="12" cy="12" r="3"/>
+            </svg>`;
+        }
+
+        function montarBotaoVoo(resultado) {
+            const btn = document.createElement("button");
+            btn.className = "voo-btn";
+            btn.type = "button";
+
+            const thumb = document.createElement("div");
+            thumb.className = "voo-thumb";
+            thumb.innerHTML = iconeLidarSvg();
+
+            const label = document.createElement("span");
+            label.className = "voo-label";
+            label.textContent = formatarDataLabel(resultado.data);
+
+            btn.addEventListener("click", () => selecionarVoo(btn, resultado.url));
+            btn.appendChild(thumb);
+            btn.appendChild(label);
+            return btn;
+        }
+
+        function montarUrlViewer(urlArquivoLaz) {
+            return CONFIG.viewerBase + encodeURIComponent(urlArquivoLaz);
+        }
+
+        function mostrarLoaderIframe() {
+            document.getElementById("iframe-loader").classList.remove("hidden");
+        }
+
+        function esconderLoaderIframe() {
+            document.getElementById("iframe-loader").classList.add("hidden");
+        }
+
+        function selecionarVoo(btnClicado, urlArquivoLaz) {
+            document.querySelectorAll(".voo-btn").forEach((b) => b.classList.remove("ativo"));
+            btnClicado.classList.add("ativo");
+
+            mostrarLoaderIframe();
+            const iframe = document.getElementById("lidar-viewer");
+            iframe.src = montarUrlViewer(urlArquivoLaz);
+
+            document.body.classList.add("immersive");
+        }
+
+        async function montarTimeline() {
+            const nav = document.getElementById("timeline");
+            nav.innerHTML = "";
+
+            const voos = await listarVoosDisponiveis();
+
+            if (!voos.length) {
+                nav.innerHTML = '<span class="voo-label" style="color: rgba(255,255,255,0.7);">Nenhum voo disponível</span>';
+                return;
+            }
+
+            voos.forEach((voo) => {
+                const btn = montarBotaoVoo(voo);
+                nav.appendChild(btn);
+            });
+
+            const iframe = document.getElementById("lidar-viewer");
+            iframe.src = montarUrlViewer(voos[0].url);
+
+            const botoes = nav.querySelectorAll(".voo-btn");
+            if (botoes[0]) {
+                botoes[0].classList.add("ativo");
+            }
+        }
+
+        document.getElementById("btn-restaurar").addEventListener("click", () => {
+            document.body.classList.remove("immersive");
+>>>>>>> Stashed changes
         });
 
         // Ao voltar no histórico (bfcache), mantém o splash oculto.
