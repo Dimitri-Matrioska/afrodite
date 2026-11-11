@@ -284,17 +284,35 @@
     </div>
 
     <script>
-        // Animação de entrada ao abrir a página
-        window.addEventListener("load", () => {
+        const SPLASH_KEY = "afroditeSplashShown";
+        const splash = document.getElementById("loading");
+
+        // Exibe o splash apenas na primeira entrada da aba e sem esperar o carregamento completo.
+        document.addEventListener("DOMContentLoaded", () => {
+            const jaMostrouSplash = sessionStorage.getItem(SPLASH_KEY) === "1";
+
+            if (jaMostrouSplash) {
+                splash.classList.add("hidden");
+                return;
+            }
+
             setTimeout(() => {
-                document.getElementById("loading").classList.add("hidden");
+                splash.classList.add("hidden");
+                sessionStorage.setItem(SPLASH_KEY, "1");
             }, 1800);
+        });
+
+        // Ao voltar no histórico (bfcache), mantém o splash oculto.
+        window.addEventListener("pageshow", (event) => {
+            if (event.persisted) {
+                splash.classList.add("hidden");
+                sessionStorage.setItem(SPLASH_KEY, "1");
+            }
         });
 
         // Transição com a splash ao clicar em um botão
         function navegarPara(event, destino) {
             event.preventDefault();
-            const splash = document.getElementById("loading");
             splash.classList.remove("hidden");
 
             setTimeout(() => {
